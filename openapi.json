@@ -78,13 +78,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "archived",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -395,20 +388,6 @@
               "type": "string",
               "maxLength": 100
             }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "archived",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -627,7 +606,14 @@
             }
           },
           {
-            "name": "archived",
+            "name": "category_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "request_template_id",
             "in": "query",
             "schema": {
               "type": "string"
@@ -850,7 +836,14 @@
             }
           },
           {
-            "name": "archived",
+            "name": "category_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "request_template_id",
             "in": "query",
             "schema": {
               "type": "string"
@@ -1063,20 +1056,6 @@
             "schema": {
               "type": "string",
               "maxLength": 100
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "archived",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           }
         ],

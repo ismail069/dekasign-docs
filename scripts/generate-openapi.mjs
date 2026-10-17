@@ -33,7 +33,7 @@ function add(method, route, summary, scope, options = {}) {
   };
 }
 for (const route of ["categories","request-templates","approval-workflows","request-forms","document-sign-templates"]) {
- add("GET","/"+route,"List "+route,"catalog:read",{list:true,queries:["status","archived"]});
+ add("GET","/"+route,"List "+route,"catalog:read",{list:true,queries:route==="categories"?["status"]:["approval-workflows","request-forms"].includes(route)?["status","category_id","request_template_id"]:[]});
  add("GET","/"+route+"/{id}","Get "+route,"catalog:read");
 }
 add("POST","/categories","Create a category only","categories:write",{idempotent:true,body:object({name:s({minLength:2,maxLength:100}),description:s({maxLength:500,default:""})},["name"])});
