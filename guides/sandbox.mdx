@@ -1,0 +1,21 @@
+---
+title: "Sandbox dan pengujian alur"
+description: "Uji cabang dan waktu virtual tanpa mengirim proses nyata."
+---
+## Mulai
+Buka workflow pada canvas dan pilih **Run sandbox**. Pilih snapshot/rancangan yang hendak diuji, isi pemohon simulasi dan form data sesuai key/tipe schema. Jika panel menggunakan JSON, pastikan valid.
+
+## Uji satu jalur
+Mulai simulasi, lihat node aktif dan event. Beri keputusan simulasi pada Actor. Ubah input untuk memastikan setiap output Rule terpilih pada kondisi yang tepat, termasuk gabungan AND/OR dan nilai batas.
+
+## Uji waktu
+Gunakan kontrol waktu virtual untuk Wait/SLA yang tersedia. Verifikasi pengingat, jalur SLA dan Loop terkontrol tidak membuat tugas ganda atau pengulangan tanpa batas. Jangan menyamakan waktu virtual dengan bukti worker server sudah berjalan pada jam nyata.
+
+## Uji revisi
+Pilih Need revision, lihat task Revision, ubah data simulasi lalu Resubmit. Pastikan kembali ke node yang ditentukan dan batas revisi dipakai dengan benar. Reject final harus berakhir sebagai Rejected, bukan otomatis membuka form edit.
+
+## Publish
+Simpan perubahan setelah tes; hasil snapshot lama bukan bukti rancangan baru telah lulus. Jalankan Validate ulang dan Publish hanya setelah jalur penting benar. Sandbox tidak menandatangani PDF produksi atau mengirim notifikasi nyata.
+
+## Bila gagal
+Periksa key form, tipe angka/tanggal, candidate approver dan konektor. Catat input, expected route, actual route dan versi. Kirim laporan dukungan dengan data sintetis tanpa credential.

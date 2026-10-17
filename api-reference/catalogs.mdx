@@ -1,0 +1,29 @@
+---
+title: "Katalog, kategori dan versi"
+description: "Pin versi dan archive tanpa mengubah proses aktif."
+---
+
+Dengan `catalog:read`, baca daftar dan detail `categories`, `request-templates` (Form Builder), `approval-workflows`, `request-forms`, dan `document-sign-templates` di bawah `/api/v1`.
+
+Ambil schema melalui `GET /approval-workflows/{id}/releases/{release}/submission-schema`. Respons workflow mencakup `workflow_release_id` seperti `workflow-id@3`, kategori, template, versi form dan versi publish. Gunakan key schema, bukan label tampilan. Request aktif mempertahankan snapshot versinya.
+
+`GET /document-sign-templates/{id}/content` mengembalikan PDF sumber. Query `version` adalah ID versi template, bukan nomor versinya.
+
+## Tambah kategori
+`POST /categories` memerlukan `categories:write`, idempotency key, dan requester Owner/Admin berwenang.
+
+```json
+{"name":"Permintaan perangkat","description":"Kebutuhan perangkat kerja"}
+```
+
+Respons `request_form_created:false` dan `key_scope_expanded:false` berarti belum ada request form dan akses key tidak diperluas. Buat/publish workflow di platform.
+
+## Archive
+Gunakan `POST /categories/{id}/archive` dengan `categories:write`, atau `POST /approval-workflows/{id}/archive` dan `/request-forms/{id}/archive` dengan `workflows:archive`. Kirim alasan serta idempotency key.
+
+```json
+{"reason":"Digantikan proses operasional baru"}
+```
+
+Workflow dengan request DRAFT, IN_PROGRESS atau NEEDS_REVISION ditolak dengan `WORKFLOW_IN_USE`. Archive bukan menghapus bukti atau file.
+

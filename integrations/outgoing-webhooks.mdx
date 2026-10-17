@@ -1,0 +1,40 @@
+---
+title: "Outgoing webhooks"
+description: "REST dan HMAC app events adalah transport berbeda."
+---
+
+Outgoing webhook mengirim kejadian ke server Anda; berbeda dengan API untuk submit request.
+
+## REST workflow dan Document Sign
+Konfigurasikan endpoint HTTPS publik port 443 tanpa credential/query/fragment pada URL. Server membatasi private address, metadata cloud, redirect dan header terlarang. Pilih **None**, **Bearer**, **API key**, atau **Basic**, lalu custom header. Jangan taruh secret dalam custom body.
+
+Workflow mendukung **all** (event runtime yang benar-benar dijalankan) atau **final** (default, hasil APPROVED/REJECTED). Document Sign mendukung `document.completed` dan `document.expired`.
+
+Payload workflow memuat request, versi, status, node/output, path, revisi, data form dan histori. Dokumen memuat paket, digest, status/expiry serta histori signing/approval. Data ini dapat bersifat pribadi: target harus berhak menerimanya. PDF privat tidak otomatis menjadi file attachment.
+
+Tambahan payload berada di `custom`, tidak menimpa field kanonis, maksimal 16 KB/kedalaman 8.
+
+```http
+Idempotency-Key: <event-id>
+DekaSign-Event-ID: <event-id>
+DekaSign-Timestamp: <unix-seconds>
+```
+
+Auth mengikuti konfigurasi REST. **REST umum tidak otomatis memakai HMAC DekaSign-Signature.** Validasi credential, schema dan deduplikasi event ID.
+
+## Integration app HMAC
+Transport app events memakai secret webhook, bukan API key. Event: `approval.submitted`, `approval.revision_requested`, `approval.resubmitted`, `approval.completed`.
+
+Header mencakup `DekaSign-Event-ID`, `DekaSign-Timestamp`, `DekaSign-Delivery-ID`, `DekaSign-Key-Version`, `DekaSign-Signature`. Signature HMAC-SHA256 hex dihitung atas:
+
+```text
+<event-id>.<unix-seconds>.<raw-request-body>
+```
+
+Verifikasi secret versi yang sesuai, body mentah, constant-time comparison, toleransi waktu dan event ID anti-replay. Pertimbangkan retry saat merotasi secret.
+
+## Retry dan bukti
+Kembalikan 2xx setelah event diterima secara andal. Antrean persisten melakukan sampai lima percobaan per siklus sebelum exhausted. Log/replay tersedia sesuai izin. Pengiriman dapat terjadi lebih dari sekali.
+
+2xx bukan bukti proses bisnis downstream selesai. Uji auth, payload, duplikasi, gagal/retry dan log pada endpoint milik Anda sebelum mengirim data nyata.
+

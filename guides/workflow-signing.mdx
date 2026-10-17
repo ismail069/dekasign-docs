@@ -1,0 +1,23 @@
+---
+title: "Dokumen bertanda tangan pada pengajuan"
+description: "Opsi per dokumen, approver dan bukti keputusan."
+---
+## Alur per dokumen
+Pada Submit Request, upload dokumen yang didukung lalu aktifkan signing untuk dokumen spesifik yang memerlukannya. Satu request dapat mempunyai beberapa dokumen dengan rencana signing berbeda. Template tanda tangan standalone bukan prasyarat universal untuk setiap workflow baru.
+
+Buka editor pada dokumen terpilih, tetapkan Actor/signers dan area/field sesuai kebijakan yang didukung. Dokumen request mengikuti desain dan approver yang benar-benar dikunjungi; cabang yang tidak dijalankan tidak otomatis menjadi penanda tangan.
+
+## Review
+Approver memeriksa form, file, note dan anotasi sebelum keputusan. Catatan bukan consent signing. Persetujuan dokumen dan persetujuan workflow harus mengikuti izin serta mode yang dikonfigurasi.
+
+## Revisi dokumen
+Requester membaca instruksi revisi dan anotasi, mengganti lampiran atau data sesuai kebutuhan, lalu memeriksa kembali rencana signing sebelum Resubmit. Bukti versi lama tidak boleh dipakai seolah menyetujui file baru.
+
+## Hasil
+Dokumen yang disetujui/ditandatangani menyimpan konteks tindakan dan halaman bukti yang disediakan sistem. Periksa identitas pelaku, waktu dan versi/digest. Jangan mengubah PDF final dengan print-to-PDF dan menganggap bukti integritas tetap sama.
+
+## API
+Submit request melalui management API hanya mendukung digital approval untuk dokumen yang dipilih. API key tidak boleh menghasilkan gambar tanda tangan atau mengambil alih signer. Endpoint API masih sandbox; lihat [request API](/api-reference/requests).
+
+## Batas
+Native memakai integritas internal DekaSign, bukan segel bersertifikat. Aktivasi external Actor dan ALL/ANY masih terpisah dari external signer Document Sign.

@@ -1,0 +1,24 @@
+---
+title: "Template email dan Email Studio"
+description: "Subject, header, body, footer, preview dan impor HTML."
+---
+## Membuat template
+Buka **Message templates**, pilih **New email template**, beri nama dan scope kategori yang sesuai. Fitur editor memakai istilah Inggris. Sidebar utama diperkecil agar canvas lebih luas.
+
+Pisahkan **Block palette** dari block yang sudah dipakai. Pilih block pada canvas untuk menampilkan properties-nya. Header dipakai untuk title/subject; body untuk isi; footer untuk penutup dan social links. Block judul tidak otomatis diduplikasi menjadi body.
+
+## Merancang isi
+Tambahkan teks, image/logo, tombol, link, list dan divider yang tersedia. Atur font family, size, weight, alignment, warna body/footer dan urutan block. Gambar sebaiknya memiliki URL/alt yang benar dan ukuran email yang wajar. Jangan memasukkan script atau CSS aplikasi penuh.
+
+**URL link** menentukan tujuan tautan, bukan sekadar mengganti teks label. Isi URL yang aman dan uji dengan preview. Tautan tindakan harus memakai parameter yang disediakan, bukan token yang disalin dari email pengguna lain.
+
+## Parameter aman
+Panel Properties menampilkan parameter yang berlaku. Sisipkan parameter melalui kontrol yang tersedia atau drag-and-drop jika didukung input aktif. Gunakan nama parameter persis dari editor; jangan mengarang variable atau memasukkan secret.
+
+Parameter dan data form tidak mengubah permission. Tautan masih memerlukan sesi/verifikasi yang sah. Kurangi data pribadi dalam email/WhatsApp; isi dokumen tidak otomatis menjadi lampiran notifikasi.
+
+## Event
+Template dapat disiapkan untuk pengajuan diterima, tugas siap diperiksa, node approved/rejected, need revision, SLA expire, workflow selesai dan signing selesai sesuai binding event yang tersedia. Verifikasi binding/kategori dan versi template yang dipakai; menyimpan desain tidak dengan sendirinya membuktikan pengiriman event produksi.
+
+## Preview dan HTML
+Gunakan **Preview** sebelum Save. Jika mengimpor HTML, periksa ulang hasil sanitasi, URL, gambar dan parameter. Tidak semua HTML/CSS web kompatibel dengan email. Script tidak boleh dijalankan. Uji pada inbox yang Anda kendalikan sebelum mengaktifkan untuk pengguna.

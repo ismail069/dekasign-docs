@@ -1,0 +1,20 @@
+---
+title: "Ketersediaan dan batas rilis"
+description: "Pisahkan penggunaan aplikasi dari fitur tertunda atau bergantung provider."
+---
+## Tersedia menurut konfigurasi rilis
+Form Builder, kategori/card request, canvas approval serial dengan Rule AND/OR, Sandbox, review/revisi dokumen, delegasi, template email, kanal terkonfigurasi, dan Native Document Sign adalah permukaan aplikasi yang didokumentasikan. Izin, versi dan konfigurasi tetap menentukan akses.
+
+## Tertunda atau belum aktif
+- SSO tidak dikerjakan dalam cakupan saat ini.
+- Grup paralel ALL/ANY memerlukan penerimaan dan aktivasi runtime terpisah.
+- External approval Actor belum diaktifkan untuk penerimaan baru produksi.
+- Management REST API masih sandbox, bukan production API komersial.
+- Checkout live tidak aktif hanya karena halaman paket ada.
+- Segel elektronik bersertifikat, sertifikat signer, trusted timestamp dan layanan KYC eksternal tidak termasuk profil integritas internal.
+
+## Bergantung layanan pelanggan
+WhatsApp/email provider membutuhkan akun, credential, template dan test yang sah. Pengujian kontrak/mock bukan bukti deliverability nyata. Provider accepted bukan delivered/read. Pemulihan backup, provider bounce dan seluruh skenario DR tidak dipresentasikan sebagai sudah terbukti hanya melalui dokumentasi.
+
+## Publikasi
+Rujukan fitur sesuai snapshot source yang dicatat bersama katalog API. Bila panduan tidak sesuai tampilan deployment Anda, periksa versi dan tanyakan tim, jangan melewati guard atau mengaktifkan flag sendiri.

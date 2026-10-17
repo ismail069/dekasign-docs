@@ -1,0 +1,3761 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "DekaSign sandbox and session API",
+    "version": "2026-10-18",
+    "description": "Management endpoints are sandbox-only and may return SANDBOX_API_DISABLED on production hosts. Template authoring and human approval decisions are not machine-key APIs. Session routes are separately authenticated. Responses are intentionally extensible; narrative guides document key fields. This specification does not grant access or enable feature flags."
+  },
+  "servers": [
+    {
+      "url": "https://{workspace}.dekasign.com",
+      "description": "Use the authorized sandbox workspace supplied by your administrator.",
+      "variables": {
+        "workspace": {
+          "default": "your-workspace"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/api/v1/categories": {
+      "get": {
+        "operationId": "get_categories",
+        "summary": "List categories",
+        "tags": [
+          "categories"
+        ],
+        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                25,
+                50,
+                100
+              ],
+              "default": 25
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "archived",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "catalog:read"
+      },
+      "post": {
+        "operationId": "post_categories",
+        "summary": "Create a category only",
+        "tags": [
+          "categories"
+        ],
+        "description": "Required scope: categories:write. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "categories:write",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 100
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 500,
+                    "default": ""
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/categories/{id}": {
+      "get": {
+        "operationId": "get_categories_id",
+        "summary": "Get categories",
+        "tags": [
+          "categories"
+        ],
+        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "catalog:read"
+      }
+    },
+    "/api/v1/request-templates": {
+      "get": {
+        "operationId": "get_request_templates",
+        "summary": "List request-templates",
+        "tags": [
+          "request-templates"
+        ],
+        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                25,
+                50,
+                100
+              ],
+              "default": 25
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "archived",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "catalog:read"
+      }
+    },
+    "/api/v1/request-templates/{id}": {
+      "get": {
+        "operationId": "get_request_templates_id",
+        "summary": "Get request-templates",
+        "tags": [
+          "request-templates"
+        ],
+        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "catalog:read"
+      }
+    },
+    "/api/v1/approval-workflows": {
+      "get": {
+        "operationId": "get_approval_workflows",
+        "summary": "List approval-workflows",
+        "tags": [
+          "approval-workflows"
+        ],
+        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                25,
+                50,
+                100
+              ],
+              "default": 25
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "archived",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "catalog:read"
+      }
+    },
+    "/api/v1/approval-workflows/{id}": {
+      "get": {
+        "operationId": "get_approval_workflows_id",
+        "summary": "Get approval-workflows",
+        "tags": [
+          "approval-workflows"
+        ],
+        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "catalog:read"
+      }
+    },
+    "/api/v1/request-forms": {
+      "get": {
+        "operationId": "get_request_forms",
+        "summary": "List request-forms",
+        "tags": [
+          "request-forms"
+        ],
+        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                25,
+                50,
+                100
+              ],
+              "default": 25
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "archived",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "catalog:read"
+      }
+    },
+    "/api/v1/request-forms/{id}": {
+      "get": {
+        "operationId": "get_request_forms_id",
+        "summary": "Get request-forms",
+        "tags": [
+          "request-forms"
+        ],
+        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "catalog:read"
+      }
+    },
+    "/api/v1/document-sign-templates": {
+      "get": {
+        "operationId": "get_document_sign_templates",
+        "summary": "List document-sign-templates",
+        "tags": [
+          "document-sign-templates"
+        ],
+        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                25,
+                50,
+                100
+              ],
+              "default": 25
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "archived",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "catalog:read"
+      }
+    },
+    "/api/v1/document-sign-templates/{id}": {
+      "get": {
+        "operationId": "get_document_sign_templates_id",
+        "summary": "Get document-sign-templates",
+        "tags": [
+          "document-sign-templates"
+        ],
+        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "catalog:read"
+      }
+    },
+    "/api/v1/categories/{id}/archive": {
+      "post": {
+        "operationId": "post_categories_id_archive",
+        "summary": "Archive unused categories",
+        "tags": [
+          "categories"
+        ],
+        "description": "Required scope: categories:write. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "categories:write",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/approval-workflows/{id}/archive": {
+      "post": {
+        "operationId": "post_approval_workflows_id_archive",
+        "summary": "Archive unused approval-workflows",
+        "tags": [
+          "approval-workflows"
+        ],
+        "description": "Required scope: workflows:archive. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "workflows:archive",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/request-forms/{id}/archive": {
+      "post": {
+        "operationId": "post_request_forms_id_archive",
+        "summary": "Archive unused request-forms",
+        "tags": [
+          "request-forms"
+        ],
+        "description": "Required scope: workflows:archive. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "workflows:archive",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/approval-workflows/{id}/releases/{release}/submission-schema": {
+      "get": {
+        "operationId": "get_approval_workflows_id_releases_release_submission_schema",
+        "summary": "Read pinned release schema",
+        "tags": [
+          "approval-workflows"
+        ],
+        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "release",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "catalog:read"
+      }
+    },
+    "/api/v1/document-sign-templates/{id}/content": {
+      "get": {
+        "operationId": "get_document_sign_templates_id_content",
+        "summary": "Read source PDF",
+        "tags": [
+          "document-sign-templates"
+        ],
+        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Private PDF bytes.",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "catalog:read"
+      }
+    },
+    "/api/v1/approval-requests": {
+      "get": {
+        "operationId": "get_approval_requests",
+        "summary": "List app requests",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Required scope: requests:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                25,
+                50,
+                100
+              ],
+              "default": 25
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "requests:read"
+      },
+      "post": {
+        "operationId": "post_approval_requests",
+        "summary": "Submit a request",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Required scope: requests:create. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "requests:create",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workflow_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "workflow_release_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 160
+                  },
+                  "external_id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_.:-]{3,120}$"
+                  },
+                  "form_data": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "documents": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "document_id": {
+                          "type": "string"
+                        },
+                        "field_key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "sign_actor_ids": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 20
+                        }
+                      },
+                      "required": [
+                        "document_id",
+                        "field_key",
+                        "name"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 20
+                  },
+                  "submit": {
+                    "type": "boolean",
+                    "default": true
+                  }
+                },
+                "required": [
+                  "workflow_id",
+                  "workflow_release_id",
+                  "external_id",
+                  "form_data"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/approval-requests/{id}": {
+      "get": {
+        "operationId": "get_approval_requests_id",
+        "summary": "Read request status and visited steps",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Required scope: requests:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "requests:read"
+      }
+    },
+    "/api/v1/approval-requests/{id}/revision-requirements": {
+      "get": {
+        "operationId": "get_approval_requests_id_revision_requirements",
+        "summary": "Read active revision requirements",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Required scope: requests:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "requests:read"
+      }
+    },
+    "/api/v1/approval-requests/{id}/revision-draft": {
+      "patch": {
+        "operationId": "patch_approval_requests_id_revision_draft",
+        "summary": "Save revision draft",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Required scope: requests:revise. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "requests:revise",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expected_version": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "expected_task_version": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "form_data": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "documents": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "document_id": {
+                          "type": "string"
+                        },
+                        "field_key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "sign_actor_ids": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 20
+                        }
+                      },
+                      "required": [
+                        "document_id",
+                        "field_key",
+                        "name"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 20
+                  }
+                },
+                "required": [
+                  "expected_version",
+                  "expected_task_version",
+                  "form_data"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/approval-requests/{id}/resubmit": {
+      "post": {
+        "operationId": "post_approval_requests_id_resubmit",
+        "summary": "Resubmit revision",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Required scope: requests:revise. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "requests:revise",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expected_version": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "expected_task_version": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "form_data": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "documents": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "document_id": {
+                          "type": "string"
+                        },
+                        "field_key": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "sign_actor_ids": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 20
+                        }
+                      },
+                      "required": [
+                        "document_id",
+                        "field_key",
+                        "name"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 20
+                  }
+                },
+                "required": [
+                  "expected_version",
+                  "expected_task_version",
+                  "form_data"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/documents": {
+      "get": {
+        "operationId": "get_documents",
+        "summary": "List app documents",
+        "tags": [
+          "documents"
+        ],
+        "description": "Required scope: documents:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                25,
+                50,
+                100
+              ],
+              "default": 25
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "documents:read"
+      },
+      "post": {
+        "operationId": "post_documents",
+        "summary": "Upload one PDF",
+        "tags": [
+          "documents"
+        ],
+        "description": "Required scope documents:write. One PDF, maximum 25 MB and 1–200 pages. Sandbox only.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "documents:write",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "logicalPurpose": {
+                    "type": "string",
+                    "enum": [
+                      "ATTACHMENT",
+                      "SIGNATURE_TARGET"
+                    ],
+                    "default": "ATTACHMENT"
+                  }
+                },
+                "required": [
+                  "file"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/documents/{id}": {
+      "get": {
+        "operationId": "get_documents_id",
+        "summary": "Read document metadata",
+        "tags": [
+          "documents"
+        ],
+        "description": "Required scope: documents:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "documents:read"
+      },
+      "delete": {
+        "operationId": "delete_documents_id",
+        "summary": "Delete unused document",
+        "tags": [
+          "documents"
+        ],
+        "description": "Required scope: documents:delete. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "documents:delete",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/documents/{id}/session": {
+      "post": {
+        "operationId": "post_documents_id_session",
+        "summary": "Create one-hour hosted editor session",
+        "tags": [
+          "documents"
+        ],
+        "description": "Required scope: documents:write. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "documents:write",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "purpose": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 120,
+                    "default": "Prepare Instance"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/signature-packages": {
+      "get": {
+        "operationId": "get_signature_packages",
+        "summary": "List app signing packages",
+        "tags": [
+          "signature-packages"
+        ],
+        "description": "Required scope: packages:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                25,
+                50,
+                100
+              ],
+              "default": 25
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "archived",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "packages:read"
+      },
+      "post": {
+        "operationId": "post_signature_packages",
+        "summary": "Send confirmed preview",
+        "tags": [
+          "signature-packages"
+        ],
+        "description": "Required scope: packages:create. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "packages:create",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "template_id": {
+                    "type": "string"
+                  },
+                  "preview_token": {
+                    "type": "string"
+                  },
+                  "confirmed": {
+                    "type": "boolean",
+                    "enum": [
+                      true
+                    ]
+                  }
+                },
+                "required": [
+                  "template_id",
+                  "preview_token",
+                  "confirmed"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/signature-packages/{id}": {
+      "get": {
+        "operationId": "get_signature_packages_id",
+        "summary": "Read signing package",
+        "tags": [
+          "signature-packages"
+        ],
+        "description": "Required scope: packages:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "packages:read"
+      }
+    },
+    "/api/v1/signature-packages/preview": {
+      "post": {
+        "operationId": "post_signature_packages_preview",
+        "summary": "Prepare frozen signing preview",
+        "tags": [
+          "signature-packages"
+        ],
+        "description": "Required scope: packages:create. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "packages:create",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "template_id": {
+                    "type": "string"
+                  },
+                  "expires_in_days": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 365
+                  },
+                  "sender_values": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "maxLength": 4000
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        }
+                      ]
+                    }
+                  },
+                  "signers": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "slot_id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 2,
+                          "maxLength": 100
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "phone": {
+                          "type": "string",
+                          "maxLength": 30
+                        },
+                        "recipient_kind": {
+                          "type": "string",
+                          "enum": [
+                            "internal",
+                            "external"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "slot_id",
+                        "name",
+                        "email"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "template_id",
+                  "expires_in_days",
+                  "signers"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/signature-packages/preview/document": {
+      "post": {
+        "operationId": "post_signature_packages_preview_document",
+        "summary": "Render populated preview PDF",
+        "tags": [
+          "signature-packages"
+        ],
+        "description": "Required scope: packages:create. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Private PDF bytes.",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "packages:create",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "template_id": {
+                    "type": "string"
+                  },
+                  "preview_token": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "template_id",
+                  "preview_token"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/signature-packages/{id}/archive": {
+      "post": {
+        "operationId": "post_signature_packages_id_archive",
+        "summary": "Archive terminal package",
+        "tags": [
+          "signature-packages"
+        ],
+        "description": "Required scope: packages:archive. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "packages:archive",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/hosted-editor/{sessionId}/commands": {
+      "get": {
+        "operationId": "get_hosted_editor_sessionId_commands",
+        "summary": "Read hosted editor state",
+        "tags": [
+          "hosted-editor"
+        ],
+        "description": "Not an integration-key endpoint. Requires the dedicated session/identity flow described in the guide.",
+        "security": [],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Opaque secret session credential; do not log."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        }
+      },
+      "post": {
+        "operationId": "post_hosted_editor_sessionId_commands",
+        "summary": "Save or complete hosted layout",
+        "tags": [
+          "hosted-editor"
+        ],
+        "description": "Opaque session credential in path. Idempotency-Key header or body idempotencyKey is required by command execution. Layout follows the server document layout schema; bearer app key is not accepted as this session.",
+        "security": [],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Opaque secret session credential; do not log."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "SAVE_LAYOUT",
+                      "COMPLETE"
+                    ]
+                  },
+                  "expectedVersion": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "layout": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "idempotencyKey": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "expectedVersion",
+                  "layout"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/hosted-editor/{sessionId}/document": {
+      "get": {
+        "operationId": "get_hosted_editor_sessionId_document",
+        "summary": "Read hosted PDF",
+        "tags": [
+          "hosted-editor"
+        ],
+        "description": "Not an integration-key endpoint. Requires the dedicated session/identity flow described in the guide.",
+        "security": [],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Opaque secret session credential; do not log."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Private PDF bytes.",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        }
+      }
+    },
+    "/api/v1/guest/auth": {
+      "post": {
+        "operationId": "post_guest_auth",
+        "summary": "Request or verify recipient OTP",
+        "tags": [
+          "guest"
+        ],
+        "description": "Not an integration-key endpoint. Requires the dedicated session/identity flow described in the guide.",
+        "security": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "action": {
+                        "type": "string",
+                        "enum": [
+                          "request_otp"
+                        ]
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email"
+                      },
+                      "requestId": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "action",
+                      "email",
+                      "requestId"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "action": {
+                        "type": "string",
+                        "enum": [
+                          "verify_otp"
+                        ]
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email"
+                      },
+                      "requestId": {
+                        "type": "string"
+                      },
+                      "code": {
+                        "type": "string",
+                        "pattern": "^[0-9]{6}$"
+                      }
+                    },
+                    "required": [
+                      "action",
+                      "email",
+                      "requestId",
+                      "code"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/signing/{id}/document": {
+      "get": {
+        "operationId": "get_signing_id_document",
+        "summary": "Read recipient-authorized PDF",
+        "tags": [
+          "signing"
+        ],
+        "description": "Not an integration-key endpoint. Requires the dedicated session/identity flow described in the guide.",
+        "security": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Private PDF bytes.",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        }
+      }
+    },
+    "/api/v1/requests": {
+      "get": {
+        "operationId": "get_requests",
+        "summary": "Retired request endpoint",
+        "tags": [
+          "requests"
+        ],
+        "description": "Not an integration-key endpoint. Requires the dedicated session/identity flow described in the guide.",
+        "security": [],
+        "parameters": [],
+        "responses": {
+          "410": {
+            "description": "ENDPOINT_RETIRED; use /approval-requests."
+          }
+        },
+        "deprecated": true
+      },
+      "post": {
+        "operationId": "post_requests",
+        "summary": "Retired request endpoint",
+        "tags": [
+          "requests"
+        ],
+        "description": "Not an integration-key endpoint. Requires the dedicated session/identity flow described in the guide.",
+        "security": [],
+        "parameters": [],
+        "responses": {
+          "410": {
+            "description": "ENDPOINT_RETIRED; use /approval-requests."
+          }
+        },
+        "deprecated": true
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "SandboxBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Sandbox dks_test_ key, server-side only."
+      }
+    }
+  }
+}

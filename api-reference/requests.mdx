@@ -1,0 +1,39 @@
+---
+title: "Submit, status dan revisi request"
+description: "Versi rilis dan concurrency guard pengajuan ulang."
+---
+
+## Submit
+`POST /api/v1/approval-requests` memerlukan `requests:create` dan idempotency key.
+
+```json
+{
+  "workflow_id":"workflow-id",
+  "workflow_release_id":"workflow-id@3",
+  "external_id":"purchase-20261018-001",
+  "form_data":{"amount":7500000},
+  "documents":[{"document_id":"uploaded-id","field_key":"proposal","name":"proposal.pdf","sign_actor_ids":["actor-id"]}],
+  "submit":true
+}
+```
+
+ID/key contoh harus diganti dari katalog/schema. `external_id` unik per app, 3–120 karakter huruf/angka, titik, garis bawah, titik dua atau minus. `documents` opsional, harus PDF milik app yang dipetakan ke field file.
+
+`sign_actor_ids` opsional, hanya menunjuk Actor internal sah ketika workflow menerima signing per dokumen. Jalur API memakai **digital approval only**, tanpa gambar tanda tangan visual. Rilis stale, izin kurang dan runtime belum didukung ditolak.
+
+## Status
+`GET /approval-requests` mendukung `q`, `status`, `page`, `size`. `GET /approval-requests/{id}` memberi detail. Keduanya membutuhkan `requests:read` dan hanya menampilkan request milik app.
+
+Detail mencakup status, `version`, `request_revision`, versi form/workflow, data, langkah yang dikunjungi, SLA/waktu dan keputusan. `remaining_approval_layers` saat aktif dapat bergantung pada Rule, bukan kepastian semua cabang dilewati.
+
+## Revisi
+Ambil `GET /approval-requests/{id}/revision-requirements` ketika NEEDS_REVISION. `PATCH /approval-requests/{id}/revision-draft` menyimpan dan `POST /approval-requests/{id}/resubmit` mengajukan ulang. Gunakan `requests:revise`, idempotency key dan versi terbaru:
+
+```json
+{"expected_version":4,"expected_task_version":2,"form_data":{"amount":7000000}}
+```
+
+`documents` opsional. Hanya requester app dengan tugas revisi aktif berwenang yang dapat mengubahnya. Pada konflik, baca ulang dan tinjau perubahan; jangan memaksa versi tebakan.
+
+`/api/v1/requests` pensiun (`410 ENDPOINT_RETIRED`). Tidak ada endpoint API key untuk approve/reject sebagai manusia.
+

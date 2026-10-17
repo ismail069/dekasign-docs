@@ -1,0 +1,41 @@
+---
+title: "Preview dan kirim paket tanda tangan"
+description: "Receipt mengikat template, nilai, penerima dan expiry."
+---
+
+Desain template di platform dan izinkan pada app. API key tidak mengisi consent atas nama penerima.
+
+## Preview
+`POST /api/v1/signature-packages/preview` membutuhkan `packages:create`.
+
+```json
+{
+  "template_id":"template-id",
+  "expires_in_days":3,
+  "sender_values":{"employee_name":"Nama contoh","employee_number":"EMP-001"},
+  "signers":[{"slot_id":"slot-id","name":"Penerima contoh","email":"recipient@example.com","phone":"+6281234567890","recipient_kind":"external"}]
+}
+```
+
+Expiry wajib 1–365 hari; slot sesuai desain, 1–20 penerima. Penerima eksternal membutuhkan email/telepon valid. Uji hanya alamat yang Anda kuasai.
+
+Respons memuat `preview_token`, versi dan `prepared_pdf`. `pdf_url_is_source:true` berarti `pdf_url` adalah sumber, bukan preview terisi.
+
+## Periksa lalu send
+POST `/signature-packages/preview/document` dengan `template_id` dan `preview_token` untuk PDF terisi. Tampilkan PDF, nilai, penerima dan expiry kepada pengirim. Receipt berlaku 10 menit dan terikat konteks.
+
+Setelah pengirim mengonfirmasi, `POST /signature-packages` dengan `packages:create`, idempotency key dan:
+
+```json
+{"template_id":"template-id","preview_token":"receipt-dari-preview","confirmed":true}
+```
+
+Send memakai snapshot preview, bukan fetch REST ulang. Perubahan memerlukan preview baru. `201` dan `invitation_status:"queued"` berarti antrean, bukan bukti email delivered atau consent selesai.
+
+## Status dan archive
+`GET /signature-packages` mendukung `q`, `status`, `archived=only`, pagination. Detail `GET /signature-packages/{id}`. Keduanya `packages:read`.
+
+`POST /signature-packages/{id}/archive` memakai `packages:archive`, alasan 5–500 karakter, idempotency key. Paket harus terminal; paket aktif ditolak `PACKAGE_NOT_CLOSED`. Bukti dipertahankan.
+
+Profil `internal_dekasign` bukan sertifikat PSrE atau trusted timestamp.
+

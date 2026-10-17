@@ -1,0 +1,20 @@
+---
+title: "Hosted editor dan session penerima"
+description: "Credential editor terpisah dari API key dan identitas penerima."
+---
+
+`POST /api/v1/documents/{id}/session` memerlukan `documents:write` dan dokumen milik app. `purpose` opsional, 3–120 karakter. Session berlaku satu jam.
+
+Credential opaque pada path `{sessionId}` bersifat rahasia. Jangan masukkan ke analytics/log atau memperlakukannya sebagai key permanen.
+
+- `GET /api/v1/hosted-editor/{sessionId}/commands`: layout, versi, purpose, expiry.
+- `GET /api/v1/hosted-editor/{sessionId}/document`: PDF privat.
+- `POST /api/v1/hosted-editor/{sessionId}/commands`: `type` SAVE_LAYOUT/COMPLETE, `expectedVersion`, `layout`, idempotency key melalui header atau body `idempotencyKey`.
+
+Layout divalidasi server; konflik versi memerlukan baca ulang. Session expired ditolak. Editor tidak memberi hak menandatangani.
+
+## Session penerima
+`POST /api/v1/guest/auth` bukan machine-key endpoint. Request OTP memakai `action:"request_otp"`, `email`, `requestId`. Verifikasi memakai `action:"verify_otp"`, konteks sama, `code` enam digit dari kanal resmi.
+
+Jangan mengambil OTP dari log/database/respons development untuk mengaku sebagai penerima. `GET /api/v1/signing/{id}/document` memerlukan session member/guest yang berwenang, bukan Bearer app key. Gunakan UI resmi untuk consent dan penandatanganan.
+

@@ -1,55 +1,34 @@
-# Mintlify Starter Kit
+# DekaSign documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+Public user guides and developer reference for https://docs.dekasign.com, maintained from the DekaSign application source. The connected Mintlify project is `deka-sign/deka-sign`; pushes to `ismail069/dekasign-docs` branch `main` deploy automatically.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+## Content
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
-
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
-
-## AI-assisted writing
-
-Set up your AI coding tool to work with Mintlify:
-
-```bash
-npx skills add https://mintlify.com/docs
-```
-
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
-
-See the [AI tools guides](/ai-tools) for tool-specific setup.
+- 17 product guides cover onboarding, roles/settings, email/WhatsApp, Email Studio, categories, Form Builder, canvas/Sandbox, request/revision/delegation and Document Sign.
+- 9 developer/integration guides explain sandbox keys, catalog/versions, request/revision, PDF upload, preview/send, session authentication, errors and outgoing webhooks.
+- `openapi.json` covers all 40 HTTP methods found in the application's 33 v1 route files. Human-session and retired routes are labelled separately. Read responses are extensible rather than pretending every response has the same schema.
+- Availability gates are explicit: SSO deferred, ALL/ANY and external approval admission not active, management API sandbox-only, certified seal not provided.
 
 ## Development
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
+Use Node 20.17+ and the official Mintlify CLI:
 
-```
-npm i -g mint
-```
-
-Run the following command at the root of your documentation, where your `docs.json` is located:
-
-```
-mint dev
+```bash
+npm install -g mint
+mint dev --no-open --port 3188
+mint validate
+mint broken-links
+node scripts/verify-docs.mjs
 ```
 
-View your local preview at `http://localhost:3000`.
+The source-parity check expects the app in sibling `../dekasign-app`, or use `DEKASIGN_APP_SOURCE` with the app checkout path. Regenerate the reviewed specification with `node scripts/generate-openapi.mjs`. Review command schemas against source whenever endpoints change; generation is not runtime proof.
 
-## Publishing changes
+## Publishing and security
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+No secret, API token, OTP, production customer file or private signing URL belongs in this repository. API playground is disabled to discourage entering secrets in a public browser reference. Use only an authorized sandbox with synthetic data for examples.
 
-## Need help?
+The public site uses halo@dekasign.com. DekaSign integrity evidence is internal, not a certified electronic seal or trusted timestamp. Documentation does not enable feature flags or constitute successful production acceptance.
 
-### Troubleshooting
+Legal content is published by the application, not duplicated here: https://dekasign.com/id/privacy and https://dekasign.com/id/terms. Authoritative legal text is Indonesian.
 
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
-
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+Reviewed 18 October 2026 against application source `99f3cbe4` plus the accompanying public-site/documentation change. Verify current deployed version before relying on a newly described UI feature.

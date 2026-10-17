@@ -1,0 +1,34 @@
+---
+title: "Authentication dan idempotency"
+description: "Key server-side, scope dan retry aman."
+---
+
+Owner mengelola key di **Settings → Workspace API keys** atau integration app. Pilih requester aktif, scope, allowlist kategori/template dan expiry minimum. Simpan key di secret manager server, bukan frontend, URL, Git, screenshot atau log.
+
+```http
+Authorization: Bearer <sandbox-api-key>
+X-Dekasign-Environment: sandbox
+```
+
+Key sandbox berawalan `dks_test_`. Server memeriksa status key/app/requester, expiry, organisasi, host tenant, izin kategori, allowlist, scope dan rate limit. Key tidak melewati izin requester.
+
+| Scope | Kegunaan |
+| --- | --- |
+| `catalog:read` | Katalog kategori/form/workflow/template |
+| `categories:write` | Kelola kategori dengan kewenangan pengelola |
+| `workflows:archive` | Archive workflow/form tanpa penggunaan aktif |
+| `requests:create`, `requests:read`, `requests:revise` | Submit, baca dan revisi request milik app |
+| `documents:read`, `documents:write`, `documents:delete` | Dokumen milik app |
+| `packages:read`, `packages:create`, `packages:archive` | Paket tanda tangan milik app |
+
+## Idempotency
+Command submit, revisi, resubmit, upload, archive dan delete memerlukan `Idempotency-Key`, 8–160 karakter ASCII printable. Gunakan key baru per maksud operasi; simpan bersama payload sebelum kirim.
+
+```http
+Idempotency-Key: procurement-20261018-001
+```
+
+Retry memakai key dan payload identik. Payload berbeda dengan key sama menghasilkan konflik. Jangan ganti key setiap timeout sebelum memeriksa hasil awal. Preview, hosted session dan OTP memiliki kontrak berbeda.
+
+API key tidak dapat memberi consent, melewati OTP atau menandatangani sebagai penerima.
+

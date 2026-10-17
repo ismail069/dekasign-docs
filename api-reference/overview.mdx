@@ -1,0 +1,22 @@
+---
+title: "API overview"
+description: "Kontrak sandbox sesuai source DekaSign."
+---
+
+<Warning>Management API hanya menerima lingkungan sandbox. Host produksi dapat menonaktifkannya dengan `503 SANDBOX_API_DISABLED`. Ini bukan pengumuman API produksi komersial.</Warning>
+
+API menyediakan katalog, pengajuan, dokumen, paket tanda tangan dan status. Desain Form Builder, Approval Workflow dan template Document Sign tetap dibuat manual di platform. API key tidak memberi hak memutuskan sebagai approver.
+
+Gunakan base URL workspace yang diberikan administrator dengan prefix `/api/v1`. [Authentication](/api-reference/authentication) menjelaskan key, scope dan allowlist. Sandbox dapat membuat record serta antrean pada workspace uji; gunakan data sintetis, bukan asumsi simulasi tanpa efek.
+
+## Alur integrasi
+1. Baca katalog dan versi rilis aktif.
+2. Ambil submission schema dari rilis tersebut.
+3. Upload PDF jika perlu dan simpan ID dokumennya.
+4. Submit dengan versi tetap, external ID unik dan idempotency key.
+5. Baca status atau terima [outgoing webhook](/integrations/outgoing-webhooks).
+
+Daftar memakai `page` mulai 1 dan `size` 25, 50 atau 100 (default 25). Respons menggunakan `data` dan `pagination`: `page`, `size`, `total`, `pages`. Filter berbeda per endpoint.
+
+Unduh [OpenAPI](/openapi.json). Source ditinjau 18 Oktober 2026 pada aplikasi `99f3cbe4`; deployment dan feature flag menentukan ketersediaan. Lihat [availability](/guides/availability).
+

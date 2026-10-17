@@ -1,0 +1,22 @@
+---
+title: "Data dinamis dan REST lookup dokumen"
+description: "Test response, mapping field dan nilai sebelum Send."
+---
+## Desain field
+Buat field pada PDF dan pilih Filled by Sender untuk nilai yang harus disiapkan sebelum dikirim. Tanpa REST data source, form persiapan meminta isian manual. Pilih Template designer untuk nilai tetap; Approver untuk isian saat signing.
+
+## Konfigurasi data source
+Aktifkan **REST data source** bila data berasal dari sistem Anda. Pilih endpoint terkonfigurasi dan autentikasi yang aman. Tentukan input lookup seperti employee_number dan JSON body yang memakainya. Endpoint hanya HTTPS publik, bukan host privat.
+
+Jalankan Test dengan nilai sintetis. Hasil response bertipe sederhana ditawarkan sebagai response variables. Petakan setiap Sender field ke path hasil yang diuji, bukan nama field tebakan. Place & Date mempunyai pemetaan tempat dan tanggal terpisah.
+
+## Fetch saat persiapan
+Pada Prepare & Send, isi input lookup, tekan Fetch, lalu periksa hasil. Respons yang diverifikasi dibekukan dalam preview; Send tidak memanggil ulang API dan mengambil nilai yang mungkin berubah. Preview mempunyai batas waktu serta terikat template/version/konteks.
+
+Perubahan endpoint, konfigurasi, scope, versi, atau token kedaluwarsa dapat menolak penggunaan hasil lama. Test tidak otomatis mengizinkan akses ke semua endpoint. Jangan memasukkan credential pada input lookup.
+
+## Bila REST dimatikan
+Sender fields kembali diisi manual sebelum preview. Required tetap divalidasi. Field Approver tidak menjadi Sender hanya karena API dimatikan, dan parameter recipient tidak boleh disisipkan lewat response API.
+
+## Batas
+Response dan payload dibatasi ukuran, kedalaman dan tipe data. HTML/objek kompleks tidak otomatis menjadi teks yang aman; petakan scalar yang sesuai. Nilai yang tidak muat pada area PDF harus diperbaiki ukuran/isinya, bukan dipotong diam-diam.

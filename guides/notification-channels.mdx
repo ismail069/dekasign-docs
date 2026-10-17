@@ -1,0 +1,35 @@
+---
+title: "Kanal email dan WhatsApp"
+description: "Konfigurasi, test, aktivasi dan pemilihan kanal."
+---
+## Prinsip routing
+Email wajib sebagai baseline approval dan Document Sign. Gunakan email DekaSign atau email organisasi sendiri. WhatsApp hanya tambahan. Untuk default organisasi, DekaSign merupakan fallback bila pengiriman custom email gagal atau kegagalan diketahui sistem. Tidak semua bounce dapat diketahui; accepted bukan delivered/read.
+
+Pilihan **custom email** eksplisit pada Actor mematikan email DekaSign untuk node tersebut, termasuk fallback Actor itu. OTP/security tetap memakai kanal platform tepercaya. Jika ingin fallback default organisasi, jangan memilih override Actor tanpa memahami dampaknya.
+
+## Membuat SMTP
+Owner membuka **Notification channels**, memilih **Add channel / SMTP**, memberi nama dan mengisi:
+| Field | Contoh non-secret |
+|---|---|
+| SMTP_HOST | smtp.example.com |
+| SMTP_PORT | 465 atau 587 |
+| SMTP_SECURE | true untuk 465; false dengan STARTTLS wajib untuk 587 |
+| SMTP_USER | notifications@example.com |
+| SMTP_PASSWORD | Masukkan secret di form, jangan di dokumentasi |
+| SMTP_FROM_NAME | Nama organisasi |
+| SMTP_FROM_EMAIL | notifications@example.com |
+
+Simpan, kirim test ke inbox yang Anda kendalikan, periksa hasil, lalu aktifkan. Mengubah konfigurasi menghapus status teruji/aktif. Port 25, TLS yang dimatikan dan host privat tidak didukung oleh pengaturan aman ini.
+
+## WhatsApp
+Pilih kartu **WatZap**, **Convia**, **Wati**, **Bird**, atau REST umum. Masukkan akun/credential provider, identitas pengirim, template/language/variabel yang disetujui provider, dan nomor tujuan berformat kode negara. Konfigurasikan pemetaan, test ke nomor yang sah, lalu aktifkan.
+
+Provider mempunyai biaya, persetujuan template dan aturan pesan sendiri. Dokumentasi konektor tidak berarti template Anda sudah disetujui. Rilis tidak menjanjikan semua provider telah diuji dengan akun nyata.
+
+## REST umum dan Bird email
+Pilih jenis **Email** atau **WhatsApp**, beri nama, masukkan endpoint HTTPS publik, metode autentikasi, header dan JSON body. Petakan tujuan ke parameter email atau phone yang tepat dan pesan ke message body. Gunakan parameter yang ditawarkan UI; jangan mengirim seluruh data pelanggan tanpa kebutuhan.
+
+Endpoint harus HTTPS, tanpa host privat atau secret di URL. Simpan credential di field khusus. Test harus diterima sebelum aktivasi. Lihat [integrasi dan webhook](/integrations/outgoing-webhooks).
+
+## Memantau
+Gunakan **Delivery logs** untuk status, retry dan error yang disamarkan. Periksa alamat, izin provider, template dan kuota bila gagal. Jangan mengirim ulang secara manual tanpa mengecek deduplikasi.

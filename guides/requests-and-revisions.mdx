@@ -1,0 +1,26 @@
+---
+title: "Submit, status, dan revisi pengajuan"
+description: "Alur requester dan approver dari card kategori sampai selesai."
+---
+## Submit request
+Requester membuka Request Forms/dashboard dan memilih card kategori/form yang diizinkan. Periksa versi, isi field wajib dan tabel dinamis, unggah lampiran, lalu tinjau sebelum Submit. Save draft bukan pengajuan yang sudah diterima.
+
+PDF/PPTX/gambar ditinjau melalui engine platform sesuai dukungan berkas dan converter. Jangan mengunggah data yang tidak perlu. Bila memerlukan signing, aktifkan per dokumen, atur desain signer/input, dan pastikan workflow mendukungnya.
+
+## Membaca status
+Buka **My Requests**, gunakan filter dan pagination, lalu detail request. Riwayat menampilkan node yang telah dikunjungi, keputusan, aktor, datetime dan SLA yang tersedia. Proses aktif menampilkan informasi layer approval yang harus dilalui. Riwayat bukan daftar semua kemungkinan cabang seolah semuanya telah dijalankan.
+
+## Tindakan approver
+Buka **My Approvals**, pilih tugas, baca form/lampiran dan catatan. Gunakan reviewer untuk anotasi/note. Pastikan versi yang ditinjau masih terbaru. Approve, Reject, dan Need revision mempunyai makna berbeda; memberi komentar saja tidak mengambil keputusan.
+
+## Bila Need revision
+1. Requester membuka notifikasi atau detail request yang sama.
+2. Baca alasan revisi, catatan dan anotasi approver pada dokumen terkait.
+3. Perbaiki field/lampiran yang diizinkan. Penggantian dokumen dapat memerlukan pengaturan sign ulang.
+4. Simpan bila perlu, tinjau data terbaru, lalu **Resubmit**.
+5. Proses mengikuti rute Revision/Loop yang dikonfigurasi, bukan mengulang semua node secara otomatis.
+
+Batas revisi yang habis tidak mengubah data menjadi Approved. Tindakan final mengikuti kebijakan dan keputusan yang sah. Request Rejected final memerlukan pengajuan baru bila organisasi ingin memulai lagi.
+
+## Sesudah Approved
+Finish Approved merekam hasil approval. Jika terdapat kewajiban signing yang dikonfigurasi, pantau statusnya terpisah. Approved bukan pembayaran vendor, Signed seluruh paket, atau eksekusi sistem eksternal.

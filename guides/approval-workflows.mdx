@@ -1,0 +1,31 @@
+---
+title: "Approval Workflow Engine"
+description: "Canvas, semua node, AND/OR, SLA dan publish."
+---
+## Persiapan
+Buat kategori serta form dan pastikan approver mempunyai kewenangan kategori. Buka **Approval Workflows**, buat workflow, pilih kategori/template, lalu masuk Canvas. Sidebar utama diperkecil untuk workspace.
+
+## Navigasi canvas
+Gunakan pan pada latar, Zoom, Fit view dan Focus node. Seret header node untuk mengatur posisi; posisi bukan routing. Hubungkan output ke input/target yang benar. Auto layout membantu merapikan, bukan mengganti keputusan bisnis. Gunakan Undo/Redo dan Save sesuai kebutuhan.
+
+## Elemen
+| Node | Fungsi | Pemeriksaan |
+|---|---|---|
+| Start | Memulai pengajuan dengan form | Form/kategori/version harus benar. |
+| Actor | Memberi tugas approver internal | Approver berwenang; approved, rejected, revision dan SLA memiliki routing yang sah. |
+| Rule | Memilih jalur berdasarkan data form | Pilih field/operator/value dari schema. Gabungkan kondisi AND/OR. |
+| Wait | Menahan proses sesuai konfigurasi | Durasi dan jalur berikutnya harus valid. |
+| Notification | Mengantrekan pesan pada alur | Penerima, kanal dan jalur lanjutan harus benar. |
+| Revision | Membuka pekerjaan perbaikan | Batas dan target kembali jelas. |
+| Loop | Kembali ke tugas sesuai pola yang didukung | Bukan loop bebas/tanpa batas. |
+| Finish | Hasil akhir Approved atau Rejected | Jalur final tidak disamakan dengan selesainya seluruh signing. |
+
+Rule memakai field form, bukan kode bebas. Jalur approved berwarna hijau; output Rule memiliki warna berbeda. Need revision dan SLA dipisahkan secara visual pada Actor.
+
+## Kebijakan Actor
+Tentukan approver, SLA, delegasi, batas revisi dan kanal. Default email DekaSign; custom email eksplisit menonaktifkan email DekaSign pada node itu. WhatsApp add-on memerlukan channel aktif dan pemetaan tujuan.
+
+## Validasi dan Sandbox
+Jalankan Validate, perbaiki koneksi/otoritas yang salah, lalu [uji Sandbox](/guides/sandbox). Save menyimpan rancangan; Publish membuat versi alur untuk request baru. Drag node tidak boleh memutus konektor atau mengubah policy.
+
+<Warning>Parallel ALL/ANY dan penerimaan baru external Actor belum diaktifkan di produksi. External signer Document Sign berbeda dari external approval Actor. Jangan menganggap node draft yang dapat digambar sudah dapat dieksekusi.</Warning>

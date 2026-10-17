@@ -1,0 +1,25 @@
+---
+title: "Form Builder"
+description: "Field umum, tanggal/waktu, tabel dinamis dan lampiran."
+---
+## Susun formulir
+Buka **Request templates**, buat template bernama jelas, lalu tambahkan elemen dari palette. Pilih field untuk mengatur label, helper text, required, validasi dan pilihan. Gunakan Preview untuk mencoba isian sebelum menyimpan versi.
+
+Field key dipertahankan saat label berubah. Key dipakai oleh Rule dan API; jangan menganggap label yang terlihat adalah nama parameter API.
+
+## Jenis field
+Gunakan text/multiline untuk uraian, integer/decimal untuk angka, select/multiple choice/checkbox untuk pilihan, date untuk tanggal, file untuk lampiran, dan dynamic table untuk baris berulang. Set kondisi visibilitas berdasarkan field yang tersedia dan operator yang sesuai tipenya.
+
+## Tanggal
+Elemen tanggal dapat dikonfigurasi sebagai **Date only** atau **Date & time**. Periksa format dan konteks zona waktu pada isian sebelum Submit; jangan menyamakan tampilan tanggal dengan timestamp keputusan server.
+
+## Dynamic table
+Tabel dinamis bersifat umum, bukan khusus attendance/lembur. Tambahkan hingga **10 kolom**, tetapkan label/key/tipe/validasi yang tersedia, lalu izinkan requester menambah baris sesuai batas konfigurasi. Contoh: item pengadaan, rincian biaya, daftar hari lembur atau daftar kebutuhan acara.
+
+Coba baris kosong, nilai wajib, angka dan batas jumlah baris saat Preview. Rule tidak boleh memakai ekspresi bebas atau key yang tidak sesuai schema.
+
+## Dokumen
+Gunakan upload field untuk PDF, PPTX atau gambar yang didukung. Periksa batas ukuran/jumlah pada form; batas API upload berbeda dan saat ini PDF saja. Jika suatu dokumen perlu sign, aktifkan opsi per dokumen pada pengajuan dan desain field/penerima menurut alur yang didukung.
+
+## Setelah Save
+Simpan versi baru, buka workflow yang memakai template, periksa Rule dan Validate lagi. Publish mengikat versi form/workflow untuk request baru. Uji dengan data sintetis sebelum digunakan organisasi.

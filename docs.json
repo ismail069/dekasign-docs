@@ -1,72 +1,119 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "DekaSign",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#1463FF",
+    "light": "#4B88FF",
+    "dark": "#0050D8"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/images/favicon-dekasign.png",
+  "logo": {
+    "light": "/images/logo-dekasign.png",
+    "dark": "/images/logo-dekasign.png",
+    "href": "https://dekasign.com"
+  },
   "navigation": {
-    "pages": [
+    "tabs": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
+        "tab": "Panduan",
+        "groups": [
+          {
+            "group": "Mulai",
+            "pages": [
+              "index",
+              "quickstart",
+              "guides/accounts-and-roles",
+              "guides/settings",
+              "guides/availability"
+            ]
+          },
+          {
+            "group": "Komunikasi",
+            "pages": [
+              "guides/notification-channels",
+              "guides/email-studio"
+            ]
+          },
+          {
+            "group": "Approval Workflow",
+            "pages": [
+              "guides/categories-and-forms",
+              "guides/form-builder",
+              "guides/approval-workflows",
+              "guides/sandbox",
+              "guides/requests-and-revisions",
+              "guides/delegation",
+              "guides/workflow-signing"
+            ]
+          },
+          {
+            "group": "Document Sign",
+            "pages": [
+              "guides/document-sign",
+              "guides/document-data"
+            ]
+          },
+          {
+            "group": "Operasional",
+            "pages": [
+              "guides/operations"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Developers",
+        "groups": [
+          {
+            "group": "API sandbox",
+            "pages": [
+              "api-reference/overview",
+              "api-reference/authentication",
+              "api-reference/catalogs",
+              "api-reference/requests",
+              "api-reference/documents",
+              "api-reference/signing",
+              "api-reference/hosted-editor",
+              "api-reference/errors"
+            ]
+          },
+          {
+            "group": "Integrasi",
+            "pages": [
+              "integrations/outgoing-webhooks"
+            ]
+          },
+          {
+            "group": "Endpoint reference",
+            "openapi": "/openapi.json",
+            "expanded": false
+          }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    ]
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:support@mintlify.com"
+        "href": "mailto:halo@dekasign.com"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "label": "Buka DekaSign",
+      "href": "https://dekasign.com/login"
     }
   },
-  "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
-    ]
+  "api": {
+    "playground": {
+      "display": "none"
+    }
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/ismail069/dekasign-docs"
     }
   }
 }

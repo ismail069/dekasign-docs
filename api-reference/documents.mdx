@@ -1,0 +1,28 @@
+---
+title: "Upload dan kelola dokumen"
+description: "PDF app-owned dan perlindungan bukti."
+---
+
+Daftar/detail `GET /api/v1/documents` dan `/documents/{id}` memerlukan `documents:read`. Data dibatasi ke app.
+
+## Upload
+`POST /api/v1/documents` membutuhkan `documents:write`, idempotency key, multipart form-data:
+- `file`: tepat satu PDF, maksimum 25 MB, 1–200 halaman.
+- `logicalPurpose`: `ATTACHMENT` (default) atau `SIGNATURE_TARGET`.
+
+```bash
+curl "$DEKASIGN_BASE_URL/api/v1/documents" \
+  -H "Authorization: Bearer $DEKASIGN_API_KEY" \
+  -H 'X-Dekasign-Environment: sandbox' \
+  -H 'Idempotency-Key: proposal-upload-20261018-001' \
+  -F 'logicalPurpose=ATTACHMENT' \
+  -F 'file=@proposal.pdf;type=application/pdf'
+```
+
+Simpan variabel secret secara aman di server. API ini tidak menerima PPTX/gambar walaupun UI review mendukungnya. Kapasitas penuh dapat menghasilkan `UPLOAD_BUSY` dengan `Retry-After`.
+
+## Delete
+`DELETE /documents/{id}` membutuhkan `documents:delete`, idempotency key dan JSON alasan 5–500 karakter. Hanya dokumen belum dipakai yang memenuhi syarat dapat dihapus; bukti submitted/signed dilindungi.
+
+Untuk layout gunakan [hosted editor](/api-reference/hosted-editor); untuk undangan gunakan [preview dan send](/api-reference/signing).
+

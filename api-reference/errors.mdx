@@ -1,0 +1,25 @@
+---
+title: "Error dan pemulihan"
+description: "Tangani konflik dan retry tanpa duplikasi."
+---
+
+Error umumnya JSON `code`; beberapa jalur juga menyertakan `error`. Jangan bergantung pada kalimat error yang dapat berubah bahasa.
+
+| HTTP | Tindakan |
+| --- | --- |
+| 400/422 | Perbaiki input/schema/idempotency key |
+| 401 | Periksa credential, status dan expiry |
+| 403 | Periksa environment, scope, requester, tenant |
+| 404 | ID tidak ada atau di luar akses app |
+| 409 | Baca ulang versi/status dan penggunaan aktif |
+| 410 | Endpoint pensiun; gunakan approval-requests |
+| 413 | Kurangi ukuran body/file |
+| 408/429 | Retry terbatas; hormati Retry-After |
+| 503 | Periksa sandbox gate/kapasitas, bukan ganti header production |
+
+Kode relevan: `SANDBOX_API_DISABLED`, `ENVIRONMENT_MISMATCH`, `INPUT_INVALID`, `NOT_FOUND`, `WORKFLOW_IN_USE`, `REVISION_NOT_OPEN`, `PACKAGE_NOT_CLOSED`, `UPLOAD_BUSY`.
+
+Command idempotent diulang dengan key dan payload identik setelah timeout. Jangan membuat key baru sebelum mengetahui hasil command awal. Webhook dideduplikasi berdasarkan event ID.
+
+Laporkan waktu, endpoint tanpa token, status dan kode ke [support](mailto:halo@dekasign.com). Jangan kirim password, API key, OTP, preview/session token atau file pribadi.
+

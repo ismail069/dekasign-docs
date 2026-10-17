@@ -1,0 +1,22 @@
+---
+title: "Kategori dan Request Forms"
+description: "Kategori, versi form, workflow release dan card requester."
+---
+## Buat kategori
+Owner/Admin membuka halaman **Request Forms** dan memilih **Add category**. Isi nama yang jelas dan deskripsi. Kategori baru tidak otomatis menjadi form, workflow, atau izin approval untuk semua anggota.
+
+Tetapkan siapa yang boleh mengajukan, menggunakan template, dan menyetujui kategori tersebut. Kandidat approver harus aktif dan berwenang pada kategori; nama yang muncul di daftar member belum tentu kandidat yang sah.
+
+## Hubungkan desain
+Buat/simpan Form Builder template, lalu gunakan kategori dan template tersebut pada workflow canvas. Configure, Validate, Sandbox dan Publish. Card Request Form dibuat dari hasil workflow yang published, bukan hanya dari kategori kosong.
+
+## Versi
+Kombinasi kategori dan template form yang sama menggunakan rilis published baru untuk pengajuan baru. Kombinasi kategori/template yang berbeda dapat menghasilkan card/form baru. Card menampilkan versi form dan workflow yang aktif.
+
+Request yang sedang berjalan tetap memakai release yang diterima. Mengganti label field tidak boleh dipakai untuk mengubah makna data historis; field key dan versi adalah bagian dari kontrak pengajuan.
+
+## Arsip
+Jangan arsipkan workflow/kategori yang masih digunakan request aktif. API dan kontrol yang relevan menolak konflik tersebut. Arsip bukan menghapus keputusan atau bukti dokumen.
+
+## Tidak melihat card?
+Periksa status published, kategori aktif, scope form dan izin Request Create. Role Requester saja tidak menjamin semua kategori terlihat. Minta pengelola memperbaiki konfigurasi, bukan membuat pengajuan lewat tenant lain.

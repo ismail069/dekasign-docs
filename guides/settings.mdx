@@ -1,0 +1,22 @@
+---
+title: "Settings dan organisasi"
+description: "Profil, password, identitas organisasi, anggota dan API Access."
+---
+## Pengaturan pribadi
+Buka menu profil di top bar, lalu **Settings**. Periksa nama dan identitas akun. Ganti password dengan memenuhi verifikasi dan aturan form; perubahan password tidak dikerjakan melalui komentar atau pesan dukungan.
+
+## Pengaturan organisasi
+Owner membuka bagian **Organization** pada Settings. Isi nama organisasi, domain email yang sah, logo dan warna tema. Preview logo/warna sebelum menyimpan. Domain email digunakan untuk klasifikasi penerima internal/eksternal; label internal bukan bukti kewenangan hukum.
+
+Logo organisasi ditampilkan pada konteks organisasi yang sesuai, termasuk login tenant jika dikonfigurasi. Subdomain salah atau organisasi tidak ditemukan tidak boleh dipakai untuk memasukkan data organisasi lain.
+
+## Anggota dan kewenangan
+Gunakan bagian **User management / Members** sesuai role. Undang email yang benar, pilih role seperlunya, dan tetapkan izin kategori atau form. Tinjau masa berlaku dan status aktif. Jangan memberikan Owner hanya untuk membuat seseorang dapat Approve; beri kewenangan kategori yang tepat.
+
+## API key workspace
+Owner dapat membuka **Settings → API Access**. Buat aplikasi integrasi, pilih mapped requester, kategori/workflow/template yang boleh diakses, scope minimum dan masa berlaku key. Salin key sekali ke secret manager server Anda. Rotasi atau cabut key jika bocor. Jangan menaruhnya pada form, frontend, URL atau source repo.
+
+API manajemen masih sandbox dan menggunakan data workspace sesuai allowlist; sandbox bukan isolasi data otomatis. Jangan menggunakannya untuk transaksi pelanggan produksi sampai aktivasi dan cakupan komersial benar-benar tersedia.
+
+## Checklist sebelum operasi
+Pastikan organisasi, anggota, izin kategori, kanal email teruji, form/workflow published, serta pengganti approver sesuai kebijakan. Lihat [kanal notifikasi](/guides/notification-channels).

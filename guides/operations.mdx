@@ -1,0 +1,26 @@
+---
+title: "Notifikasi, riwayat dan troubleshooting"
+description: "Membaca event, log pengiriman, status paket dan error umum."
+---
+## Lonceng notifikasi
+Klik lonceng di top bar untuk event yang tersedia: tugas approval siap, request perlu revisi, workflow selesai dan paket signing selesai. Membaca notifikasi tidak mengambil keputusan atau menyelesaikan signature.
+
+## Riwayat dan tabel
+Gunakan filter, pencarian serta pagination. Pilihan ukuran halaman dimulai 25 record pada tabel data yang mendukungnya. Riwayat request menampilkan langkah yang dikunjungi dan versi terkait; jangan menafsirkan seluruh kemungkinan node sebagai pekerjaan yang sudah dilakukan.
+
+## Masalah umum
+| Gejala | Pemeriksaan |
+|---|---|
+| Form/card tidak terlihat | Kategori aktif, workflow published, izin request/form. |
+| Approver tidak ada pada dropdown | Keanggotaan aktif, grant kategori, masa berlaku, kebijakan node. |
+| Resubmit ditolak | Status Needs revision, versi draft/assignment terbaru, perbaikan wajib. |
+| Preview dokumen gagal | Sender fields lengkap, field muat, penerima tepat, token/version belum berubah. |
+| Signing ditolak | Identitas, consent, field milik penerima, batas waktu dan versi dokumen. |
+| Email/WhatsApp gagal | Kanal aktif/teruji, mapping tujuan, provider template, kredensial dan quota. |
+| API 503 sandbox disabled | Host belum membuka API sandbox; bukan error yang diperbaiki dengan production header. |
+
+## Dukungan
+Catat waktu, halaman, referensi proses, hasil yang diharapkan dan pesan error. Gunakan screenshot yang sudah menghapus credential dan data sensitif. Jangan membagikan link token/OTP. Hubungi halo@dekasign.com; ketersediaan dukungan tidak berarti SLA waktu tanggapan tertentu sudah dijanjikan.
+
+## Paket dan billing
+Paket/kuota mengikuti penawaran yang disetujui. Trial tidak otomatis menagih. Dokumentasi billing bukan bukti checkout live telah aktif. Jangan mengulangi pembayaran hanya karena redirect browser belum berubah; periksa status dan rekonsiliasi.
