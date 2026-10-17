@@ -1,2 +1,3 @@
 /* Keep the full-colour DekaSign logo legible on the dark documentation theme. */
-.dark img[src$="/images/logo-dekasign.png"] { background: #fff; border-radius: 6px; padding: 5px 8px; }
+.nav-logo { height: 44px !important; width: auto; }
+.dark .nav-logo { background: #fff; border-radius: 6px; padding: 5px 8px; }
