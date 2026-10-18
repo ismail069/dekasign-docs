@@ -1,0 +1,21 @@
+---
+title: "Sandbox and workflow testing"
+description: "Test branches and virtual time without submitting a real process."
+---
+## Start
+Open a workflow canvas and select **Run sandbox**. Choose the design/snapshot, enter a simulated requester, and supply form data with schema-compatible keys/types. If the panel uses JSON, make sure it is valid.
+
+## Test a path
+Start the simulation, inspect active nodes/events, and make simulated Actor decisions. Change inputs to check each Rule output, including AND/OR combinations and boundary values.
+
+## Test time
+Use the available virtual-time controls for Wait/SLA. Verify reminders, SLA routes, and controlled Loops do not create duplicate tasks or unlimited repetitions. Virtual time does not prove a server worker ran at a real-world deadline.
+
+## Test revisions
+Choose Need revision, inspect the Revision task, edit simulated data, and Resubmit. Check the return node and revision limits. Final rejection must end as Rejected, not automatically open an editable form.
+
+## Publish
+Save changes after testing. An older snapshot's result does not validate a newer design. Validate again and Publish only after important routes behave correctly. Sandbox does not sign production PDFs or send real notifications.
+
+## Troubleshoot
+Check form keys, number/date types, approver candidates, and connectors. Record inputs, expected/actual routes, and version. Send support reports with synthetic data and no credentials.

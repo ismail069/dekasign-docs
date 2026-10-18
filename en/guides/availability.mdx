@@ -1,0 +1,20 @@
+---
+title: "Availability and release boundaries"
+description: "Distinguish documented application features from deferred or provider-dependent capabilities."
+---
+## Subject to release configuration
+The documented application surfaces include Form Builder, category/request cards, serial workflow canvas with AND/OR Rules, Sandbox, document review/revision, delegation, email templates, configured channels, and Native Document Sign. Permissions, versions, and configuration determine actual access.
+
+## Deferred or not enabled
+- SSO is outside the current implementation scope.
+- Parallel ALL/ANY groups require separate runtime acceptance and activation.
+- External approval Actor admission is not enabled for new production requests.
+- Management REST APIs remain sandbox-only, not commercial production APIs.
+- A pricing page does not automatically enable live checkout.
+- Certified electronic seals, signer certificates, trusted timestamps, and external KYC are not part of the internal integrity profile.
+
+## Customer provider dependencies
+Email/WhatsApp providers require valid accounts, credentials, templates, and testing. Contract/mock tests do not prove real deliverability. Provider accepted is not delivered/read. Documentation does not claim that backup restoration, provider bounce handling, or every disaster-recovery scenario has been proven.
+
+## Publication
+Feature descriptions reflect the source snapshot recorded with the API catalog. If the guide differs from your deployment, check the version and contact the team. Do not bypass guards or enable feature flags yourself.

@@ -1,0 +1,38 @@
+---
+title: "Outgoing webhooks"
+description: "General REST callbacks and HMAC app events use different transports."
+---
+Outgoing webhooks send events to your server. They differ from the API used to submit requests.
+
+## Workflow and Document Sign REST callbacks
+Configure a public HTTPS endpoint on port 443 without credentials, query parameters, or fragments in its URL. The server restricts private addresses, cloud metadata endpoints, redirects, and forbidden headers. Choose **None**, **Bearer**, **API key**, or **Basic** authentication and custom headers. Do not put secrets in custom body data.
+
+Workflow supports **all** (runtime events actually executed) or **final** (default, APPROVED/REJECTED results). Document Sign supports `document.completed` and `document.expired`.
+
+Workflow payloads include request, versions, status, node/output, path, revisions, form data, and history. Document payloads include package, digest, status/expiry, and signing/approval history. These may contain personal data; the target must be authorized to receive it. Private PDFs are not automatically attached.
+
+Extra data goes under `custom`, cannot overwrite canonical fields, and is limited to 16 KB/depth 8.
+
+```http
+Idempotency-Key: <event-id>
+DekaSign-Event-ID: <event-id>
+DekaSign-Timestamp: <unix-seconds>
+```
+
+Authentication follows your REST configuration. **General REST does not automatically use HMAC DekaSign-Signature.** Validate credentials/schema and deduplicate event IDs.
+
+## Integration app HMAC
+App events use a webhook secret, not the API key. Events: `approval.submitted`, `approval.revision_requested`, `approval.resubmitted`, and `approval.completed`.
+
+Headers include `DekaSign-Event-ID`, `DekaSign-Timestamp`, `DekaSign-Delivery-ID`, `DekaSign-Key-Version`, and `DekaSign-Signature`. Calculate the hexadecimal HMAC-SHA256 signature over:
+
+```text
+<event-id>.<unix-seconds>.<raw-request-body>
+```
+
+Verify the correct secret version, raw body, constant-time comparison, timestamp tolerance, and anti-replay event ID. Account for retries during secret rotation.
+
+## Retries and evidence
+Return 2xx after reliably accepting the event. The durable queue makes up to five attempts per cycle before exhaustion. Logs/replay are available according to permissions. Deliveries may occur more than once.
+
+A 2xx response does not prove downstream business processing is complete. Test authentication, payloads, duplicates, failures/retries, and logs on your own endpoint before sending real data.

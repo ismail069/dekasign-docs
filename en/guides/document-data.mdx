@@ -1,0 +1,22 @@
+---
+title: "Dynamic document data and REST lookup"
+description: "Test responses, map fields, and prepare values before sending."
+---
+## Design fields
+Add PDF fields and select Filled by Sender for values prepared before sending. Without a REST data source, preparation asks for manual values. Choose Template designer for fixed data or Approver for recipient inputs at signing time.
+
+## Configure the data source
+Enable **REST data source** when values come from your system. Select a configured endpoint and secure authentication. Define lookup inputs such as `employee_number` and the JSON body that uses them. Only public HTTPS endpoints are allowed, not private hosts.
+
+Run Test with synthetic inputs. Supported scalar response values become response variables. Map each Sender field to a tested response path, not a guessed field name. Place & Date has separate place and date mappings.
+
+## Fetch during preparation
+In Prepare & Send, enter lookup inputs, press Fetch, and inspect the result. Verified values are frozen in the preview. Send does not fetch the API again and obtain potentially changed data. Previews expire and are bound to template/version/context.
+
+Changed endpoints, configuration, scope, versions, or expired tokens can invalidate older results. Test does not authorize every endpoint. Do not put credentials in lookup inputs.
+
+## When REST is disabled
+Sender inputs return to manual entry before preview. Required validation still applies. Disabling the API does not make Approver fields Sender fields, and API responses must not inject recipient parameters.
+
+## Limits
+Responses/payloads have size, depth, and type limits. HTML/complex objects do not automatically become safe text; map appropriate scalars. Correct oversized content or field dimensions rather than silently clipping PDF values.

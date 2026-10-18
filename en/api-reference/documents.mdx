@@ -1,0 +1,26 @@
+---
+title: "Upload and manage documents"
+description: "App-owned PDFs and protected evidence."
+---
+List/read with `GET /api/v1/documents` and `/documents/{id}` using `documents:read`. Results are limited to the app.
+
+## Upload
+`POST /api/v1/documents` requires `documents:write`, an idempotency key, and multipart form-data:
+- `file`: exactly one PDF, maximum 25 MB, 1–200 pages.
+- `logicalPurpose`: `ATTACHMENT` (default) or `SIGNATURE_TARGET`.
+
+```bash
+curl "$DEKASIGN_BASE_URL/api/v1/documents" \
+  -H "Authorization: Bearer $DEKASIGN_API_KEY" \
+  -H 'X-Dekasign-Environment: sandbox' \
+  -H 'Idempotency-Key: proposal-upload-20261018-001' \
+  -F 'logicalPurpose=ATTACHMENT' \
+  -F 'file=@proposal.pdf;type=application/pdf'
+```
+
+Store secret environment variables securely on your server. This API does not accept PPTX/images even though the review UI supports them. Capacity exhaustion may return `UPLOAD_BUSY` with `Retry-After`.
+
+## Delete
+`DELETE /documents/{id}` requires `documents:delete`, an idempotency key, and a JSON reason of 5–500 characters. Only eligible unused documents can be deleted; submitted/signed evidence is protected.
+
+For layout use the [hosted editor](/en/api-reference/hosted-editor); for invitations use [preview and send](/en/api-reference/signing).

@@ -1,0 +1,32 @@
+---
+title: "Authentication and idempotency"
+description: "Server-side keys, minimum scopes, and safe retries."
+---
+The Owner manages keys in **Settings → Workspace API keys** or the integration app. Select an active mapped requester, minimum scopes, category/template allowlists, and the shortest appropriate expiry. Store keys in a server secret manager, not frontend code, URLs, Git, screenshots, or logs.
+
+```http
+Authorization: Bearer <sandbox-api-key>
+X-Dekasign-Environment: sandbox
+```
+
+Sandbox keys start with `dks_test_`. The server checks key/app/requester status, expiry, organization, tenant host, category authority, allowlists, scopes, and rate limits. Keys do not bypass the requester's permissions.
+
+| Scope | Purpose |
+|---|---|
+| `catalog:read` | Category/form/workflow/template catalogs |
+| `categories:write` | Category management with authorized manager permissions |
+| `workflows:archive` | Archive workflows/forms without active usage |
+| `requests:create`, `requests:read`, `requests:revise` | Submit, read, and revise app-owned requests |
+| `documents:read`, `documents:write`, `documents:delete` | App-owned documents |
+| `packages:read`, `packages:create`, `packages:archive` | App-owned signing packages |
+
+## Idempotency
+Submit, revision, resubmit, upload, archive, and delete commands require an `Idempotency-Key` containing 8–160 printable ASCII characters. Use a new key for each intended operation and store it with the payload before sending.
+
+```http
+Idempotency-Key: procurement-20261018-001
+```
+
+Retry with the identical key and payload. Reusing a key with different data causes a conflict. After a timeout, check the first outcome before generating another key. Preview, hosted sessions, and OTP flows have separate contracts.
+
+API keys cannot give consent, bypass OTP, or sign as a recipient.

@@ -1,0 +1,20 @@
+---
+title: "API overview"
+description: "Sandbox contracts aligned with DekaSign source."
+---
+<Warning>Management APIs accept the sandbox environment only. Production hosts may return `503 SANDBOX_API_DISABLED`. This is not a commercial production API announcement.</Warning>
+
+The API exposes catalogs, requests, documents, signing packages, and status. Create Form Builder designs, Approval Workflows, and Document Sign templates manually in the platform. API keys cannot decide on behalf of human approvers.
+
+Use the workspace base URL provided by your administrator with prefix `/api/v1`. [Authentication](/en/api-reference/authentication) explains keys, scopes, and allowlists. Sandbox calls can create records and queue work in the test workspace; use synthetic data rather than assuming the API has no side effects.
+
+## Integration sequence
+1. Read catalogs and active release versions.
+2. Fetch the release's submission schema.
+3. Upload PDFs if needed and retain document IDs.
+4. Submit with a pinned release, unique external ID, and idempotency key.
+5. Read status or receive [outgoing webhooks](/en/integrations/outgoing-webhooks).
+
+Lists use `page` starting at 1 and `size` 25, 50, or 100 (default 25). Responses contain `data` and `pagination`: `page`, `size`, `total`, `pages`. Filters vary by endpoint.
+
+Download the [OpenAPI specification](/openapi.json). Source was reviewed on 18 October 2026 at application commit `99f3cbe4`; deployment and feature flags determine availability. See [release boundaries](/en/guides/availability).

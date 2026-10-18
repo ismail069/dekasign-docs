@@ -1,0 +1,31 @@
+---
+title: "Approval Workflow Engine"
+description: "Canvas navigation, node types, AND/OR Rules, SLAs, and publishing."
+---
+## Prerequisites
+Create a category and form, and confirm approvers have category authority. Open **Approval Workflows**, create a workflow, choose the category/template, and open Canvas. The main sidebar collapses to give the editor more room.
+
+## Navigate the canvas
+Pan the background and use Zoom, Fit view, and Focus node. Drag node headers to position them; positions do not define routing. Connect each output to the correct target/input. Auto layout arranges the design, not business decisions. Use Undo/Redo and Save as needed.
+
+## Elements
+| Node | Purpose | Check |
+|---|---|---|
+| Start | Start a request with its form | Correct form, category, and version. |
+| Actor | Assign an internal approver task | Authorized approver and valid approved, rejected, revision, and SLA routes. |
+| Rule | Choose a path from form data | Schema field/operator/value; combined AND/OR conditions. |
+| Wait | Hold the process as configured | Valid duration and next route. |
+| Notification | Queue a flow message | Correct recipients, channels, and continuation. |
+| Revision | Open correction work | Clear limits and return target. |
+| Loop | Return to a task using supported patterns | Not an unrestricted or unbounded loop. |
+| Finish | End with Approved or Rejected | Final approval does not mean all signing is complete. |
+
+Rules use form fields, not arbitrary code. Approved paths are green; Rule outputs have distinct colors. Need revision and SLA outputs are visually separated on Actor nodes.
+
+## Actor policy
+Set the approver, SLA, delegation, revision limits, and channels. DekaSign email is the default. An explicit custom-email override disables DekaSign email for that node. WhatsApp is an add-on requiring an active channel and destination mapping.
+
+## Validate and test
+Run Validate, fix invalid connections/authority, then [test in Sandbox](/en/guides/sandbox). Save stores the design; Publish creates the release for new requests. Moving nodes must not disconnect edges or change policy.
+
+<Warning>Parallel ALL/ANY and new external approval Actor admission are not enabled for production. An external Document Sign recipient is different from an external approval Actor. A draft node that can be drawn is not proof of runtime availability.</Warning>

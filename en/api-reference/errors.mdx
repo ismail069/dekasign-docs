@@ -1,0 +1,23 @@
+---
+title: "Errors and recovery"
+description: "Handle conflicts and retries without duplicates."
+---
+Errors generally contain a JSON `code`; some paths also return `error`. Do not depend on error wording that may change with language.
+
+| HTTP | Action |
+|---|---|
+| 400/422 | Correct input, schema, or idempotency key |
+| 401 | Check credential status and expiry |
+| 403 | Check environment, scope, requester, and tenant |
+| 404 | ID is missing or outside app access |
+| 409 | Read current version/status and active usage again |
+| 410 | Retired endpoint; use approval-requests |
+| 413 | Reduce body/file size |
+| 408/429 | Retry within limits; honor Retry-After |
+| 503 | Check sandbox gates/capacity; do not switch to a production header |
+
+Relevant codes include `SANDBOX_API_DISABLED`, `ENVIRONMENT_MISMATCH`, `INPUT_INVALID`, `NOT_FOUND`, `WORKFLOW_IN_USE`, `REVISION_NOT_OPEN`, `PACKAGE_NOT_CLOSED`, and `UPLOAD_BUSY`.
+
+After a timeout, retry idempotent commands with the same key/payload. Do not generate a new key before checking the first result. Deduplicate webhooks by event ID.
+
+Report the time, endpoint without tokens, HTTP status, and code to [support](mailto:halo@dekasign.com). Never send passwords, API keys, OTPs, preview/session tokens, or private files.

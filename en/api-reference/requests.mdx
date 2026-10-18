@@ -1,0 +1,37 @@
+---
+title: "Submit, track, and revise API requests"
+description: "Pinned releases and concurrency guards for resubmission."
+---
+## Submit
+`POST /api/v1/approval-requests` requires `requests:create` and an idempotency key.
+
+```json
+{
+  "workflow_id":"workflow-id",
+  "workflow_release_id":"workflow-id@3",
+  "external_id":"purchase-20261018-001",
+  "form_data":{"amount":7500000},
+  "documents":[{"document_id":"uploaded-id","field_key":"proposal","name":"proposal.pdf","sign_actor_ids":["actor-id"]}],
+  "submit":true
+}
+```
+
+Replace example IDs/keys with catalog/schema values. `external_id` is unique per app and contains 3–120 letters/digits, periods, underscores, colons, or hyphens. Optional `documents` must reference app-owned PDFs mapped to file fields.
+
+Optional `sign_actor_ids` may reference valid internal Actors only when the workflow accepts per-document signing. This API path uses **digital approval only**, without visual signature images. Stale releases, missing authority, and unsupported runtimes are rejected.
+
+## Status
+`GET /approval-requests` supports `q`, `status`, `page`, and `size`. Read details with `GET /approval-requests/{id}`. Both require `requests:read` and return app-owned requests only.
+
+Details include status, `version`, `request_revision`, form/workflow versions, data, visited steps, SLA/timestamps, and decisions. For active requests, `remaining_approval_layers` can depend on Rules; it does not guarantee every branch will be visited.
+
+## Revisions
+Read `GET /approval-requests/{id}/revision-requirements` in NEEDS_REVISION. Save with `PATCH /approval-requests/{id}/revision-draft` and resubmit with `POST /approval-requests/{id}/resubmit`. Use `requests:revise`, an idempotency key, and current versions:
+
+```json
+{"expected_version":4,"expected_task_version":2,"form_data":{"amount":7000000}}
+```
+
+`documents` is optional. Only the app requester with an authorized active revision task may make changes. On conflict, read again and review intervening edits; never guess versions to force an update.
+
+`/api/v1/requests` is retired (`410 ENDPOINT_RETIRED`). There is no API-key endpoint for approving/rejecting as a human.

@@ -14,80 +14,199 @@
     "href": "https://dekasign.com"
   },
   "navigation": {
-    "tabs": [
+    "languages": [
       {
-        "tab": "Panduan",
-        "groups": [
+        "language": "id",
+        "default": true,
+        "navbar": {
+          "links": [
+            {
+              "label": "Dukungan",
+              "href": "mailto:halo@dekasign.com"
+            }
+          ],
+          "primary": {
+            "type": "button",
+            "label": "Buka DekaSign",
+            "href": "https://dekasign.com/login"
+          }
+        },
+        "tabs": [
           {
-            "group": "Mulai",
-            "pages": [
-              "index",
-              "quickstart",
-              "guides/accounts-and-roles",
-              "guides/settings",
-              "guides/availability"
+            "tab": "Panduan",
+            "groups": [
+              {
+                "group": "Mulai",
+                "pages": [
+                  "index",
+                  "quickstart",
+                  "guides/accounts-and-roles",
+                  "guides/settings",
+                  "guides/availability"
+                ]
+              },
+              {
+                "group": "Komunikasi",
+                "pages": [
+                  "guides/notification-channels",
+                  "guides/email-studio"
+                ]
+              },
+              {
+                "group": "Approval Workflow",
+                "pages": [
+                  "guides/categories-and-forms",
+                  "guides/form-builder",
+                  "guides/approval-workflows",
+                  "guides/sandbox",
+                  "guides/requests-and-revisions",
+                  "guides/delegation",
+                  "guides/workflow-signing"
+                ]
+              },
+              {
+                "group": "Document Sign",
+                "pages": [
+                  "guides/document-sign",
+                  "guides/document-data"
+                ]
+              },
+              {
+                "group": "Operasional",
+                "pages": [
+                  "guides/operations"
+                ]
+              }
             ]
           },
           {
-            "group": "Komunikasi",
-            "pages": [
-              "guides/notification-channels",
-              "guides/email-studio"
-            ]
-          },
-          {
-            "group": "Approval Workflow",
-            "pages": [
-              "guides/categories-and-forms",
-              "guides/form-builder",
-              "guides/approval-workflows",
-              "guides/sandbox",
-              "guides/requests-and-revisions",
-              "guides/delegation",
-              "guides/workflow-signing"
-            ]
-          },
-          {
-            "group": "Document Sign",
-            "pages": [
-              "guides/document-sign",
-              "guides/document-data"
-            ]
-          },
-          {
-            "group": "Operasional",
-            "pages": [
-              "guides/operations"
+            "tab": "Developers",
+            "groups": [
+              {
+                "group": "API sandbox",
+                "pages": [
+                  "api-reference/overview",
+                  "api-reference/authentication",
+                  "api-reference/catalogs",
+                  "api-reference/requests",
+                  "api-reference/documents",
+                  "api-reference/signing",
+                  "api-reference/hosted-editor",
+                  "api-reference/errors"
+                ]
+              },
+              {
+                "group": "Integrasi",
+                "pages": [
+                  "integrations/outgoing-webhooks"
+                ]
+              },
+              {
+                "group": "Referensi endpoint",
+                "openapi": {
+                  "source": "/openapi-id.json",
+                  "directory": "api-reference"
+                },
+                "expanded": false
+              }
             ]
           }
         ]
       },
       {
-        "tab": "Developers",
-        "groups": [
+        "language": "en",
+        "navbar": {
+          "links": [
+            {
+              "label": "Support",
+              "href": "mailto:halo@dekasign.com"
+            }
+          ],
+          "primary": {
+            "type": "button",
+            "label": "Open DekaSign",
+            "href": "https://dekasign.com/login"
+          }
+        },
+        "tabs": [
           {
-            "group": "API sandbox",
-            "pages": [
-              "api-reference/overview",
-              "api-reference/authentication",
-              "api-reference/catalogs",
-              "api-reference/requests",
-              "api-reference/documents",
-              "api-reference/signing",
-              "api-reference/hosted-editor",
-              "api-reference/errors"
+            "tab": "Guides",
+            "groups": [
+              {
+                "group": "Get started",
+                "pages": [
+                  "en/index",
+                  "en/quickstart",
+                  "en/guides/accounts-and-roles",
+                  "en/guides/settings",
+                  "en/guides/availability"
+                ]
+              },
+              {
+                "group": "Communication",
+                "pages": [
+                  "en/guides/notification-channels",
+                  "en/guides/email-studio"
+                ]
+              },
+              {
+                "group": "Approval Workflow",
+                "pages": [
+                  "en/guides/categories-and-forms",
+                  "en/guides/form-builder",
+                  "en/guides/approval-workflows",
+                  "en/guides/sandbox",
+                  "en/guides/requests-and-revisions",
+                  "en/guides/delegation",
+                  "en/guides/workflow-signing"
+                ]
+              },
+              {
+                "group": "Document Sign",
+                "pages": [
+                  "en/guides/document-sign",
+                  "en/guides/document-data"
+                ]
+              },
+              {
+                "group": "Operations",
+                "pages": [
+                  "en/guides/operations"
+                ]
+              }
             ]
           },
           {
-            "group": "Integrasi",
-            "pages": [
-              "integrations/outgoing-webhooks"
+            "tab": "Developers",
+            "groups": [
+              {
+                "group": "API sandbox",
+                "pages": [
+                  "en/api-reference/overview",
+                  "en/api-reference/authentication",
+                  "en/api-reference/catalogs",
+                  "en/api-reference/requests",
+                  "en/api-reference/documents",
+                  "en/api-reference/signing",
+                  "en/api-reference/hosted-editor",
+                  "en/api-reference/errors"
+                ]
+              },
+              {
+                "group": "Integrations",
+                "pages": [
+                  "en/integrations/outgoing-webhooks"
+                ]
+              },
+              {
+                "group": "Endpoint reference",
+                "openapi": {
+                  "source": "/openapi.json",
+                  "directory": "en/api-reference"
+                },
+                "expanded": false
+              }
             ]
-          },
-          {
-            "group": "Endpoint reference",
-            "openapi": "/openapi.json",
-            "expanded": false
           }
         ]
       }

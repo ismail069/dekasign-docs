@@ -1,0 +1,39 @@
+---
+title: "Preview and send signing packages"
+description: "Receipts bind templates, values, recipients, and expiry."
+---
+Design a template in the platform and allow it for the app. API keys cannot supply recipient consent.
+
+## Preview
+`POST /api/v1/signature-packages/preview` requires `packages:create`.
+
+```json
+{
+  "template_id":"template-id",
+  "expires_in_days":3,
+  "sender_values":{"employee_name":"Example employee","employee_number":"EMP-001"},
+  "signers":[{"slot_id":"slot-id","name":"Example recipient","email":"recipient@example.com","phone":"+6281234567890","recipient_kind":"external"}]
+}
+```
+
+Expiry is mandatory, 1–365 days. Match the designed slots, with 1–20 recipients. External recipients require valid email/phone. Test only destinations you control.
+
+The response includes `preview_token`, version, and `prepared_pdf`. `pdf_url_is_source:true` means `pdf_url` points to the source, not the populated preview.
+
+## Review, then send
+POST `/signature-packages/preview/document` with `template_id` and `preview_token` for the populated PDF. Show the sender the PDF, values, recipients, and expiry. The context-bound receipt is valid for 10 minutes.
+
+After sender confirmation, `POST /signature-packages` with `packages:create`, an idempotency key, and:
+
+```json
+{"template_id":"template-id","preview_token":"receipt-from-preview","confirmed":true}
+```
+
+Send uses the frozen preview, not another REST fetch. Changes require a new preview. `201` and `invitation_status:"queued"` mean queued delivery, not delivered email or completed consent.
+
+## Status and archive
+`GET /signature-packages` supports `q`, `status`, `archived=only`, and pagination. Details use `GET /signature-packages/{id}`. Both require `packages:read`.
+
+`POST /signature-packages/{id}/archive` requires `packages:archive`, a 5–500-character reason, and an idempotency key. Packages must be terminal; active packages return `PACKAGE_NOT_CLOSED`. Evidence is retained.
+
+The `internal_dekasign` profile is not a PSrE certificate or trusted timestamp.

@@ -1,0 +1,18 @@
+---
+title: "Hosted editor and recipient sessions"
+description: "Editor credentials are separate from API keys and recipient identity."
+---
+`POST /api/v1/documents/{id}/session` requires `documents:write` and an app-owned document. Optional `purpose` is 3–120 characters. The session lasts one hour.
+
+The opaque `{sessionId}` path credential is secret. Do not log it, send it to analytics, or treat it as a permanent key.
+
+- `GET /api/v1/hosted-editor/{sessionId}/commands`: layout, version, purpose, expiry.
+- `GET /api/v1/hosted-editor/{sessionId}/document`: private PDF.
+- `POST /api/v1/hosted-editor/{sessionId}/commands`: `type` SAVE_LAYOUT/COMPLETE, `expectedVersion`, `layout`, and an idempotency key in the header or body `idempotencyKey`.
+
+The server validates layouts. Read again after version conflicts; expired sessions are rejected. Editor access does not grant signing authority.
+
+## Recipient sessions
+`POST /api/v1/guest/auth` is not a machine-key endpoint. Request an OTP with `action:"request_otp"`, `email`, and `requestId`. Verify with `action:"verify_otp"`, the same context, and the six-digit `code` from the official channel.
+
+Never retrieve OTPs from logs, databases, or development responses to impersonate recipients. `GET /api/v1/signing/{id}/document` requires an authorized member/guest session, not an app Bearer key. Use the official UI for consent and signing.

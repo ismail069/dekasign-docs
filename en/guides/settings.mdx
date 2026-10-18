@@ -1,0 +1,22 @@
+---
+title: "Settings and organizations"
+description: "Profile, password, organization identity, members, and API access."
+---
+## Personal settings
+Open the profile menu in the top bar, then **Settings**. Check your name and account identity. To change your password, complete the form's verification and password requirements. Do not request password changes through comments or support messages.
+
+## Organization settings
+The Owner opens **Organization** in Settings. Enter the organization name and authorized email domain, upload a logo, and choose theme colors. Preview branding before saving. The email domain classifies internal/external recipients; an internal label is not proof of legal authority.
+
+Organization branding appears in the relevant workspace context, including tenant login when configured. Do not enter another organization's information if the subdomain is wrong or the organization cannot be found.
+
+## Members and permissions
+Use **User management / Members** according to your role. Invite the correct email, choose the minimum necessary role, and grant category/form permissions. Review active status and validity periods. Do not grant Owner merely to let someone approve; grant the appropriate category authority.
+
+## Workspace API keys
+The Owner opens **Settings → API Access**. Create an integration app, choose its mapped requester, allowed categories/workflows/templates, minimum scopes, and key expiry. Copy the key once into your server-side secret manager. Rotate or revoke exposed keys. Never put keys in forms, frontend code, URLs, or source repositories.
+
+Management APIs remain sandbox-only and use workspace data within allowlists. Sandbox does not automatically isolate data. Do not use the API for customer production transactions before the required activation and commercial scope are available.
+
+## Operational checklist
+Check the organization, membership, category grants, tested email channel, published form/workflow, and substitute approvers. See [notification channels](/en/guides/notification-channels).

@@ -1,0 +1,25 @@
+---
+title: "Form Builder"
+description: "General fields, date/time inputs, dynamic tables, and attachments."
+---
+## Build a form
+Open **Request templates**, create a clearly named template, and add palette elements. Select a field to set its label, helper text, required state, validation, and choices. Use Preview to try the form before saving a version.
+
+Field keys remain stable when labels change. Rules and APIs use keys; a visible label is not necessarily an API parameter name.
+
+## Field types
+Use text/multiline for descriptions, integer/decimal for numbers, select/multiple choice/checkbox for choices, date for dates, file for attachments, and dynamic table for repeated rows. Configure conditional visibility with supported fields and type-appropriate operators.
+
+## Dates
+Date fields support **Date only** or **Date & time**. Check format and time-zone context before Submit. A displayed date is not the same as a server decision timestamp.
+
+## Dynamic tables
+Dynamic tables are general-purpose, not limited to attendance/overtime. Add up to **10 columns**, set supported labels/keys/types/validation, and let requesters add rows within configured limits. Examples include procurement items, expenses, overtime dates, or event requirements.
+
+Preview empty rows, required values, numeric inputs, and row limits. Rules must not use arbitrary expressions or keys outside the schema.
+
+## Documents
+Use upload fields for supported PDFs, PPTX files, or images. Check the form's size/count limits; the upload API has different limits and currently accepts PDF only. For signing, enable it per document during submission and design fields/recipients within the supported flow.
+
+## After saving
+Save a new version, open the workflow using the template, check its Rules, and Validate again. Publish pins form/workflow versions for new requests. Test with synthetic data before organizational use.

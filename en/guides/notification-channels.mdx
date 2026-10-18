@@ -1,0 +1,36 @@
+---
+title: "Email and WhatsApp channels"
+description: "Configure, test, activate, and select notification channels."
+---
+## Routing principles
+Email is required for approvals and Document Sign. Use DekaSign email or your organization's channel; WhatsApp is an add-on. For the organization default, DekaSign is the fallback when custom email sending fails or a delivery failure becomes known to the system. Not all bounces can be detected. Accepted is not delivered/read.
+
+An explicit **custom email** Actor override disables DekaSign email, including that Actor's fallback. OTP/security messages continue to use the trusted platform channel. If you need the organization-default fallback, understand the consequences before applying an Actor override.
+
+## Add SMTP
+The Owner opens **Notification channels**, selects **Add channel / SMTP**, names it, and enters:
+
+| Field | Non-secret example |
+|---|---|
+| SMTP_HOST | smtp.example.com |
+| SMTP_PORT | 465 or 587 |
+| SMTP_SECURE | true for 465; false with mandatory STARTTLS for 587 |
+| SMTP_USER | notifications@example.com |
+| SMTP_PASSWORD | Enter the secret in the settings form, never documentation |
+| SMTP_FROM_NAME | Organization name |
+| SMTP_FROM_EMAIL | notifications@example.com |
+
+Save, send a test to an inbox you control, inspect the result, then activate. Configuration changes clear tested/active status. Port 25, disabled TLS, and private hosts are not supported by this secure configuration.
+
+## WhatsApp
+Select **WatZap**, **Convia**, **Wati**, **Bird**, or general REST. Enter provider credentials, sender identity, approved template/language/variables, and the destination number with country code. Configure mapping, test an authorized number, then activate.
+
+Providers have their own charges, template approvals, and messaging rules. Connector documentation does not approve your template. The release does not claim every provider has been tested with a real account.
+
+## General REST and Bird email
+Choose **Email** or **WhatsApp**, name the channel, and configure the public HTTPS endpoint, authentication, headers, and JSON body. Map the destination to the correct email/phone parameter and the message to its body parameter. Use variables offered by the UI; do not send unnecessary customer data.
+
+Endpoints must use HTTPS without private hosts or secrets in the URL. Store credentials in the dedicated fields. A successful test is required before activation. See [integrations and webhooks](/en/integrations/outgoing-webhooks).
+
+## Monitor deliveries
+Use **Delivery logs** to inspect status, retries, and redacted errors. Check destinations, provider permissions, templates, and quotas on failure. Check deduplication before manually resending.

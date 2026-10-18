@@ -1,0 +1,27 @@
+---
+title: "Catalogs, categories, and versions"
+description: "Pin releases and archive without changing active processes."
+---
+Use `catalog:read` to list/read `categories`, `request-templates` (Form Builder), `approval-workflows`, `request-forms`, and `document-sign-templates` under `/api/v1`.
+
+Fetch a schema through `GET /approval-workflows/{id}/releases/{release}/submission-schema`. Workflow responses include `workflow_release_id`, such as `workflow-id@3`, category, template, form version, and published version. Use schema keys, not display labels. Active requests retain their version snapshot.
+
+`GET /document-sign-templates/{id}/content` returns the source PDF. Query `version` is a template version ID, not its number.
+
+## Add a category
+`POST /categories` requires `categories:write`, an idempotency key, and an authorized Owner/Admin requester.
+
+```json
+{"name":"Equipment requests","description":"Work equipment requirements"}
+```
+
+Response values `request_form_created:false` and `key_scope_expanded:false` mean no Request Form was created and key access was not expanded. Create/publish the workflow in the platform.
+
+## Archive
+Use `POST /categories/{id}/archive` with `categories:write`, or `POST /approval-workflows/{id}/archive` and `/request-forms/{id}/archive` with `workflows:archive`. Send a reason and idempotency key.
+
+```json
+{"reason":"Replaced by a new operational process"}
+```
+
+Workflows used by DRAFT, IN_PROGRESS, or NEEDS_REVISION requests return `WORKFLOW_IN_USE`. Archiving does not delete evidence or files.

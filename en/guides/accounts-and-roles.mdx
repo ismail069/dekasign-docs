@@ -1,0 +1,25 @@
+---
+title: "Login, onboarding, and roles"
+description: "Use your own identity, active membership, and appropriate permissions."
+---
+## Login and organizations
+Sign in with your account email. For invitations, use the address the invitation was sent to. Select the correct organization and its subdomain. Membership in multiple organizations does not automatically grant access to all tenant data.
+
+Onboarding collects the organization identity and setup information supported by the release. Check **Settings** before inviting members or publishing workflows. If organization creation or purchasing is gated, contact the team; clicking a button is not proof of activation.
+
+## Roles
+| Role | Main responsibility | Important boundary |
+|---|---|---|
+| Owner | Organization, members, settings, channels, billing, and API keys | Cannot retrieve another person's OTP/private key or sign as them. |
+| Admin | Forms, categories, workflows, and permitted management | Not automatically an approver for every category; Owner-only settings remain restricted. |
+| Approver | Review assigned tasks and make decisions | Requires a valid assignment, category authority, and validity period. |
+| Creator / Requester | Submit requests and revisions | Limited to authorized forms, categories, and data. |
+| External signer | Review and sign an assigned document | Not a general organization member or approval Actor. |
+
+Multiple roles do not bypass permission checks. Admin status alone does not make a member an eligible approver.
+
+## Profile menu
+Click your name/avatar in the top bar for **Settings** and **Sign out**. Profile settings let you change your name and password through the available verification flow. Never reuse demo passwords for customer accounts.
+
+## When access is denied
+Check the active organization, membership, form/category grants, task assignment, and delegation validity. Ask the Owner to correct permissions. A direct URL does not bypass server checks. SSO is not active in this scope.

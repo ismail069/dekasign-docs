@@ -4,6 +4,7 @@ Public user guides and developer reference for https://docs.dekasign.com, mainta
 
 ## Content
 
+- Native language switcher: Indonesian (`id`, default, original root URLs) and English (`en`, `/en/...`). All 26 authored pages have English counterparts, including developer guides. Each language has its own navbar labels and endpoint-reference directory. Technical API action labels stay in English to preserve existing endpoint URLs; Indonesian endpoint explanations are translated.
 - 17 product guides cover onboarding, roles/settings, email/WhatsApp, Email Studio, categories, Form Builder, canvas/Sandbox, request/revision/delegation and Document Sign.
 - 9 developer/integration guides explain sandbox keys, catalog/versions, request/revision, PDF upload, preview/send, session authentication, errors and outgoing webhooks.
 - `openapi.json` covers all 40 HTTP methods found in the application's 33 v1 route files. Human-session and retired routes are labelled separately. Read responses are extensible rather than pretending every response has the same schema.
@@ -21,7 +22,13 @@ mint broken-links
 node scripts/verify-docs.mjs
 ```
 
-The source-parity check expects the app in sibling `../dekasign-app`, or use `DEKASIGN_APP_SOURCE` with the app checkout path. Regenerate the reviewed specification with `node scripts/generate-openapi.mjs`. Review command schemas against source whenever endpoints change; generation is not runtime proof.
+The source-parity check expects the app in sibling `../dekasign-app`, or use `DEKASIGN_APP_SOURCE` with the app checkout path. Regenerate the reviewed specification with `node scripts/generate-openapi.mjs`, then `node scripts/localize-openapi.mjs`. The localizer fails on unknown explanatory text instead of silently publishing untranslated prose. Review command schemas against source whenever endpoints change; generation is not runtime proof.
+
+Keep translated pages under `en/` with the same file names and structure as the Indonesian originals. Update both language versions together, preserve technical identifiers, and run `node scripts/verify-docs.mjs`, `mint validate`, and `mint broken-links`. `node scripts/configure-languages.mjs` refreshes the paired navigation without moving the original Indonesian pages. Legal policy text remains authoritative Indonesian; this translation does not publish an English legal agreement.
+
+Windows CLI note (Mint4.2.819): `mint broken-links` reports false positives for forward-slash links to nested `en/guides/...` files. Its installed link resolver compares forward-slash URL directories with backslash filesystem directories. The existing file and empty resolver result were reproduced without modifying the CLI. Do not rewrite valid public URLs to bypass this. The repository's cross-platform link/parity check and actual deployed route checks are required alongside successful `mint validate`; do not describe this CLI run as a clean broken-links pass.
+
+Brand assets in `images/` are byte-identical to the Owner-supplied `logo-dekasign.png` and `favicon-dekasign.png`. The same original logo is used for both themes, with a white backing in dark mode so its dark wordmark stays legible.
 
 ## Publishing and security
 

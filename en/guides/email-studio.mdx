@@ -1,0 +1,24 @@
+---
+title: "Email templates and Email Studio"
+description: "Subjects, headers, bodies, footers, previews, and HTML import."
+---
+## Create a template
+Open **Message templates**, select **New email template**, and set the name and category scope. Editor functions use English terms. The main sidebar collapses to give the canvas more space.
+
+The **Block palette** is separate from blocks already on the canvas. Select a canvas block to edit its properties. The header holds the title/subject, the body holds content, and the footer holds closing content and social links. Title blocks are not automatically duplicated into the body.
+
+## Design content
+Add the available text, image/logo, button, link, list, and divider blocks. Set font family, size, weight, alignment, body/footer colors, and block order. Use valid image URLs, descriptive alt text, and reasonable email image sizes. Do not import scripts or a complete application stylesheet.
+
+**URL link** sets a link's destination, not merely its label. Enter a safe URL and test the preview. Action links must use supported parameters, not tokens copied from another user's email.
+
+## Safe parameters
+The Properties panel shows applicable parameters. Insert them with the available controls or drag and drop when the active input supports it. Use the exact parameter names shown in the editor; do not invent variables or insert secrets.
+
+Parameters and form data do not change permissions. Links still require a valid session/verification. Minimize personal information in email/WhatsApp messages; document content is not automatically attached to notifications.
+
+## Events
+Prepare templates for request submission, approval tasks ready for review, node approval/rejection, revision requests, SLA expiry, workflow completion, and signing completion, according to available event bindings. Verify the binding, category, and template version. Saving a design does not prove production event delivery.
+
+## Preview and HTML
+Use **Preview** before saving. After HTML import, check sanitized output, URLs, images, and parameters. Not all web HTML/CSS works in email. Scripts must not execute. Test in an inbox you control before enabling messages for users.

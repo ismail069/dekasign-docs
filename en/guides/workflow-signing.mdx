@@ -1,0 +1,23 @@
+---
+title: "Signed documents in approval requests"
+description: "Per-document options, approvers, and decision evidence."
+---
+## Per-document flow
+During Submit Request, upload supported documents and enable signing for each document that needs it. One request can contain several documents with different signing plans. A standalone signature template is not a universal prerequisite for every new workflow.
+
+Open the selected document's editor and assign Actors/signers and fields/areas according to supported policy. Request documents follow the design and approvers actually visited; unexecuted branches do not automatically become signers.
+
+## Review
+Approvers review form data, files, notes, and annotations before deciding. A note is not signing consent. Document approval and workflow approval must follow the configured permissions and modes.
+
+## Document revisions
+The requester reads revision instructions/annotations, replaces files or data as needed, and reviews signing plans before Resubmit. Evidence for an older version must not be presented as approval of a newer file.
+
+## Results
+Approved/signed documents retain action context and the evidence page provided by the system. Check the actor, time, and version/digest. Printing a final PDF to a new PDF does not preserve the same integrity evidence.
+
+## API
+Management API submissions support digital approval only for selected documents. API keys cannot create visual signatures or impersonate signers. API access remains sandbox-only; see the [request API](/en/api-reference/requests).
+
+## Boundaries
+Native signing uses internal DekaSign integrity, not a certified seal. External approval Actors and ALL/ANY activation are separate from external Document Sign recipients.
