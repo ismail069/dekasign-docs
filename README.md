@@ -30,6 +30,8 @@ Windows CLI note (Mint4.2.819): `mint broken-links` reports false positives for 
 
 Brand assets in `images/` are byte-identical to the Owner-supplied `logo-dekasign.png` and `favicon-dekasign.png`. The same original logo is used for both themes, with a white backing in dark mode so its dark wordmark stays legible.
 
+Live acceptance on 18 October 2026: `node scripts/verify-live-locales.mjs` passed all 52 authored routes, translated titles, hreflang, supplied logo, isolation marker, and absence of response cookies. Edge verified English search → delegation guide, the same-page English → Indonesian switch, and Indonesian → English endpoint navigation with translated explanations and unchanged parameters. Hydrated document language is `id`/`en` respectively. Mintlify currently emits `lang=en` in its initial SSR shell even for Indonesian routes; this vendor limitation is not recorded as a passing SSR-language check. Light/dark branding was checked and the theme restored to System.
+
 ## Publishing and security
 
 No secret, API token, OTP, production customer file or private signing URL belongs in this repository. API playground is disabled to discourage entering secrets in a public browser reference. Use only an authorized sandbox with synthetic data for examples.
