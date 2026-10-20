@@ -32,6 +32,17 @@ Headers include `DekaSign-Event-ID`, `DekaSign-Timestamp`, `DekaSign-Delivery-ID
 
 Verify the correct secret version, raw body, constant-time comparison, timestamp tolerance, and anti-replay event ID. Account for retries during secret rotation.
 
+## Read and archive app endpoints
+`GET /api/v1/webhooks` and `GET /api/v1/webhooks/{id}` require `webhooks:read`. Results contain only sandbox endpoints assigned to the app. Lists support `q`, `status`, `transport`, `page`, and `size` 25/50/100. `destination_origin` exposes the destination origin without its full URL, tokens, headers, or secret.
+
+To disable an unused endpoint, send `POST /api/v1/webhooks/{id}/archive` with `webhooks:archive`, an `Idempotency-Key` header, and this body:
+
+```json
+{"expected_version":2,"reason":"Endpoint replaced by a new configuration"}
+```
+
+An endpoint still bound to an active app, an in-use workflow, or pending delivery returns `WEBHOOK_IN_USE`. Archiving preserves historical evidence and does not reroute delivery. Request submission's `report_endpoint_id` selects a registered ID rather than a new URL.
+
 ## Retries and evidence
 Return 2xx after reliably accepting the event. The durable queue makes up to five attempts per cycle before exhaustion. Logs/replay are available according to permissions. Deliveries may occur more than once.
 

@@ -1,0 +1,38 @@
+---
+title: "Secure Document Sharing"
+description: "Private sessions, file slots, recipient uploads, annotations, and audit."
+---
+
+<Note>
+This guide describes the locally tested session-first implementation. Migration, production rollout, and provider acceptance remain separate. Use this flow when it is available in your workspace version.
+</Note>
+
+## Prepare a session
+Create a session and configure recipients, expiry, and security. Upload files, inspect global policy or per-file overrides, then review recipient impact and Process usage before activation.
+
+One session has **6 active file slots**, shared by the sender and all recipients. Ordinary files allow **15 MB** each; ZIP files allow **25 MB**, using binary MB. Removing a file frees a slot while retaining audit and file lineage.
+
+## Recipient access and uploads
+Recipients open their invitation and complete verification. Email is the default; WhatsApp or both channels apply only when configured and available. Audience, expiry, revocation, and per-file permissions still apply. A changed file version/policy may require fresh verification.
+
+An organization's Owner/Admin role does not automatically grant access to another account's private session. External pages may show tenant branding; **Powered by DekaSign** retains platform branding in the footer.
+
+Recipients can upload when a slot is free and policy permits it. Incoming files are private to the sender and uploader. The sender must explicitly republish a copy to share it with other recipients.
+
+## Wet-signed returns
+The sender adds wet-signature instructions to the source. The recipient signs, scans, and uploads a PDF/image through that file's response action. The scan stays linked to the original in the same thread and uses one active slot. This differs from signing through Document Sign.
+
+## Notes and annotations
+Supported previews provide note, pin, area, highlight, ellipse, arrow, and freehand tools. Choose **Save private draft**, then **Post** when ready. Only the author sees a draft. Recipient threads target the sender and author; the sender can select an audience that already has file access.
+
+Replies, resolve/reopen, and history use versions to prevent stale tabs from overwriting newer changes. Annotations bind to the source, version, and preview representation. Spatial XLSX annotations are unavailable; use a file note. Native sheet/cell anchors, historical visuals, and annotation export remain separate work.
+
+## Downloads and audit
+**Download** follows file permissions. Preview-only does not fall back to the original. Downloads may be watermarked visual copies; supported ZIP downloads contain visual derivatives and a manifest. These files are not editable originals or annotation exports.
+
+Reports distinguish previews, downloads served, uploads, and receipt acknowledgement. Preview/download activity is recorded even if the recipient forgets to acknowledge receipt. Serving a file does not prove that its contents were read or approved.
+
+## Usage and security
+Activation for one recipient uses **1 Process**; each additional recipient adds one Process. A successful explicit reinvitation after revocation adds one new Process. Transport retries and OTP resends are not reinvitations. Files, annotations, and previews do not add the per-document Process used by [signed approval documents](/en/guides/workflow-signing).
+
+Account and tenant isolation still apply. Server/database/storage operators can potentially read content in the current system. Encryption with keys outside operator control and automated dormant-data retention remain planned. Subscription inactivity does not automatically delete documents.

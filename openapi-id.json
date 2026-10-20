@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "API sandbox dan sesi DekaSign",
-    "version": "2026-10-18",
+    "version": "2026-10-20",
     "description": "Endpoint manajemen hanya untuk sandbox dan dapat mengembalikan SANDBOX_API_DISABLED pada host produksi. Desain template dan keputusan manusia bukan API machine-key. Rute sesi memakai autentikasi terpisah. Respons dapat diperluas; panduan menjelaskan field penting. Spesifikasi ini tidak memberikan akses atau mengaktifkan fitur."
   },
   "servers": [
@@ -1584,6 +1584,39 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "properties": {
+                    "workflow_release_id": {
+                      "type": "string"
+                    },
+                    "signing_required": {
+                      "type": "boolean"
+                    },
+                    "document_signing_mode": {
+                      "type": "string",
+                      "enum": [
+                        "request_documents"
+                      ],
+                      "nullable": true
+                    },
+                    "submission_supported": {
+                      "type": "boolean"
+                    },
+                    "submission_unavailable_reason": {
+                      "type": "string",
+                      "enum": [
+                        "UNSUPPORTED_EXECUTION_MODEL",
+                        "LEGACY_SIGNING_NOT_SUPPORTED_BY_API"
+                      ],
+                      "nullable": true
+                    },
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": true
+                      }
+                    }
+                  },
                   "additionalProperties": true
                 }
               }
@@ -2018,6 +2051,11 @@
                       "additionalProperties": false
                     },
                     "maxItems": 20
+                  },
+                  "report_endpoint_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 150
                   },
                   "submit": {
                     "type": "boolean",
@@ -2620,7 +2658,7 @@
         "tags": [
           "documents"
         ],
-        "description": "Memerlukan scope documents:write. Tepat satu PDF, maksimum 25 MB dan 1–200 halaman. Hanya sandbox.",
+        "description": "Memerlukan scope documents:write. Tepat satu PDF, maksimum 15 MB dan 1–200 halaman. Hanya sandbox.",
         "security": [
           {
             "SandboxBearer": []
@@ -2901,7 +2939,7 @@
     "/api/v1/documents/{id}/session": {
       "post": {
         "operationId": "post_documents_id_session",
-        "summary": "Create one-hour hosted editor session",
+        "summary": "Create hosted editor session",
         "tags": [
           "documents"
         ],
@@ -2983,8 +3021,480 @@
                     "minLength": 3,
                     "maxLength": 120,
                     "default": "Prepare Instance"
+                  },
+                  "expires_in_seconds": {
+                    "type": "integer",
+                    "minimum": 60,
+                    "maximum": 86400,
+                    "default": 3600
                   }
                 },
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/documents/{id}/session/{sessionId}": {
+      "delete": {
+        "operationId": "delete_documents_id_session_sessionId",
+        "summary": "Revoke hosted editor session",
+        "tags": [
+          "documents"
+        ],
+        "description": "Memerlukan scope documents:write. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Identitas dalam lingkup workspace."
+          },
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Identitas dalam lingkup workspace."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hasil operasi. Field respons berbeda menurut endpoint dan deployment; lihat panduan.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Operasi atau layout tidak valid."
+          },
+          "401": {
+            "description": "Kredensial/sesi tidak valid atau kedaluwarsa."
+          },
+          "403": {
+            "description": "Scope, environment, tenant atau kewenangan ditolak."
+          },
+          "404": {
+            "description": "Tidak ditemukan atau di luar lingkup aplikasi."
+          },
+          "409": {
+            "description": "Versi kedaluwarsa, masih digunakan aktif atau konflik idempotensi."
+          },
+          "422": {
+            "description": "Schema atau idempotency key wajib tidak valid."
+          },
+          "429": {
+            "description": "Batas laju permintaan tercapai."
+          },
+          "503": {
+            "description": "Sandbox tidak aktif atau operasi sementara tidak tersedia."
+          }
+        },
+        "x-dekasign-scope": "documents:write",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expected_version": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "expected_version",
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/webhooks": {
+      "get": {
+        "operationId": "get_webhooks",
+        "summary": "List assigned webhooks",
+        "tags": [
+          "webhooks"
+        ],
+        "description": "Memerlukan scope webhooks:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                25,
+                50,
+                100
+              ],
+              "default": 25
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "active",
+                "paused",
+                "disabled"
+              ]
+            }
+          },
+          {
+            "name": "transport",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "local_http",
+                "https_design"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hasil operasi. Field respons berbeda menurut endpoint dan deployment; lihat panduan.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": true
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer",
+                          "enum": [
+                            25,
+                            50,
+                            100
+                          ]
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "pages": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "page",
+                        "size",
+                        "total",
+                        "pages"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Operasi atau layout tidak valid."
+          },
+          "401": {
+            "description": "Kredensial/sesi tidak valid atau kedaluwarsa."
+          },
+          "403": {
+            "description": "Scope, environment, tenant atau kewenangan ditolak."
+          },
+          "404": {
+            "description": "Tidak ditemukan atau di luar lingkup aplikasi."
+          },
+          "409": {
+            "description": "Versi kedaluwarsa, masih digunakan aktif atau konflik idempotensi."
+          },
+          "422": {
+            "description": "Schema atau idempotency key wajib tidak valid."
+          },
+          "429": {
+            "description": "Batas laju permintaan tercapai."
+          },
+          "503": {
+            "description": "Sandbox tidak aktif atau operasi sementara tidak tersedia."
+          }
+        },
+        "x-dekasign-scope": "webhooks:read"
+      }
+    },
+    "/api/v1/webhooks/{id}": {
+      "get": {
+        "operationId": "get_webhooks_id",
+        "summary": "Read assigned webhook",
+        "tags": [
+          "webhooks"
+        ],
+        "description": "Memerlukan scope webhooks:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Identitas dalam lingkup workspace."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hasil operasi. Field respons berbeda menurut endpoint dan deployment; lihat panduan.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Operasi atau layout tidak valid."
+          },
+          "401": {
+            "description": "Kredensial/sesi tidak valid atau kedaluwarsa."
+          },
+          "403": {
+            "description": "Scope, environment, tenant atau kewenangan ditolak."
+          },
+          "404": {
+            "description": "Tidak ditemukan atau di luar lingkup aplikasi."
+          },
+          "409": {
+            "description": "Versi kedaluwarsa, masih digunakan aktif atau konflik idempotensi."
+          },
+          "422": {
+            "description": "Schema atau idempotency key wajib tidak valid."
+          },
+          "429": {
+            "description": "Batas laju permintaan tercapai."
+          },
+          "503": {
+            "description": "Sandbox tidak aktif atau operasi sementara tidak tersedia."
+          }
+        },
+        "x-dekasign-scope": "webhooks:read"
+      }
+    },
+    "/api/v1/webhooks/{id}/archive": {
+      "post": {
+        "operationId": "post_webhooks_id_archive",
+        "summary": "Archive unused webhook",
+        "tags": [
+          "webhooks"
+        ],
+        "description": "Memerlukan scope webhooks:archive. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Identitas dalam lingkup workspace."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hasil operasi. Field respons berbeda menurut endpoint dan deployment; lihat panduan.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Operasi atau layout tidak valid."
+          },
+          "401": {
+            "description": "Kredensial/sesi tidak valid atau kedaluwarsa."
+          },
+          "403": {
+            "description": "Scope, environment, tenant atau kewenangan ditolak."
+          },
+          "404": {
+            "description": "Tidak ditemukan atau di luar lingkup aplikasi."
+          },
+          "409": {
+            "description": "Versi kedaluwarsa, masih digunakan aktif atau konflik idempotensi."
+          },
+          "422": {
+            "description": "Schema atau idempotency key wajib tidak valid."
+          },
+          "429": {
+            "description": "Batas laju permintaan tercapai."
+          },
+          "503": {
+            "description": "Sandbox tidak aktif atau operasi sementara tidak tersedia."
+          }
+        },
+        "x-dekasign-scope": "webhooks:archive",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expected_version": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "expected_version",
+                  "reason"
+                ],
                 "additionalProperties": false
               }
             }

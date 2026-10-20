@@ -33,6 +33,17 @@ Header mencakup `DekaSign-Event-ID`, `DekaSign-Timestamp`, `DekaSign-Delivery-ID
 
 Verifikasi secret versi yang sesuai, body mentah, constant-time comparison, toleransi waktu dan event ID anti-replay. Pertimbangkan retry saat merotasi secret.
 
+## Baca dan archive endpoint app
+`GET /api/v1/webhooks` dan `GET /api/v1/webhooks/{id}` memerlukan `webhooks:read`. Hasil hanya mencakup endpoint sandbox yang ditetapkan pada app. Daftar mendukung `q`, `status`, `transport`, `page`, dan `size` 25/50/100. `destination_origin` menampilkan origin tujuan, tanpa URL lengkap, token, header, atau secret.
+
+Untuk menonaktifkan endpoint yang tidak dipakai, kirim `POST /api/v1/webhooks/{id}/archive` dengan `webhooks:archive`, header `Idempotency-Key`, dan body:
+
+```json
+{"expected_version":2,"reason":"Endpoint digantikan konfigurasi baru"}
+```
+
+Endpoint yang masih terikat pada app aktif, workflow yang dipakai, atau delivery tertunda ditolak dengan `WEBHOOK_IN_USE`. Archive mempertahankan bukti lama dan tidak mengalihkan delivery ke endpoint lain. Parameter `report_endpoint_id` pada submit request memilih ID terdaftar, bukan URL baru.
+
 ## Retry dan bukti
 Kembalikan 2xx setelah event diterima secara andal. Antrean persisten melakukan sampai lima percobaan per siklus sebelum exhausted. Log/replay tersedia sesuai izin. Pengiriman dapat terjadi lebih dari sekali.
 

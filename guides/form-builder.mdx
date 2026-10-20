@@ -19,7 +19,9 @@ Tabel dinamis bersifat umum, bukan khusus attendance/lembur. Tambahkan hingga **
 Coba baris kosong, nilai wajib, angka dan batas jumlah baris saat Preview. Rule tidak boleh memakai ekspresi bebas atau key yang tidak sesuai schema.
 
 ## Dokumen
-Gunakan upload field untuk PDF, PPTX atau gambar yang didukung. Periksa batas ukuran/jumlah pada form; batas API upload berbeda dan saat ini PDF saja. Jika suatu dokumen perlu sign, aktifkan opsi per dokumen pada pengajuan dan desain field/penerima menurut alur yang didukung.
+Gunakan upload field untuk PDF, PPTX atau gambar yang didukung. Lampiran pengajuan dibatasi 25 MB/file dan 10 file per field; dokumen yang perlu ditandatangani dibatasi 15 MB/file. Platform API menerima satu PDF hingga 15 MB per upload, sama dengan batas Document Sign.
+
+Pada rilis yang mendukung klasifikasi dokumen, requester memilih **Attachment**, **Supporting document**, atau **Document to sign**. Pilihan terakhir membuka editor untuk menentukan **Digital Only** atau **Visible Signature**, lalu **Save & attach to form**. Lihat [alur dan biaya dokumen pengajuan](/guides/workflow-signing).
 
 ## Setelah Save
 Simpan versi baru, buka workflow yang memakai template, periksa Rule dan Validate lagi. Publish mengikat versi form/workflow untuk request baru. Uji dengan data sintetis sebelum digunakan organisasi.

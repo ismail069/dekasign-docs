@@ -68,7 +68,8 @@
                 "group": "Document Sign",
                 "pages": [
                   "guides/document-sign",
-                  "guides/document-data"
+                  "guides/document-data",
+                  "guides/secure-sharing"
                 ]
               },
               {
@@ -165,7 +166,8 @@
                 "group": "Document Sign",
                 "pages": [
                   "en/guides/document-sign",
-                  "en/guides/document-data"
+                  "en/guides/document-data",
+                  "en/guides/secure-sharing"
                 ]
               },
               {

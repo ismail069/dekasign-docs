@@ -1,0 +1,38 @@
+---
+title: "Secure Document Sharing"
+description: "Sesi privat, slot file, upload penerima, anotasi, dan audit."
+---
+
+<Note>
+Panduan ini menjelaskan implementasi session-first yang diuji lokal. Migrasi, rilis production, dan penerimaan provider tetap terpisah. Gunakan alur ini bila tersedia pada versi workspace Anda.
+</Note>
+
+## Siapkan sesi
+Buat sesi, atur penerima, masa berlaku, dan keamanan. Unggah file, periksa kebijakan global atau override per file, lalu tinjau dampak penerima dan pemakaian Process sebelum aktivasi.
+
+Satu sesi mempunyai **6 slot file aktif**, dipakai bersama oleh pengirim dan seluruh penerima. File biasa maksimal **15 MB**, ZIP maksimal **25 MB**, memakai MB biner. Menghapus file membebaskan slot; audit dan hubungan file tetap dipertahankan.
+
+## Akses dan upload penerima
+Penerima membuka undangan dan melakukan verifikasi. Email adalah default; WhatsApp atau kedua kanal hanya dipakai bila dikonfigurasi dan tersedia. Audience, expiry, revocation, dan izin per file tetap diperiksa. Perubahan versi/kebijakan file dapat memerlukan verifikasi ulang.
+
+Owner/Admin organisasi tidak otomatis mendapat akses ke sesi privat account lain. Logo tenant dapat tampil di halaman eksternal; footer **Powered by DekaSign** mempertahankan identitas platform.
+
+Penerima dapat mengunggah ketika slot kosong dan kebijakan mengizinkan. File masuk privat untuk pengirim dan pengunggah. Pengirim harus melakukan republication eksplisit untuk membagikan salinannya kepada penerima lain.
+
+## Hasil tanda tangan basah
+Pengirim menambahkan instruksi tanda tangan basah pada sumber. Penerima menandatangani, memindai, lalu mengunggah PDF/gambar melalui tindakan balasan file tersebut. Scan terhubung ke original pada thread yang sama dan menggunakan satu slot aktif. Ini berbeda dari signing melalui Document Sign.
+
+## Catatan dan anotasi
+Preview yang mendukungnya menyediakan note, pin, area, highlight, ellipse, arrow, dan freehand. Pilih **Save private draft**, lalu **Post** saat siap. Draft hanya terlihat oleh penulis. Thread penerima ditujukan kepada pengirim dan penulis; pengirim dapat memilih audience yang sudah mempunyai akses file.
+
+Reply, resolve/reopen, dan riwayat memakai versi untuk mencegah tab lama menimpa perubahan baru. Anotasi terikat pada sumber, versi, dan representasi preview. Anotasi spasial XLSX belum tersedia; gunakan file note. Anchor native sheet/cell, visual historis, dan ekspor anotasi masih terpisah.
+
+## Unduh dan audit
+**Download** mengikuti izin file. Preview-only tidak menyajikan original sebagai fallback. Unduhan dapat berupa salinan visual ber-watermark; ZIP yang didukung berisi turunan visual dan manifest. Berkas ini bukan original yang dapat diedit atau ekspor anotasi.
+
+Laporan membedakan preview, download yang dilayani, upload, dan konfirmasi penerimaan. Preview/download tetap dicatat bila penerima lupa melakukan konfirmasi. Penyajian file bukan bukti bahwa isinya telah dibaca atau disetujui.
+
+## Pemakaian dan keamanan
+Aktivasi untuk satu penerima memakai **1 Process**; setiap penerima tambahan menambah satu Process. Undangan ulang eksplisit yang berhasil setelah revocation menambah satu Process baru. Retry transport dan kirim ulang OTP bukan reinvitation. File, anotasi, dan preview tidak menambah Process per dokumen seperti [dokumen approval yang ditandatangani](/guides/workflow-signing).
+
+Isolasi account/tenant tetap berlaku. Operator server/database/storage saat ini masih berpotensi membaca konten. Enkripsi dengan kunci di luar kendali operator dan dormant-data retention otomatis masih direncanakan. Langganan tidak aktif tidak otomatis menghapus dokumen.

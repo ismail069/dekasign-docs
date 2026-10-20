@@ -3,12 +3,33 @@ title: "Dokumen bertanda tangan pada pengajuan"
 description: "Opsi per dokumen, approver dan bukti keputusan."
 ---
 ## Alur per dokumen
-Pada Submit Request, upload dokumen yang didukung lalu aktifkan signing untuk dokumen spesifik yang memerlukannya. Satu request dapat mempunyai beberapa dokumen dengan rencana signing berbeda. Template tanda tangan standalone bukan prasyarat universal untuk setiap workflow baru.
+<Note>
+Klasifikasi, template persiapan tersimpan, dan kebijakan Process berikut sudah diuji lokal pada pembaruan 20 Oktober 2026. Migrasi dan deployment masih terpisah. Pastikan workspace Anda memakai rilis yang sesuai sebelum mengikuti alur ini.
+</Note>
+
+Workflow harus mengaktifkan tanda tangan dokumen pengajuan. Setelah upload, pilih jenis setiap dokumen:
+
+| Pilihan | Kegunaan |
+| --- | --- |
+| **Attachment** | Lampiran biasa untuk ditinjau. |
+| **Supporting document** | Dokumen pendukung untuk ditinjau. |
+| **Document to sign** | Dokumen yang memerlukan tanda tangan digital atau visual. |
+
+Untuk **Document to sign**, buka editor, pilih Actor/signers dan **Digital Only** atau **Visible Signature**, lalu atur field yang diperlukan. Klik **Save & attach to form** untuk menyimpan template privat dan memasangnya otomatis ke form. Template terikat pada file, versi rilis, dan desain tersebut; Anda tidak perlu membuat template standalone terlebih dahulu.
+
+Dokumen tanda tangan maksimal 15 MB/file. Form boleh disimpan sebagai draft saat persiapan belum selesai, tetapi **Submit** ditolak sampai setiap dokumen tanda tangan mempunyai persiapan tersimpan yang valid.
 
 Buka editor pada dokumen terpilih, tetapkan Actor/signers dan area/field sesuai kebijakan yang didukung. Dokumen request mengikuti desain dan approver yang benar-benar dikunjungi; cabang yang tidak dijalankan tidak otomatis menjadi penanda tangan.
 
 ## Review
 Approver memeriksa form, file, note dan anotasi sebelum keputusan. Catatan bukan consent signing. Persetujuan dokumen dan persetujuan workflow harus mengikuti izin serta mode yang dikonfigurasi.
+
+Di reviewer dokumen, buka **Preview & download audit** untuk melihat siapa yang memperoleh preview/unduhan, waktunya, dan revisi dokumen. Aktivitas ini tercatat terpisah dari konfirmasi dan keputusan. File yang dilayani sistem bukan bukti bahwa isinya telah dibaca atau disetujui.
+
+## Pemakaian Process
+Untuk pengajuan baru pada kebijakan ini, satu workflow memakai **1 Process**, ditambah **1 Process untuk setiap dokumen tanda tangan yang berbeda**. Dua dokumen tanda tangan dan beberapa lampiran biasa memakai **3 Process**. Attachment dan Supporting document tidak menambah Process tanda tangan.
+
+Dokumen dengan isi asli yang sama dihitung sekali dalam siklus request tersebut, termasuk saat approver bertambah, retry, revisi desain, atau upload ulang. Isi asli yang berbeda menambah satu Process saat diajukan pada revisi berikutnya. Kredit yang tidak cukup membatalkan seluruh transaksi submit. Pengajuan historis mempertahankan kebijakan lamanya; sandbox tidak memotong kredit production.
 
 ## Revisi dokumen
 Requester membaca instruksi revisi dan anotasi, mengganti lampiran atau data sesuai kebutuhan, lalu memeriksa kembali rencana signing sebelum Resubmit. Bukti versi lama tidak boleh dipakai seolah menyetujui file baru.

@@ -21,6 +21,10 @@ ID/key contoh harus diganti dari katalog/schema. `external_id` unik per app, 3â€
 
 `sign_actor_ids` opsional, hanya menunjuk Actor internal sah ketika workflow menerima signing per dokumen. Jalur API memakai **digital approval only**, tanpa gambar tanda tangan visual. Rilis stale, izin kurang dan runtime belum didukung ditolak.
 
+Pada implementasi terbaru, server menyimpan template persiapan digital-only yang terikat pada file dan Actor yang diminta sebelum binding pengajuan. Persiapan ini bukan consent atau bukti tanda tangan; approver tetap harus memverifikasi identitas dan meninjau dokumen. Editor form UI mempunyai alur terpisah [Save & attach to form](/guides/workflow-signing).
+
+Untuk hasil melalui webhook, `report_endpoint_id` opsional memilih endpoint terdaftar yang aktif dan diizinkan untuk app/workflow tersebut. Jika dihilangkan, default app tetap berlaku. App `get_only` tidak dapat diubah menjadi webhook lewat parameter ini. URL bebas seperti `reportURL` tidak diterima. Lihat [outgoing webhooks](/integrations/outgoing-webhooks).
+
 ## Status
 `GET /approval-requests` mendukung `q`, `status`, `page`, `size`. `GET /approval-requests/{id}` memberi detail. Keduanya membutuhkan `requests:read` dan hanya menampilkan request milik app.
 

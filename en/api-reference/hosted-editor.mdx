@@ -2,7 +2,9 @@
 title: "Hosted editor and recipient sessions"
 description: "Editor credentials are separate from API keys and recipient identity."
 ---
-`POST /api/v1/documents/{id}/session` requires `documents:write` and an app-owned document. Optional `purpose` is 3–120 characters. The session lasts one hour.
+`POST /api/v1/documents/{id}/session` requires `documents:write` and a private requester-owned document bound to that app/key. Optional `purpose` is 3–120 characters. Optional `expires_in_seconds` allows 60–86400 seconds and defaults to 3600. The response includes `session_id`, `session_url`, `expires_at`, and `version` inside `data`.
+
+`session_url` contains a secret token returned once. `session_id` is the administrative ID used for revocation; it does not grant editor access. Do not construct an editor URL from the administrative ID.
 
 The opaque `{sessionId}` path credential is secret. Do not log it, send it to analytics, or treat it as a permanent key.
 
@@ -11,6 +13,17 @@ The opaque `{sessionId}` path credential is secret. Do not log it, send it to an
 - `POST /api/v1/hosted-editor/{sessionId}/commands`: `type` SAVE_LAYOUT/COMPLETE, `expectedVersion`, `layout`, and an idempotency key in the header or body `idempotencyKey`.
 
 The server validates layouts. Read again after version conflicts; expired sessions are rejected. Editor access does not grant signing authority.
+
+The session is bound to its source/version/digest, issuing key, app, and requester. Source changes or revoked authority deny access and replay. **COMPLETE** finishes layout preparation only; it is not consent, a signature, or an automatic workflow-start command.
+
+## Revoke editor access
+Use `DELETE /api/v1/documents/{id}/session/{sessionId}` with a `documents:write` API key, an `Idempotency-Key` header, and this body:
+
+```json
+{"expected_version":1,"reason":"Sender cancelled document preparation"}
+```
+
+Use the document ID and administrative session ID from the issue response. Success returns `session_id`, status `REVOKED`, and the new version. Inspect version conflicts before retrying; the same key does not revoke twice. Revocation does not delete the document or historical evidence.
 
 ## Recipient sessions
 `POST /api/v1/guest/auth` is not a machine-key endpoint. Request an OTP with `action:"request_otp"`, `email`, and `requestId`. Verify with `action:"verify_otp"`, the same context, and the six-digit `code` from the official channel.

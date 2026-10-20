@@ -20,6 +20,10 @@ Replace example IDs/keys with catalog/schema values. `external_id` is unique per
 
 Optional `sign_actor_ids` may reference valid internal Actors only when the workflow accepts per-document signing. This API path uses **digital approval only**, without visual signature images. Stale releases, missing authority, and unsupported runtimes are rejected.
 
+In the latest implementation, the server saves digital-only preparation bound to the file and requested Actors before binding the submission. This is not consent or signature evidence; approvers must still verify identity and review the document. The form UI has a separate [Save & attach to form flow](/en/guides/workflow-signing).
+
+For webhook results, optional `report_endpoint_id` selects an active registered endpoint allowed for that app/workflow. Omitting it retains app defaults. It cannot change a `get_only` app to webhook mode. Arbitrary URLs such as `reportURL` are not accepted. See [outgoing webhooks](/en/integrations/outgoing-webhooks).
+
 ## Status
 `GET /approval-requests` supports `q`, `status`, `page`, and `size`. Read details with `GET /approval-requests/{id}`. Both require `requests:read` and return app-owned requests only.
 

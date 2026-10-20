@@ -7,7 +7,7 @@ Daftar/detail `GET /api/v1/documents` dan `/documents/{id}` memerlukan `document
 
 ## Upload
 `POST /api/v1/documents` membutuhkan `documents:write`, idempotency key, multipart form-data:
-- `file`: tepat satu PDF, maksimum 25 MB, 1–200 halaman.
+- `file`: tepat satu PDF, maksimum 15 MB, 1–200 halaman.
 - `logicalPurpose`: `ATTACHMENT` (default) atau `SIGNATURE_TARGET`.
 
 ```bash

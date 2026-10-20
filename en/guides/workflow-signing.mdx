@@ -3,12 +3,33 @@ title: "Signed documents in approval requests"
 description: "Per-document options, approvers, and decision evidence."
 ---
 ## Per-document flow
-During Submit Request, upload supported documents and enable signing for each document that needs it. One request can contain several documents with different signing plans. A standalone signature template is not a universal prerequisite for every new workflow.
+<Note>
+The classification, saved preparation templates, and Process policy below were tested locally in the 20 October 2026 update. Migration and deployment remain separate. Confirm that your workspace uses the corresponding release before following this flow.
+</Note>
+
+The workflow must enable request-document signing. After upload, choose each document's purpose:
+
+| Choice | Use |
+| --- | --- |
+| **Attachment** | An ordinary attachment to review. |
+| **Supporting document** | Supporting evidence to review. |
+| **Document to sign** | A document requiring digital or visual signing. |
+
+For **Document to sign**, open the editor, select Actors/signers and **Digital Only** or **Visible Signature**, and configure the required fields. Click **Save & attach to form** to save a private template and attach it automatically. It is bound to that file, release, and layout; you do not need to create a standalone template first.
+
+Signing documents allow up to 15 MB/file. You can save a draft before preparation is complete, but **Submit** is refused until every signing document has valid saved preparation.
 
 Open the selected document's editor and assign Actors/signers and fields/areas according to supported policy. Request documents follow the design and approvers actually visited; unexecuted branches do not automatically become signers.
 
 ## Review
 Approvers review form data, files, notes, and annotations before deciding. A note is not signing consent. Document approval and workflow approval must follow the configured permissions and modes.
+
+In the document reviewer, open **Preview & download audit** to see who received a preview/download, when, and for which revision. This activity is separate from confirmation and decisions. Serving a file does not prove that its contents were read or approved.
+
+## Process usage
+For new requests under this policy, one workflow uses **1 Process**, plus **1 Process for each distinct signing document**. Two signing documents and several ordinary attachments use **3 Processes**. Attachment and Supporting document do not add signing Processes.
+
+The same original content is counted once in that request cycle, including additional approvers, retries, layout revisions, and reuploads. Different original content adds one Process when submitted in a later revision. Insufficient credit rolls back the complete submission transaction. Historical requests retain their previous policy; sandbox does not debit production credit.
 
 ## Document revisions
 The requester reads revision instructions/annotations, replaces files or data as needed, and reviews signing plans before Resubmit. Evidence for an older version must not be presented as approval of a newer file.

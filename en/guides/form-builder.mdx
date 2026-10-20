@@ -19,7 +19,9 @@ Dynamic tables are general-purpose, not limited to attendance/overtime. Add up t
 Preview empty rows, required values, numeric inputs, and row limits. Rules must not use arbitrary expressions or keys outside the schema.
 
 ## Documents
-Use upload fields for supported PDFs, PPTX files, or images. Check the form's size/count limits; the upload API has different limits and currently accepts PDF only. For signing, enable it per document during submission and design fields/recipients within the supported flow.
+Use upload fields for supported PDFs, PPTX files, or images. Request attachments allow 25 MB/file and 10 files per field; documents to sign allow 15 MB/file. The Platform API accepts one PDF up to 15 MB per upload, matching Document Sign.
+
+On a release supporting document classification, the requester chooses **Attachment**, **Supporting document**, or **Document to sign**. The last option opens the editor to choose **Digital Only** or **Visible Signature**, followed by **Save & attach to form**. See the [request-document flow and charges](/en/guides/workflow-signing).
 
 ## After saving
 Save a new version, open the workflow using the template, check its Rules, and Validate again. Publish pins form/workflow versions for new requests. Test with synthetic data before organizational use.
