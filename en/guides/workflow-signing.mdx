@@ -21,6 +21,13 @@ Signing documents allow up to 15 MB/file. You can save a draft before preparatio
 
 Open the selected document's editor and assign Actors/signers and fields/areas according to supported policy. Request documents follow the design and approvers actually visited; unexecuted branches do not automatically become signers.
 
+## Assign every field
+The form/workflow Document Sign Editor uses workflow Actor slots. For **every** text, multiline, number, date/place, checkbox and signature field, select its responsible Actor in **Filled by** or **Signature supplied by**. Optional values still need an assigned Actor. Unmapped or invalid ownership blocks saving and server submission.
+
+Digital-only Actors can fill non-signature fields without a signature rectangle. Visible signature fields belong only to visual-signature slots. This editor ends with **Save & attach to form**. Standalone Document Sign has a separate recipient editor and prepare/send flow.
+
+The two editor entries and mandatory field mapping passed local checks in the 21 October update. Automatic workflow mode defaults and complete requester-supplied external identity/audience handling remain open; they are not activated by this guide. Visual and deployed acceptance remain separate.
+
 ## Review
 Approvers review form data, files, notes, and annotations before deciding. A note is not signing consent. Document approval and workflow approval must follow the configured permissions and modes.
 

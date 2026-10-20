@@ -21,6 +21,13 @@ Dokumen tanda tangan maksimal 15 MB/file. Form boleh disimpan sebagai draft saat
 
 Buka editor pada dokumen terpilih, tetapkan Actor/signers dan area/field sesuai kebijakan yang didukung. Dokumen request mengikuti desain dan approver yang benar-benar dikunjungi; cabang yang tidak dijalankan tidak otomatis menjadi penanda tangan.
 
+## Petakan setiap field
+Document Sign Editor form/workflow menggunakan slot Actor dari workflow. Untuk **setiap** field teks, multiline, angka, tanggal/tempat, checkbox dan signature, pilih Actor pengisinya pada **Filled by** atau **Signature supplied by**. Field dengan nilai opsional tetap wajib memiliki Actor. Pemetaan kosong atau tidak valid memblokir penyimpanan dan submit di server.
+
+Actor digital-only dapat mengisi field selain signature tanpa kotak tanda tangan. Field visual signature hanya dapat diberikan ke slot visual. Editor ini diakhiri dengan **Save & attach to form**. Document Sign biasa memiliki editor penerima dan alur prepare/send terpisah.
+
+Dua pintu masuk editor dan pemetaan semua field sudah lulus pemeriksaan lokal pada pembaruan 21 Oktober. Default mode dari workflow serta identitas/audience eksternal yang diisi requester masih terbuka; dokumentasi ini tidak mengaktifkannya. Penerimaan visual dan deployment tetap terpisah.
+
 ## Review
 Approver memeriksa form, file, note dan anotasi sebelum keputusan. Catatan bukan consent signing. Persetujuan dokumen dan persetujuan workflow harus mengikuti izin serta mode yang dikonfigurasi.
 

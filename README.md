@@ -45,3 +45,5 @@ Legal content is published by the application, not duplicated here: https://deka
 Reviewed 18 October 2026 against application source `99f3cbe4` plus the accompanying public-site/documentation change. Verify current deployed version before relying on a newly described UI feature.
 
 The local 20 October reconciliation was reviewed against application checkpoint `199b9d7`. It preserves sandbox-only availability and separates locally tested updates from production acceptance. Publishing this repository remains a separate rollout action.
+
+Local 21 October source update against application checkpoint `ee4b9cf`: ZIP and its member previews are excluded from watermarking; permitted ZIP downloads retain the original archive. Document Sign has separate workflow and standalone editor entries. Every workflow field requires a valid Actor assignment, including optional inputs. Automatic workflow mode defaults and full external submission mapping remain open. No publishing or deployed acceptance is implied.
