@@ -70,4 +70,6 @@ For a retained prepared document, keep its original `prepared_instance_id` and `
 
 To prepare a replacement for a request's pinned older release, add all three fields to the preparation call: `request_id`, current `expected_version` and `expected_task_version`. The request must have an active correction task assigned to the mapped requester, and the key also needs `requests:revise`. Use that request's frozen `workflow_release_id`. The replacement is prebound to that request and keeps its own preparation expiry. It cannot be submitted to another request. A distinct replacement source adds its document Process identity at resubmission; retaining the same source does not repeat its charge.
 
+A paused category does not erase the frozen request: permitted reads, exact replay and correction drafts can continue. Resubmission still requires an active category and an eligible approver. Resolve `CATEGORY_UNAVAILABLE` by restoring authorized availability; do not change versions or identities to bypass the gate.
+
 `/api/v1/requests` is retired (`410 ENDPOINT_RETIRED`). There is no API-key endpoint for approving/rejecting as a human.

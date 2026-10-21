@@ -71,5 +71,7 @@ Untuk dokumen persiapan yang dipertahankan, sertakan `prepared_instance_id` asli
 
 Untuk menyiapkan pengganti bagi rilis lama yang dibekukan pada request, tambahkan ketiganya ke pemanggilan persiapan: `request_id`, `expected_version` dan `expected_task_version` terkini. Request harus mempunyai tugas koreksi aktif yang ditugaskan kepada requester; key juga membutuhkan `requests:revise`. Gunakan `workflow_release_id` milik request tersebut. Pengganti langsung terikat ke request itu dan tetap mempunyai expiry persiapan sendiri. Pengganti tidak dapat diajukan ke request lain. Sumber pengganti yang berbeda menambah identitas Process dokumen saat pengajuan ulang; mempertahankan sumber yang sama tidak mengulangi biayanya.
 
+Kategori yang dijeda tidak menghapus request yang dibekukan: pembacaan, retry yang sama dan draft koreksi yang sah tetap dapat dilakukan. Pengajuan ulang tetap membutuhkan kategori aktif dan approver yang berwenang. Atasi `CATEGORY_UNAVAILABLE` dengan memulihkan ketersediaan yang sah; jangan mengganti versi atau identitas untuk melewati pengamanan.
+
 `/api/v1/requests` pensiun (`410 ENDPOINT_RETIRED`). Tidak ada endpoint API key untuk approve/reject sebagai manusia.
 
