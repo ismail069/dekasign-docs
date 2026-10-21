@@ -21,6 +21,13 @@ Pemulihan terbatas pada workspace Owner. Admin, identitas tamu dan akun lama yan
 
 <Note>Alur ini telah diuji di server lokal dan browser desktop/mobile. Migrasi database lama, kesiapan SMTP autentikasi operator dan penerapan produksi masih harus diselesaikan. Kanal OTP login terpisah dari kanal notifikasi organisasi.</Note>
 
+## Inventaris serah terima dokumen
+Implementasi lokal terbaru menambahkan **Settings → User management → Review documents**. Pilih akun penerima, lalu **Tinjau inventaris**. Penerima dapat berupa Owner atau anggota aktif lain dengan email terverifikasi di workspace yang sama. Anggota asal boleh berstatus ditangguhkan. Owner harus sudah memverifikasi MFA dalam lima menit terakhir; akun lama dengan beberapa keanggotaan workspace perlu direkonsiliasi terpisah.
+
+Tinjauan menampilkan jumlah dokumen dan versi, templat/paket tanda tangan, unggahan formulir dan sesi berbagi, termasuk unggahan penerima serta riwayat file yang dihapus. Konflik kepemilikan dan approval/request yang masih aktif ditandai. Jumlah dapat saling mencakup antara versi dan sumber daya induknya. Mengganti akun penerima mengosongkan hasil tinjauan sebelumnya.
+
+Inventaris ini hanya untuk ditinjau: tidak memberi akses file maupun memindahkan kepemilikan, mereset MFA atau mengganti approver/signer. Konfirmasi pemindahan kepemilikan dan Email OTP setelah transfer belum tersedia pada tahap ini.
+
 ## Pengaturan organisasi
 Owner membuka bagian **Organization** pada Settings. Isi nama organisasi, domain email yang sah, logo dan warna tema. Preview logo/warna sebelum menyimpan. Domain email digunakan untuk klasifikasi penerima internal/eksternal; label internal bukan bukti kewenangan hukum.
 

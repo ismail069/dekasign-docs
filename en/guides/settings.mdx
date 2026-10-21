@@ -21,6 +21,13 @@ Recovery is limited to the Owner's workspace. Admins, guest identities and legac
 
 <Note>This flow has been tested on a local server and desktop/mobile browsers. Retained database migration, operator authentication SMTP readiness and production rollout remain pending. Sign-in OTP delivery is separate from organization notification channels.</Note>
 
+## Document handover inventory
+The latest local implementation adds **Settings → User management → Review documents**. Select the receiving account, then **Review inventory**. The receiving account can be the Owner or another active, email-verified member in the same workspace. The source member may be suspended. The Owner must have verified MFA within the last five minutes; legacy accounts with multiple workspace memberships require separate reconciliation.
+
+The review lists counts for documents and versions, signing templates/packages, form uploads and sharing sessions, including receiver uploads and removed-file history. It flags conflicting ownership and pending approval/request work. Counts can overlap across versions and parent resources. Changing the receiving account clears the previous review.
+
+This is a read-only inventory: it grants no file access and does not transfer ownership, reset MFA or replace approvers/signers. Confirmed ownership handover and post-transfer Email OTP remain unavailable in this increment.
+
 ## Organization settings
 The Owner opens **Organization** in Settings. Enter the organization name and authorized email domain, upload a logo, and choose theme colors. Preview branding before saving. The email domain classifies internal/external recipients; an internal label is not proof of legal authority.
 
