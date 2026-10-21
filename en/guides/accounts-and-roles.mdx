@@ -3,7 +3,9 @@ title: "Login, onboarding, and roles"
 description: "Use your own identity, active membership, and appropriate permissions."
 ---
 ## Login and organizations
-Sign in with your account email. For invitations, use the address the invitation was sent to. Select the correct organization and its subdomain. Membership in multiple organizations does not automatically grant access to all tenant data.
+Sign in with your account email. For invitations, use the address the invitation was sent to. Select the correct organization and its subdomain. One internal account email may register in only one organization workspace, including while its membership is inactive. External users, external signers and external approvers are separate guest identities; this internal account rule does not grant them workspace membership.
+
+The latest local implementation requires Email OTP after a password; you may choose TOTP under **Settings → Account security**. See [sign-in verification](/en/guides/settings). Migration and production rollout await authentication readiness acceptance. Google login uses a central gateway and still requires acceptance with the real Google provider; provider sign-in does not bypass the local factor or document permissions.
 
 Onboarding collects the organization identity and setup information supported by the release. Check **Settings** before inviting members or publishing workflows. If organization creation or purchasing is gated, contact the team; clicking a button is not proof of activation.
 

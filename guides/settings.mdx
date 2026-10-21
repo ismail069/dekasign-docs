@@ -1,9 +1,18 @@
 ---
 title: "Settings dan organisasi"
-description: "Profil, password, identitas organisasi, anggota dan API Access."
+description: "Profil, Email OTP, authenticator, organisasi, anggota dan API Access."
 ---
 ## Pengaturan pribadi
 Buka menu profil di top bar, lalu **Settings**. Periksa nama dan identitas akun. Ganti password dengan memenuhi verifikasi dan aturan form; perubahan password tidak dikerjakan melalui komentar atau pesan dukungan.
+
+## Verifikasi login
+Pada implementasi lokal terbaru, **Settings → Account security** menampilkan metode login Anda. Email OTP aktif secara default untuk akun internal. Setelah password benar, masukkan kode dari email terdaftar sebelum mengakses workspace. Kode berlaku lima menit; pengiriman ulang memiliki jeda dan percobaan dibatasi.
+
+Untuk memakai authenticator, login ulang jika sesi sudah melewati lima menit, pilih **Set up authenticator**, verifikasi password jika akun memilikinya, lalu pindai QR. Simpan sepuluh recovery code secara pribadi dan konfirmasikan dengan kode authenticator. Email OTP tetap berlaku sampai konfirmasi berhasil. Aktivasi mencabut sesi lama; login berikutnya memakai TOTP atau satu recovery code. Email OTP tidak menjadi pilihan cadangan selama TOTP aktif.
+
+Untuk kembali ke Email OTP, pilih **Switch to Email OTP**, masukkan password jika diperlukan dan kode authenticator terbaru atau recovery code yang belum dipakai. Pergantian mencabut authenticator, recovery code dan semua sesi; login kembali dengan OTP email. Pemulihan MFA oleh Owner dan transfer kepemilikan masih belum tersedia dalam increment ini.
+
+<Note>Alur ini telah diuji di server lokal dan browser desktop/mobile. Migrasi database lama, kesiapan SMTP autentikasi operator dan penerapan produksi masih harus diselesaikan. Kanal OTP login terpisah dari kanal notifikasi organisasi.</Note>
 
 ## Pengaturan organisasi
 Owner membuka bagian **Organization** pada Settings. Isi nama organisasi, domain email yang sah, logo dan warna tema. Preview logo/warna sebelum menyimpan. Domain email digunakan untuk klasifikasi penerima internal/eksternal; label internal bukan bukti kewenangan hukum.

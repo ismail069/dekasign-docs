@@ -1,9 +1,18 @@
 ---
 title: "Settings and organizations"
-description: "Profile, password, organization identity, members, and API access."
+description: "Profile, Email OTP, authenticator, organization, members, and API access."
 ---
 ## Personal settings
 Open the profile menu in the top bar, then **Settings**. Check your name and account identity. To change your password, complete the form's verification and password requirements. Do not request password changes through comments or support messages.
+
+## Sign-in verification
+In the latest local implementation, **Settings → Account security** shows your sign-in method. Email OTP is enabled by default for internal accounts. After a correct password, enter the code sent to your registered email before accessing the workspace. Codes expire after five minutes; resend cooldown and attempt limits apply.
+
+To use an authenticator, sign in again if your session is older than five minutes, select **Set up authenticator**, verify your password if your account has one, and scan the QR. Save ten recovery codes privately and confirm an authenticator code. Email OTP remains active until confirmation succeeds. Enrollment revokes old sessions; subsequent sign-in uses TOTP or one recovery code. Email OTP is unavailable as a fallback while TOTP is active.
+
+To return to Email OTP, select **Switch to Email OTP**, provide your password if required, and enter a fresh authenticator code or an unused recovery code. Switching revokes the authenticator, recovery codes and all sessions; sign in again with Email OTP. Owner-assisted MFA recovery and ownership transfer are not available in this increment.
+
+<Note>This flow has been tested on a local server and desktop/mobile browsers. Retained database migration, operator authentication SMTP readiness and production rollout remain pending. Sign-in OTP delivery is separate from organization notification channels.</Note>
 
 ## Organization settings
 The Owner opens **Organization** in Settings. Enter the organization name and authorized email domain, upload a logo, and choose theme colors. Preview branding before saving. The email domain classifies internal/external recipients; an internal label is not proof of legal authority.

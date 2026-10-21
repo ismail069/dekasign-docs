@@ -3,7 +3,9 @@ title: "Login, onboarding, dan role"
 description: "Identitas sendiri, keanggotaan aktif, dan kewenangan yang tepat."
 ---
 ## Login dan organisasi
-Masuk menggunakan email akun Anda. Saat menerima undangan, gunakan email tujuan undangan tersebut. Pilih organisasi yang benar; URL organisasi menggunakan subdomain. Akun yang memiliki beberapa organisasi tidak otomatis boleh membaca data seluruh tenant.
+Masuk menggunakan email akun Anda. Saat menerima undangan, gunakan email tujuan undangan tersebut. Pilih organisasi yang benar; URL organisasi menggunakan subdomain. Satu email akun internal hanya boleh terdaftar pada satu workspace organisasi, termasuk ketika keanggotaannya tidak aktif. External user, external signer dan external approver adalah identitas tamu terpisah; aturan akun internal ini tidak memberi mereka keanggotaan workspace.
+
+Implementasi lokal terbaru mewajibkan Email OTP setelah password; Anda dapat memilih TOTP pada **Settings → Account security**. Lihat [verifikasi login](/guides/settings). Migrasi dan penerapan produksi masih ditunda sampai kesiapan autentikasi diterima. Login Google menggunakan satu gateway pusat dan masih memerlukan penerimaan dengan provider Google sebenarnya; login provider tidak melewati faktor lokal atau izin dokumen.
 
 Onboarding mengumpulkan identitas organisasi dan kebutuhan dasar yang tersedia pada rilis. Setelah selesai, periksa Settings sebelum mengundang anggota atau memublikasikan workflow. Jika pembuatan organisasi atau pembelian ditahan oleh konfigurasi rilis, hubungi tim; jangan menganggap menekan tombol berarti aktivasi selesai.
 
