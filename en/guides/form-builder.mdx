@@ -23,5 +23,13 @@ Use upload fields for supported PDFs, PPTX files, or images. Request attachments
 
 On a release supporting document classification, the requester chooses **Attachment**, **Supporting document**, or **Document to sign**. The last option opens the editor to choose **Digital Only** or **Visible Signature**, followed by **Save & attach to form**. See the [request-document flow and charges](/en/guides/workflow-signing).
 
+### Pin a signing template for the API
+
+In the locally tested API preparation flow, select an upload field and open **API signing template**. Choose an exact private Document Sign template version. Map every signer slot to a different Actor in one linked workflow. Publish a new form/workflow release after saving.
+
+Changing the template version clears the mappings. **Clear Actor mappings** lets you choose another workflow. Fixed and sender-filled inputs are supported; REST data templates and external/parallel API approval remain unavailable. The API key's mapped requester must have current private access to the source template. A form binding does not grant that access.
+
+This setting controls API preparation. Requesters uploading their own files still use the separate workflow signing editor. See [prepared API documents](/en/api-reference/requests).
+
 ## After saving
 Save a new version, open the workflow using the template, check its Rules, and Validate again. Publish pins form/workflow versions for new requests. Test with synthetic data before organizational use.

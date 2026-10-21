@@ -23,5 +23,13 @@ Gunakan upload field untuk PDF, PPTX atau gambar yang didukung. Lampiran pengaju
 
 Pada rilis yang mendukung klasifikasi dokumen, requester memilih **Attachment**, **Supporting document**, atau **Document to sign**. Pilihan terakhir membuka editor untuk menentukan **Digital Only** atau **Visible Signature**, lalu **Save & attach to form**. Lihat [alur dan biaya dokumen pengajuan](/guides/workflow-signing).
 
+### Tetapkan template tanda tangan untuk API
+
+Pada alur persiapan API yang diuji lokal, pilih field unggah lalu buka **Template tanda tangan API**. Pilih versi tepat template Document Sign privat. Petakan setiap slot signer ke Actor berbeda dalam satu workflow tertaut. Setelah menyimpan, publikasikan versi formulir/workflow baru.
+
+Mengganti versi template mengosongkan pemetaan. Gunakan **Kosongkan pemetaan Actor** untuk memilih workflow lain. Input tetap dan input pengirim didukung; template data REST serta approval API eksternal/paralel belum tersedia. Requester yang dipetakan oleh API key harus mempunyai akses privat saat ini ke template sumber. Pemetaan formulir tidak memberikan akses tersebut.
+
+Pengaturan ini berlaku untuk persiapan API. Requester yang mengunggah file sendiri tetap memakai editor tanda tangan workflow yang terpisah. Lihat [dokumen API yang disiapkan](/api-reference/requests).
+
 ## Setelah Save
 Simpan versi baru, buka workflow yang memakai template, periksa Rule dan Validate lagi. Publish mengikat versi form/workflow untuk request baru. Uji dengan data sintetis sebelum digunakan organisasi.

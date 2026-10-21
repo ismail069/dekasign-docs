@@ -25,7 +25,7 @@ The sender adds wet-signature instructions to the source. The recipient signs, s
 ## Notes and annotations
 Supported previews provide note, pin, area, highlight, ellipse, arrow, and freehand tools. Choose **Save private draft**, then **Post** when ready. Only the author sees a draft. Recipient threads target the sender and author; the sender can select an audience that already has file access.
 
-Replies, resolve/reopen, and history use versions to prevent stale tabs from overwriting newer changes. Annotations bind to the source, version, and preview representation. Spatial XLSX annotations are unavailable; use a file note. Native sheet/cell anchors, historical visuals, and annotation export remain separate work.
+Replies, resolve/reopen, and history use versions to prevent stale tabs from overwriting newer changes. Annotations bind to the source, version, and preview representation. Spatial XLSX annotations are unavailable; use a file note. Native sheet/cell anchors and historical visuals remain separate work.
 
 ## Downloads and audit
 **Download** follows file permissions. Preview-only does not fall back to the original. PDF, Office and image downloads may be watermarked visual copies. ZIP files, including member previews, are excluded from watermarking; allowed ZIP downloads serve the original archive. Verification, download caps, access expiry and audit still apply. Visual copies are not editable originals or annotation exports.
@@ -36,7 +36,15 @@ Reports distinguish previews, downloads served, uploads, and receipt acknowledge
 ## Export a session report
 In the latest locally tested version, the current session custodian can choose **Report JSON** or **Activity CSV** under **Event report**. An active subscription and verified workspace session are required. The JSON includes session/file metadata, filtered activity and visible notes/history. CSV contains filtered activity and escapes spreadsheet formula prefixes. Neither contains original files, storage URLs or private drafts belonging to another person.
 
-Exports are bounded and audited. Narrow an activity filter or use CSV if the JSON is too large. This data report is separate from an annotated review PDF; native Office/cell anchors and historical rendition export remain unfinished. Production availability depends on your deployed version.
+Exports are bounded and audited. Narrow an activity filter or use CSV if the JSON is too large. This data report is separate from an annotated review PDF. Production availability depends on your deployed version.
+
+## Download an annotated review PDF
+
+The latest locally tested version adds **Allow review PDF export (PDF/images only)** to session and file policy. It is off unless explicitly enabled. Download and notes access are also required. In a permitted preview, click **Download review PDF** as the current custodian or a verified recipient.
+
+The copy combines the current PDF/image, numbered visual marks, posted/resolved notes and permitted replies. Private drafts are excluded. Source/version/preview anchors must still match. Policy watermarking applies to the review copy; the original stays unchanged.
+
+One export allows up to 20 source pages and 25 MB of output. Unsupported text, stale anchors or excess pages/size refuse the whole export. ZIP, Office files and historical renditions are excluded. The copy is a review aid, not a signing record. It is generated transiently, records download/export audit and uses the download allowance, with no extra Process. Native Office/cell export remains unfinished.
 
 ## Usage and security
 Activation for one recipient uses **1 Process**; each additional recipient adds one Process. A successful explicit reinvitation after revocation adds one new Process. Transport retries and OTP resends are not reinvitations. Files, annotations, and previews do not add the per-document Process used by [signed approval documents](/en/guides/workflow-signing).

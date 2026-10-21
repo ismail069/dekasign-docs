@@ -7,9 +7,13 @@ const object = (properties, required = []) => ({type:"object",properties,...(req
 const freeObject = {type:"object",additionalProperties:true};
 const reason = object({reason:s({minLength:5,maxLength:500})},["reason"]);
 const doc = object({document_id:s(),field_key:s(),name:s(),sign_actor_ids:{type:"array",items:s(),maxItems:20}},["document_id","field_key","name"]);
-const documents = {type:"array",items:doc,maxItems:20};
+const preparedDocument = object({prepared_instance_id:s({minLength:10,maxLength:100}),field_key:s({minLength:1,maxLength:100})},["prepared_instance_id","field_key"]);
+const documents = {type:"array",items:{oneOf:[doc,preparedDocument]},maxItems:20};
 const json = schema => ({required:true,content:{"application/json":{schema}}});
 const sender = {type:"object",additionalProperties:{oneOf:[s({maxLength:4000}),{type:"number"},{type:"boolean"}]}};
+const preparationFields = {workflow_id:s({minLength:1,maxLength:100}),workflow_release_id:s({minLength:1,maxLength:160}),field_key:s({minLength:1,maxLength:100}),sender_values:sender,expires_in_seconds:{type:"integer",minimum:60,maximum:86400,default:86400}};
+const preparationRequired = ["workflow_id","workflow_release_id","field_key"];
+const preparation = {oneOf:[object(preparationFields,preparationRequired),object({...preparationFields,request_id:s({minLength:1,maxLength:100}),expected_version:{type:"integer",minimum:1},expected_task_version:{type:"integer",minimum:1}},[...preparationRequired,"request_id","expected_version","expected_task_version"])]};
 const preview = object({template_id:s(),expires_in_days:{type:"integer",minimum:1,maximum:365},sender_values:sender,signers:{type:"array",minItems:1,maxItems:20,items:object({slot_id:s(),name:s({minLength:2,maxLength:100}),email:s({format:"email"}),phone:s({maxLength:30}),recipient_kind:s({enum:["internal","external"]})},["slot_id","name","email"])}},["template_id","expires_in_days","signers"]);
 const receipt = object({template_id:s(),preview_token:s()},["template_id","preview_token"]);
 const revision = object({expected_version:{type:"integer",minimum:1},expected_task_version:{type:"integer",minimum:1},form_data:freeObject,documents},["expected_version","expected_task_version","form_data"]);
@@ -41,6 +45,8 @@ for (const route of ["categories","approval-workflows","request-forms"]) add("PO
 add("GET","/approval-workflows/{id}/releases/{release}/submission-schema","Read pinned release schema","catalog:read");
 add("GET","/document-sign-templates/{id}/content","Read source PDF","catalog:read",{pdf:true,queries:["version"]});
 add("GET","/approval-requests","List app requests","requests:read",{list:true,queries:["status"]});
+add("POST","/approval-requests/document-preparations","Prepare a pinned workflow document","documents:write",{idempotent:true,body:preparation});
+add("GET","/approval-requests/document-preparations/{id}/content","Preview a private prepared PDF","documents:read",{pdf:true});
 add("POST","/approval-requests","Submit a request","requests:create",{created:true,idempotent:true,body:object({workflow_id:s({minLength:1,maxLength:100}),workflow_release_id:s({minLength:1,maxLength:160}),external_id:s({pattern:"^[A-Za-z0-9_.:-]{3,120}$"}),form_data:freeObject,documents,report_endpoint_id:s({minLength:1,maxLength:150}),submit:{type:"boolean",default:true}},["workflow_id","workflow_release_id","external_id","form_data"])});
 add("GET","/approval-requests/{id}","Read request status and visited steps","requests:read");
 add("GET","/approval-requests/{id}/revision-requirements","Read active revision requirements","requests:read");
@@ -49,7 +55,7 @@ add("POST","/approval-requests/{id}/resubmit","Resubmit revision","requests:revi
 add("GET","/documents","List app documents","documents:read",{list:true});
 add("GET","/documents/{id}","Read document metadata","documents:read");
 add("DELETE","/documents/{id}","Delete unused document","documents:delete",{idempotent:true,body:reason});
-add("POST","/documents","Upload one PDF","documents:write",{created:true,idempotent:true,description:"Required scope documents:write. One PDF, maximum 15 MB and 1–200 pages. Sandbox only."});
+add("POST","/documents","Upload one PDF","documents:write",{created:true,idempotent:true,description:"Required scope documents:write. One PDF, maximum 30 MB and 1–200 pages. Sandbox only."});
 paths["/api/v1/documents"].post.requestBody={required:true,content:{"multipart/form-data":{schema:object({file:s({format:"binary"}),logicalPurpose:s({enum:["ATTACHMENT","SIGNATURE_TARGET"],default:"ATTACHMENT"})},["file"])}}};
 add("POST","/documents/{id}/session","Create hosted editor session","documents:write",{body:object({purpose:s({minLength:3,maxLength:120,default:"Prepare Instance"}),expires_in_seconds:{type:"integer",minimum:60,maximum:86400,default:3600}})});
 add("DELETE","/documents/{id}/session/{sessionId}","Revoke hosted editor session","documents:write",{idempotent:true,body:object({expected_version:{type:"integer",minimum:1},reason:s({minLength:5,maxLength:500})},["expected_version","reason"])});
@@ -76,8 +82,9 @@ function receiptSchema(route,method,properties,code="200") {
  paths["/api/v1"+route][method].responses[code].content["application/json"].schema={type:"object",properties,additionalProperties:true};
 }
 for (const route of ["/categories","/request-templates","/approval-workflows","/request-forms","/document-sign-templates","/approval-requests","/documents","/signature-packages","/webhooks"]) receiptSchema(route,"get",{data:{type:"array",items:freeObject},pagination:object({page:integer,size:{type:"integer",enum:[25,50,100]},total:integer,pages:integer},["page","size","total","pages"])});
-receiptSchema("/approval-workflows/{id}/releases/{release}/submission-schema","get",{workflow_release_id:s(),signing_required:{type:"boolean"},document_signing_mode:s({enum:["request_documents"],nullable:true}),submission_supported:{type:"boolean"},submission_unavailable_reason:s({enum:["UNSUPPORTED_EXECUTION_MODEL","LEGACY_SIGNING_NOT_SUPPORTED_BY_API"],nullable:true}),fields:{type:"array",items:freeObject}});
-receiptSchema("/approval-requests","post",{id:s(),request_number:s(),external_id:s(),workflow_id:s(),workflow_release_id:s(),category_id:s(),request_template_id:s(),form_version:integer,published_version:integer,approval_status:s(),version:integer,request_revision:integer,environment:s({enum:["sandbox"]}),document_approval_mode:s({enum:["digital_only"]})},"201");
+receiptSchema("/approval-workflows/{id}/releases/{release}/submission-schema","get",{workflow_release_id:s(),signing_required:{type:"boolean"},document_signing_mode:s({enum:["request_documents"],nullable:true}),submission_supported:{type:"boolean"},submission_unavailable_reason:s({enum:["UNSUPPORTED_EXECUTION_MODEL","LEGACY_SIGNING_NOT_SUPPORTED_BY_API","LEGACY_SIGN_TEMPLATE_NOT_SUPPORTED_BY_API","EXTERNAL_ACTOR_NOT_SUPPORTED_BY_API"],nullable:true}),fields:{type:"array",items:freeObject},document_requirements:{type:"array",maxItems:20,items:freeObject}});
+receiptSchema("/approval-requests/document-preparations","post",{id:s(),prepared_instance_id:s(),field_key:s(),name:s(),expires_at:date,source_sha256:s({pattern:"^[a-f0-9]{64}$"}),signing_layout_sha256:s({pattern:"^[a-f0-9]{64}$"}),environment:s({enum:["sandbox"]}),signed:{type:"boolean",enum:[false]},prepared_content:object({method:s({enum:["GET"]}),url:s()},["method","url"])});
+receiptSchema("/approval-requests","post",{id:s(),request_number:s(),external_id:s(),workflow_id:s(),workflow_release_id:s(),category_id:s(),request_template_id:s(),form_version:integer,published_version:integer,approval_status:s(),version:integer,request_revision:integer,environment:s({enum:["sandbox"]}),document_approval_mode:s({enum:["digital_only","prepared_template"]})},"201");
 receiptSchema("/signature-packages","post",{id:s(),status:s(),expires_at:date,document_id:s(),template_version_id:s(),invitation_status:s({enum:["queued"]}),environment:s({enum:["sandbox"]}),integrity_profile:s({enum:["internal_dekasign"]})},"201");
 receiptSchema("/signature-packages/preview","post",{preview_token:s({description:"Secret frozen receipt; valid for 10 minutes. Do not log."}),template_id:s(),template_name:s(),template_version:integer,expires_at:date,preview_valid_until:date,signers:{type:"array",items:freeObject},fields:{type:"array",items:freeObject},pdf_url:s(),pdf_url_is_source:{type:"boolean",enum:[true]},prepared_pdf:object({url:s(),method:s({enum:["POST"]}),body:receipt},["url","method","body"]),notice:s()});
 receiptSchema("/signature-packages/{id}","get",{id:s(),status:s(),document_id:s(),template_version_id:s(),created_at:date,expires_at:date,expired_at:{...date,nullable:true},archived_at:{...date,nullable:true},integrity_profile:s({enum:["internal_dekasign"]}),signers:{type:"array",items:freeObject},document_versions:{type:"array",items:freeObject}});

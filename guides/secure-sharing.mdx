@@ -25,7 +25,7 @@ Pengirim menambahkan instruksi tanda tangan basah pada sumber. Penerima menandat
 ## Catatan dan anotasi
 Preview yang mendukungnya menyediakan note, pin, area, highlight, ellipse, arrow, dan freehand. Pilih **Save private draft**, lalu **Post** saat siap. Draft hanya terlihat oleh penulis. Thread penerima ditujukan kepada pengirim dan penulis; pengirim dapat memilih audience yang sudah mempunyai akses file.
 
-Reply, resolve/reopen, dan riwayat memakai versi untuk mencegah tab lama menimpa perubahan baru. Anotasi terikat pada sumber, versi, dan representasi preview. Anotasi spasial XLSX belum tersedia; gunakan file note. Anchor native sheet/cell, visual historis, dan ekspor anotasi masih terpisah.
+Reply, resolve/reopen, dan riwayat memakai versi untuk mencegah tab lama menimpa perubahan baru. Anotasi terikat pada sumber, versi, dan representasi preview. Anotasi spasial XLSX belum tersedia; gunakan file note. Anchor native sheet/cell dan visual historis masih terpisah.
 
 ## Unduh dan audit
 **Download** mengikuti izin file. Preview-only tidak menyajikan original sebagai fallback. PDF, Office dan gambar dapat diunduh sebagai salinan visual ber-watermark. ZIP dikecualikan dari watermark, termasuk pratinjau isinya; unduhan ZIP menyajikan arsip asli jika izin mengizinkan. Verifikasi, batas unduh, masa akses dan audit tetap berlaku. Salinan visual bukan original yang dapat diedit atau ekspor anotasi.
@@ -36,7 +36,15 @@ Laporan membedakan preview, download yang dilayani, upload, dan konfirmasi pener
 ## Ekspor laporan sesi
 Pada versi terbaru yang diuji lokal, pemilik sesi saat ini dapat memilih **Laporan JSON** atau **Aktivitas CSV** pada **Laporan peristiwa**. Langganan aktif dan sesi workspace terverifikasi wajib. JSON memuat metadata sesi/file, aktivitas terfilter serta catatan/riwayat yang boleh terlihat. CSV berisi aktivitas terfilter dan melindungi dari formula spreadsheet. Keduanya tidak memuat file asli, URL storage atau draft privat milik pihak lain.
 
-Ekspor dibatasi dan diaudit. Persempit filter aktivitas atau gunakan CSV jika JSON terlalu besar. Laporan data ini terpisah dari PDF tinjauan beranotasi; anchor native Office/sel dan ekspor representasi historis belum selesai. Ketersediaan production mengikuti versi yang telah dirilis.
+Ekspor dibatasi dan diaudit. Persempit filter aktivitas atau gunakan CSV jika JSON terlalu besar. Laporan data ini terpisah dari PDF tinjauan beranotasi. Ketersediaan production mengikuti versi yang telah dirilis.
+
+## Unduh PDF tinjauan beranotasi
+
+Versi terbaru yang diuji lokal menambahkan **Izinkan ekspor PDF tinjauan (PDF/gambar saja)** pada kebijakan sesi dan file. Izin ini nonaktif sampai diaktifkan secara eksplisit. Izin unduh dan catatan juga wajib. Pada preview yang diizinkan, pemilik saat ini atau penerima terverifikasi dapat memilih **Unduh PDF tinjauan**.
+
+Salinan menggabungkan PDF/gambar saat ini, tanda visual bernomor, catatan diposting/diselesaikan dan reply yang boleh terlihat. Draft privat tidak disertakan. Anchor sumber/versi/preview harus tetap sesuai. Watermark kebijakan diterapkan pada salinan tinjauan; original tetap utuh.
+
+Satu ekspor dibatasi 20 halaman sumber dan keluaran 25 MB. Teks yang tidak didukung, anchor stale atau halaman/ukuran berlebih menolak seluruh ekspor. ZIP, Office dan representasi historis tidak disertakan. Salinan membantu peninjauan, bukan bukti signing. Salinan dibuat sementara, dicatat dalam audit download/ekspor dan memakai jatah unduh, tanpa Process tambahan. Ekspor native Office/sel belum selesai.
 
 ## Pemakaian dan keamanan
 Aktivasi untuk satu penerima memakai **1 Process**; setiap penerima tambahan menambah satu Process. Undangan ulang eksplisit yang berhasil setelah revocation menambah satu Process baru. Retry transport dan kirim ulang OTP bukan reinvitation. File, anotasi, dan preview tidak menambah Process per dokumen seperti [dokumen approval yang ditandatangani](/guides/workflow-signing).

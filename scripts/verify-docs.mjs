@@ -17,7 +17,7 @@ const localePages = language => {
  visit(language);return found;
 };
 const idPages=localePages(languages[0]),enPages=localePages(languages[1]);
-assert.equal(idPages.length,27);
+assert.equal(idPages.length,28);
 assert.deepEqual(enPages,idPages.map(page=>"en/"+page),"Every Indonesian guide needs an English counterpart");
 assert.equal(languages[0].navbar.primary.label,"Buka DekaSign");
 assert.equal(languages[1].navbar.primary.label,"Open DekaSign");

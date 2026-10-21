@@ -19,11 +19,39 @@ description: "Versi rilis dan concurrency guard pengajuan ulang."
 
 ID/key contoh harus diganti dari katalog/schema. `external_id` unik per app, 3–120 karakter huruf/angka, titik, garis bawah, titik dua atau minus. `documents` opsional, harus PDF milik app yang dipetakan ke field file.
 
-`sign_actor_ids` opsional, hanya menunjuk Actor internal sah ketika workflow menerima signing per dokumen. Jalur API memakai **digital approval only**, tanpa gambar tanda tangan visual. Rilis stale, izin kurang dan runtime belum didukung ditolak.
+Untuk PDF unggahan biasa, `sign_actor_ids` opsional, hanya menunjuk Actor internal sah ketika workflow menerima signing per dokumen. Jalur dokumen biasa memakai **digital approval only**, tanpa gambar tanda tangan visual. Rilis stale, izin kurang dan runtime belum didukung ditolak.
 
 Pada implementasi terbaru, server menyimpan template persiapan digital-only yang terikat pada file dan Actor yang diminta sebelum binding pengajuan. Persiapan ini bukan consent atau bukti tanda tangan; approver tetap harus memverifikasi identitas dan meninjau dokumen. Editor form UI mempunyai alur terpisah [Save & attach to form](/guides/workflow-signing).
 
 Untuk hasil melalui webhook, `report_endpoint_id` opsional memilih endpoint terdaftar yang aktif dan diizinkan untuk app/workflow tersebut. Jika dihilangkan, default app tetap berlaku. App `get_only` tidak dapat diubah menjadi webhook lewat parameter ini. URL bebas seperti `reportURL` tidak diterima. Lihat [outgoing webhooks](/integrations/outgoing-webhooks).
+
+## Siapkan dokumen berbasis template
+
+Implementasi terbaru yang diuji lokal juga menerima dokumen tanda tangan yang disiapkan. Designer formulir harus menetapkan versi template privat dan memetakan setiap slot signer ke Actor internal workflow. Baca schema rilis untuk kebutuhan field dan input pengirim.
+
+Panggil `POST /api/v1/approval-requests/document-preparations` dengan scope `documents:write`, header environment sandbox dan **Idempotency-Key** unik:
+
+```json
+{
+  "workflow_id":"workflow-id",
+  "workflow_release_id":"workflow-id@3",
+  "field_key":"agreement",
+  "sender_values":{"reference":"PO-2026-001"},
+  "expires_in_seconds":86400
+}
+```
+
+Tinjau PDF terisi melalui `GET /api/v1/approval-requests/document-preparations/{id}/content`, memakai issuing key aktif yang sama dengan scope `documents:read` dan kewenangan persiapan (`documents:write`) yang tetap aktif. Ini pembacaan privat terautentikasi, bukan tautan preview publik. Masukkan `prepared_instance_id` yang diterima ke Submit:
+
+```json
+{"prepared_instance_id":"returned-preparation-id","field_key":"agreement"}
+```
+
+Letakkan objek tersebut dalam `documents`, satu untuk setiap field persiapan wajib. Field yang terikat template menolak `document_id` biasa dan pemetaan signer dari pemanggil. Respons memakai `document_approval_mode:"prepared_template"`; request digital-only biasa tetap `digital_only`.
+
+Persiapan mengunci byte sumber, versi template/formulir/workflow, layout field dan pemetaan Actor. Input tetap dan pengirim didukung, termasuk slot tanda tangan visual dan digital-only. Persiapan bukan tanda tangan. Reviewer tetap mengisi field, memverifikasi identitas dan memberi consent sendiri. Persiapan memakai storage; admission Process approval/signing dilakukan saat Submit. Retry yang sama tidak menambah admission.
+
+Persiapan yang belum dipakai berlaku 60–86.400 detik dan terikat ke satu request, issuing key serta requester. Akses privat saat ini dan allowlist app tetap wajib. ID belum dipakai yang kedaluwarsa, berubah, telah dipakai request lain atau lintas tenant ditolak. Template REST dinamis, field lama `sign_template` dan workflow API eksternal/paralel belum didukung pada penambahan ini. Migrasi, kredensial production dan penerimaan deployment tetap terpisah.
 
 ## Status
 `GET /approval-requests` mendukung `q`, `status`, `page`, `size`. `GET /approval-requests/{id}` memberi detail. Keduanya membutuhkan `requests:read` dan hanya menampilkan request milik app.
@@ -38,6 +66,10 @@ Ambil `GET /approval-requests/{id}/revision-requirements` ketika NEEDS_REVISION.
 ```
 
 `documents` opsional. Hanya requester app dengan tugas revisi aktif berwenang yang dapat mengubahnya. Pada konflik, baca ulang dan tinjau perubahan; jangan memaksa versi tebakan.
+
+Untuk dokumen persiapan yang dipertahankan, sertakan `prepared_instance_id` asli dan `field_key` dalam `documents`. Pemakaian ulang pada request yang sama dapat melewati TTL persiapan atau publikasi workflow baru, selama file/layout tepat masih ada pada working copy aktif (atau revisi terkirim terakhir jika belum ada working copy). Kewenangan issuing key dan kepemilikan privat template/upload saat ini tetap wajib. Referensi yang dihapus atau diganti pada working copy tidak dapat menghidupkan persiapan kedaluwarsa.
+
+Untuk menyiapkan pengganti bagi rilis lama yang dibekukan pada request, tambahkan ketiganya ke pemanggilan persiapan: `request_id`, `expected_version` dan `expected_task_version` terkini. Request harus mempunyai tugas koreksi aktif yang ditugaskan kepada requester; key juga membutuhkan `requests:revise`. Gunakan `workflow_release_id` milik request tersebut. Pengganti langsung terikat ke request itu dan tetap mempunyai expiry persiapan sendiri. Pengganti tidak dapat diajukan ke request lain. Sumber pengganti yang berbeda menambah identitas Process dokumen saat pengajuan ulang; mempertahankan sumber yang sama tidak mengulangi biayanya.
 
 `/api/v1/requests` pensiun (`410 ENDPOINT_RETIRED`). Tidak ada endpoint API key untuk approve/reject sebagai manusia.
 

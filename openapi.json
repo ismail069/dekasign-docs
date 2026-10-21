@@ -1605,12 +1605,22 @@
                       "type": "string",
                       "enum": [
                         "UNSUPPORTED_EXECUTION_MODEL",
-                        "LEGACY_SIGNING_NOT_SUPPORTED_BY_API"
+                        "LEGACY_SIGNING_NOT_SUPPORTED_BY_API",
+                        "LEGACY_SIGN_TEMPLATE_NOT_SUPPORTED_BY_API",
+                        "EXTERNAL_ACTOR_NOT_SUPPORTED_BY_API"
                       ],
                       "nullable": true
                     },
                     "fields": {
                       "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": true
+                      }
+                    },
+                    "document_requirements": {
+                      "type": "array",
+                      "maxItems": 20,
                       "items": {
                         "type": "object",
                         "additionalProperties": true
@@ -1961,7 +1971,8 @@
                     "document_approval_mode": {
                       "type": "string",
                       "enum": [
-                        "digital_only"
+                        "digital_only",
+                        "prepared_template"
                       ]
                     }
                   },
@@ -2024,31 +2035,55 @@
                   "documents": {
                     "type": "array",
                     "items": {
-                      "type": "object",
-                      "properties": {
-                        "document_id": {
-                          "type": "string"
-                        },
-                        "field_key": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "sign_actor_ids": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "document_id": {
+                              "type": "string"
+                            },
+                            "field_key": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "sign_actor_ids": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "maxItems": 20
+                            }
                           },
-                          "maxItems": 20
+                          "required": [
+                            "document_id",
+                            "field_key",
+                            "name"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prepared_instance_id": {
+                              "type": "string",
+                              "minLength": 10,
+                              "maxLength": 100
+                            },
+                            "field_key": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            }
+                          },
+                          "required": [
+                            "prepared_instance_id",
+                            "field_key"
+                          ],
+                          "additionalProperties": false
                         }
-                      },
-                      "required": [
-                        "document_id",
-                        "field_key",
-                        "name"
-                      ],
-                      "additionalProperties": false
+                      ]
                     },
                     "maxItems": 20
                   },
@@ -2073,6 +2108,340 @@
             }
           }
         }
+      }
+    },
+    "/api/v1/approval-requests/document-preparations": {
+      "post": {
+        "operationId": "post_approval_requests_document_preparations",
+        "summary": "Prepare a pinned workflow document",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Required scope: documents:write. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 160,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation result. Read fields vary by endpoint and deployment; see narrative guide.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "prepared_instance_id": {
+                      "type": "string"
+                    },
+                    "field_key": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "expires_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "source_sha256": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "signing_layout_sha256": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "environment": {
+                      "type": "string",
+                      "enum": [
+                        "sandbox"
+                      ]
+                    },
+                    "signed": {
+                      "type": "boolean",
+                      "enum": [
+                        false
+                      ]
+                    },
+                    "prepared_content": {
+                      "type": "object",
+                      "properties": {
+                        "method": {
+                          "type": "string",
+                          "enum": [
+                            "GET"
+                          ]
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "method",
+                        "url"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "documents:write",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "workflow_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "workflow_release_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 160
+                      },
+                      "field_key": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "sender_values": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "oneOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 4000
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            }
+                          ]
+                        }
+                      },
+                      "expires_in_seconds": {
+                        "type": "integer",
+                        "minimum": 60,
+                        "maximum": 86400,
+                        "default": 86400
+                      }
+                    },
+                    "required": [
+                      "workflow_id",
+                      "workflow_release_id",
+                      "field_key"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "workflow_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "workflow_release_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 160
+                      },
+                      "field_key": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "sender_values": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "oneOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 4000
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            }
+                          ]
+                        }
+                      },
+                      "expires_in_seconds": {
+                        "type": "integer",
+                        "minimum": 60,
+                        "maximum": 86400,
+                        "default": 86400
+                      },
+                      "request_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "expected_version": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "expected_task_version": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    },
+                    "required": [
+                      "workflow_id",
+                      "workflow_release_id",
+                      "field_key",
+                      "request_id",
+                      "expected_version",
+                      "expected_task_version"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/approval-requests/document-preparations/{id}/content": {
+      "get": {
+        "operationId": "get_approval_requests_document_preparations_id_content",
+        "summary": "Preview a private prepared PDF",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Required scope: documents:read. Sandbox only; app allowlists and requester authority also apply.",
+        "security": [
+          {
+            "SandboxBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Private PDF bytes.",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Stale version, active usage or idempotency conflict."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Sandbox disabled or operation temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "documents:read"
       }
     },
     "/api/v1/approval-requests/{id}": {
@@ -2331,31 +2700,55 @@
                   "documents": {
                     "type": "array",
                     "items": {
-                      "type": "object",
-                      "properties": {
-                        "document_id": {
-                          "type": "string"
-                        },
-                        "field_key": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "sign_actor_ids": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "document_id": {
+                              "type": "string"
+                            },
+                            "field_key": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "sign_actor_ids": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "maxItems": 20
+                            }
                           },
-                          "maxItems": 20
+                          "required": [
+                            "document_id",
+                            "field_key",
+                            "name"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prepared_instance_id": {
+                              "type": "string",
+                              "minLength": 10,
+                              "maxLength": 100
+                            },
+                            "field_key": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            }
+                          },
+                          "required": [
+                            "prepared_instance_id",
+                            "field_key"
+                          ],
+                          "additionalProperties": false
                         }
-                      },
-                      "required": [
-                        "document_id",
-                        "field_key",
-                        "name"
-                      ],
-                      "additionalProperties": false
+                      ]
                     },
                     "maxItems": 20
                   }
@@ -2478,31 +2871,55 @@
                   "documents": {
                     "type": "array",
                     "items": {
-                      "type": "object",
-                      "properties": {
-                        "document_id": {
-                          "type": "string"
-                        },
-                        "field_key": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "sign_actor_ids": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "document_id": {
+                              "type": "string"
+                            },
+                            "field_key": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "sign_actor_ids": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "maxItems": 20
+                            }
                           },
-                          "maxItems": 20
+                          "required": [
+                            "document_id",
+                            "field_key",
+                            "name"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prepared_instance_id": {
+                              "type": "string",
+                              "minLength": 10,
+                              "maxLength": 100
+                            },
+                            "field_key": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            }
+                          },
+                          "required": [
+                            "prepared_instance_id",
+                            "field_key"
+                          ],
+                          "additionalProperties": false
                         }
-                      },
-                      "required": [
-                        "document_id",
-                        "field_key",
-                        "name"
-                      ],
-                      "additionalProperties": false
+                      ]
                     },
                     "maxItems": 20
                   }
