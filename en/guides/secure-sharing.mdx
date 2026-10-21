@@ -10,7 +10,7 @@ This guide describes the locally tested session-first implementation. Migration,
 ## Prepare a session
 Create a session and configure recipients, expiry, and security. Upload files, inspect global policy or per-file overrides, then review recipient impact and Process usage before activation.
 
-One session has **6 active file slots**, shared by the sender and all recipients. Ordinary files allow **15 MB** each; ZIP files allow **25 MB**, using binary MB. Removing a file frees a slot while retaining audit and file lineage.
+One session has **6 active file slots**, shared by the sender and all recipients. Ordinary files allow **25 MB** each; ZIP files allow **40 MB**, using binary MB. Removing a file frees a slot while retaining audit and file lineage.
 
 ## Recipient access and uploads
 Recipients open their invitation and complete verification. Email is the default; WhatsApp or both channels apply only when configured and available. Audience, expiry, revocation, and per-file permissions still apply. A changed file version/policy may require fresh verification.
@@ -32,11 +32,24 @@ Replies, resolve/reopen, and history use versions to prevent stale tabs from ove
 
 Reports distinguish previews, downloads served, uploads, and receipt acknowledgement. Preview/download activity is recorded even if the recipient forgets to acknowledge receipt. Serving a file does not prove that its contents were read or approved.
 
+
+## Export a session report
+In the latest locally tested version, the current session custodian can choose **Report JSON** or **Activity CSV** under **Event report**. An active subscription and verified workspace session are required. The JSON includes session/file metadata, filtered activity and visible notes/history. CSV contains filtered activity and escapes spreadsheet formula prefixes. Neither contains original files, storage URLs or private drafts belonging to another person.
+
+Exports are bounded and audited. Narrow an activity filter or use CSV if the JSON is too large. This data report is separate from an annotated review PDF; native Office/cell anchors and historical rendition export remain unfinished. Production availability depends on your deployed version.
+
 ## Usage and security
 Activation for one recipient uses **1 Process**; each additional recipient adds one Process. A successful explicit reinvitation after revocation adds one new Process. Transport retries and OTP resends are not reinvitations. Files, annotations, and previews do not add the per-document Process used by [signed approval documents](/en/guides/workflow-signing).
 
 Account and tenant isolation still apply. Server/database/storage operators can potentially read content in the current system. Encryption with keys outside operator control and automated dormant-data retention remain planned. Subscription inactivity does not automatically delete documents.
 
-The approved retention rule is **210 days after the last paid subscription coverage ends**. For verified never-paid organizations, the period starts at **trial end**. Three notices are planned two months, one month, and three days before deletion. The local implementation stores evidence/schedules and cancels old schedules on renewal; notification delivery, automatic purge and production migration are not active. Unclear payment/trial history requires review.
+The approved retention policy separates uploaded content from the account:
+
+| Organization | Uploaded content, including final signed PDFs | Account, configuration, workflows and templates |
+|---|---|---|
+| Verified never-paid trial | 60 days after trial ends | Four calendar months after trial ends |
+| Paid organization | Four calendar months after paid coverage expires | One calendar year after paid coverage expires |
+
+Audit and document verification evidence remain indefinitely; final PDF bytes are deleted with other content. Each content/account deadline has its own notices one calendar month, 14 days and three days before deletion. Verified renewal invalidates the old schedule. Missing history, notices or an active hold blocks deletion. Local notice and guarded content-purge workers have been tested; production switches remain off. Account deletion, backup expiry and live R2 acceptance remain open.
 
 The tenant-key architecture and configuration checker are prepared. Independent infrastructure and protected processing are not available yet, so configuring a manifest does not make documents unreadable to operators.

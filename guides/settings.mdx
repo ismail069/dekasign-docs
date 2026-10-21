@@ -10,7 +10,7 @@ Pada implementasi lokal terbaru, **Settings → Account security** menampilkan m
 
 Untuk memakai authenticator, login ulang jika sesi sudah melewati lima menit, pilih **Set up authenticator**, verifikasi password jika akun memilikinya, lalu pindai QR. Simpan sepuluh recovery code secara pribadi dan konfirmasikan dengan kode authenticator. Email OTP tetap berlaku sampai konfirmasi berhasil. Aktivasi mencabut sesi lama; login berikutnya memakai TOTP atau satu recovery code. Email OTP tidak menjadi pilihan cadangan selama TOTP aktif.
 
-Untuk kembali ke Email OTP, pilih **Switch to Email OTP**, masukkan password jika diperlukan dan kode authenticator terbaru atau recovery code yang belum dipakai. Pergantian mencabut authenticator, recovery code dan semua sesi; login kembali dengan OTP email. Transfer kepemilikan dokumen masih belum tersedia dalam increment ini.
+Untuk kembali ke Email OTP, pilih **Switch to Email OTP**, masukkan password jika diperlukan dan kode authenticator terbaru atau recovery code yang belum dipakai. Pergantian mencabut authenticator, recovery code dan semua sesi; login kembali dengan OTP email.
 
 ## Pemulihan MFA oleh Owner
 Pada implementasi lokal terbaru, Owner membuka **Settings → User management → Recover MFA** pada anggota yang kehilangan ponsel dan recovery code. Login Owner harus sudah diverifikasi dengan MFA dalam lima menit terakhir. Pilih **Review recovery**, periksa email anggota, isi alasan, ketik email tersebut dan verifikasi password Owner jika akun memilikinya.
@@ -26,7 +26,11 @@ Implementasi lokal terbaru menambahkan **Settings → User management → Review
 
 Tinjauan menampilkan jumlah dokumen dan versi, templat/paket tanda tangan, unggahan formulir dan sesi berbagi, termasuk unggahan penerima serta riwayat file yang dihapus. Konflik kepemilikan dan approval/request yang masih aktif ditandai. Jumlah dapat saling mencakup antara versi dan sumber daya induknya. Mengganti akun penerima mengosongkan hasil tinjauan sebelumnya.
 
-Inventaris ini hanya untuk ditinjau: tidak memberi akses file maupun memindahkan kepemilikan, mereset MFA atau mengganti approver/signer. Konfirmasi pemindahan kepemilikan dan Email OTP setelah transfer belum tersedia pada tahap ini.
+Tinjauan saja tidak mengubah data. Jika pemindahan tersedia, isi alasan dan email penerima, verifikasi password Owner jika ada, centang konfirmasi perubahan akun, lalu pilih **Konfirmasi serah terima dokumen**. Tinjauan berakhir setelah sepuluh menit; penerima atau inventaris yang berubah memerlukan tinjauan baru. Konflik kepemilikan atau kebijakan dokumen yang tidak sesuai menghalangi pemindahan.
+
+Konfirmasi memindahkan kepemilikan saat ini, menangguhkan anggota lama dan mencabut sesi/authenticator lama kedua akun. Penerima login kembali dengan Email OTP. Identitas pengunggah/pengirim asli, tanda tangan, keputusan dan audit tidak berubah. Penugasan approval serta identitas requester tidak dipindahkan. Retry yang sama mengembalikan bukti awal tanpa mereset authenticator yang diaktifkan setelahnya.
+
+**Dokumen saya** tersedia untuk semua role workspace bagi file milik Anda, termasuk hasil serah terima. Menu ini tidak memberi akses ke Request atau approval milik orang lain. Role Owner/Admin saja tidak memberi akses file privat. Serah terima production tetap nonaktif sampai migrasi dan penerimaan rilis selesai; penghapusan konten anggota masih menjadi fitur terpisah yang belum selesai.
 
 ## Pengaturan organisasi
 Owner membuka bagian **Organization** pada Settings. Isi nama organisasi, domain email yang sah, logo dan warna tema. Preview logo/warna sebelum menyimpan. Domain email digunakan untuk klasifikasi penerima internal/eksternal; label internal bukan bukti kewenangan hukum.

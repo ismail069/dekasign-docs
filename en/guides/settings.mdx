@@ -10,7 +10,7 @@ In the latest local implementation, **Settings → Account security** shows your
 
 To use an authenticator, sign in again if your session is older than five minutes, select **Set up authenticator**, verify your password if your account has one, and scan the QR. Save ten recovery codes privately and confirm an authenticator code. Email OTP remains active until confirmation succeeds. Enrollment revokes old sessions; subsequent sign-in uses TOTP or one recovery code. Email OTP is unavailable as a fallback while TOTP is active.
 
-To return to Email OTP, select **Switch to Email OTP**, provide your password if required, and enter a fresh authenticator code or an unused recovery code. Switching revokes the authenticator, recovery codes and all sessions; sign in again with Email OTP. Document ownership transfer remains unavailable in this increment.
+To return to Email OTP, select **Switch to Email OTP**, provide your password if required, and enter a fresh authenticator code or an unused recovery code. Switching revokes the authenticator, recovery codes and all sessions; sign in again with Email OTP.
 
 ## Owner-assisted MFA recovery
 In the latest local implementation, the Owner opens **Settings → User management → Recover MFA** for a member who lost their phone and recovery codes. The Owner's sign-in must have completed MFA within the last five minutes. Select **Review recovery**, check the member's email, enter a reason, type that email and verify the Owner password if the account has one.
@@ -26,7 +26,11 @@ The latest local implementation adds **Settings → User management → Review d
 
 The review lists counts for documents and versions, signing templates/packages, form uploads and sharing sessions, including receiver uploads and removed-file history. It flags conflicting ownership and pending approval/request work. Counts can overlap across versions and parent resources. Changing the receiving account clears the previous review.
 
-This is a read-only inventory: it grants no file access and does not transfer ownership, reset MFA or replace approvers/signers. Confirmed ownership handover and post-transfer Email OTP remain unavailable in this increment.
+Reviewing alone changes nothing. When transfer is available, enter the reason and receiving email, verify your Owner password if configured, acknowledge the account changes, then choose **Confirm document handover**. The review expires after ten minutes; changing the recipient or inventory requires a fresh review. Conflicting ownership or incompatible document policy blocks transfer.
+
+Confirmation transfers current custody, suspends the former member and revokes both accounts' old sessions/authenticators. The recipient signs in again with Email OTP. Original uploader/sender, signatures, decisions and audit identities remain unchanged. Approval assignments and requester identity are not transferred. Exact retry returns the original receipt without resetting a later authenticator.
+
+**My documents** is available to all workspace roles for files you own, including reviewed handovers. It does not grant access to someone else's Request or approvals. Owner/Admin role alone grants no private file access. Production handover remains disabled until its migration and release acceptance are complete; member-content deletion is a separate unfinished feature.
 
 ## Organization settings
 The Owner opens **Organization** in Settings. Enter the organization name and authorized email domain, upload a logo, and choose theme colors. Preview branding before saving. The email domain classifies internal/external recipients; an internal label is not proof of legal authority.

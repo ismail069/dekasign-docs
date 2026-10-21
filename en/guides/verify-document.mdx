@@ -1,0 +1,22 @@
+---
+title: "Verify document integrity"
+description: "Check a final DekaSign PDF without sending its contents."
+---
+
+<Note>This guide describes the locally tested implementation. Availability depends on your deployed version.</Note>
+
+## Check a PDF
+Open **Verify document** in the workspace sidebar, or the public verification page. The public page defaults to English when no language preference is saved; use the ID/EN switch to change language.
+
+Choose the final PDF and select **Verify document**. Verification accepts PDFs up to **40 MB** because evidence and seal pages can enlarge a signed output. Source uploads for standalone Document Sign, Request Form signing and Platform API remain **30 MB**.
+
+The browser parses the PDF and calculates its SHA-256 fingerprint on your device. The server receives only the minimal evidence reference and fingerprints. The PDF and its filename are not uploaded or stored by this check.
+
+## Understand the result
+A successful result means the submitted file fingerprint and its supported DekaSign evidence match the retained record. DekaSign uses document hashes and Ed25519 attestations. A modified PDF, missing proof, unsupported evidence or unavailable record cannot receive a successful integrity result.
+
+The **DekaSign Document Seal** identifies the document evidence. **Verified by DekaSign** appears on a protected completed-document review only after successful server verification. Artwork alone is not the verification mechanism. This check does not establish an independent signer certificate or trusted third-party timestamp.
+
+The public result does not disclose tenant identities, signer details, document contents or storage locations. Retained audit and verification evidence can support a later integrity check after file retention removes the stored final PDF. You must keep your own copy of the file you want to verify.
+
+See [Document Sign](/en/guides/document-sign) and [Secure Document Sharing](/en/guides/secure-sharing) for signing and retention boundaries.

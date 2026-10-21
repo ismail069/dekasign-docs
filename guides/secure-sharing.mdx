@@ -10,7 +10,7 @@ Panduan ini menjelaskan implementasi session-first yang diuji lokal. Migrasi, ri
 ## Siapkan sesi
 Buat sesi, atur penerima, masa berlaku, dan keamanan. Unggah file, periksa kebijakan global atau override per file, lalu tinjau dampak penerima dan pemakaian Process sebelum aktivasi.
 
-Satu sesi mempunyai **6 slot file aktif**, dipakai bersama oleh pengirim dan seluruh penerima. File biasa maksimal **15 MB**, ZIP maksimal **25 MB**, memakai MB biner. Menghapus file membebaskan slot; audit dan hubungan file tetap dipertahankan.
+Satu sesi mempunyai **6 slot file aktif**, dipakai bersama oleh pengirim dan seluruh penerima. File biasa maksimal **25 MB**, ZIP maksimal **40 MB**, memakai MB biner. Menghapus file membebaskan slot; audit dan hubungan file tetap dipertahankan.
 
 ## Akses dan upload penerima
 Penerima membuka undangan dan melakukan verifikasi. Email adalah default; WhatsApp atau kedua kanal hanya dipakai bila dikonfigurasi dan tersedia. Audience, expiry, revocation, dan izin per file tetap diperiksa. Perubahan versi/kebijakan file dapat memerlukan verifikasi ulang.
@@ -32,11 +32,24 @@ Reply, resolve/reopen, dan riwayat memakai versi untuk mencegah tab lama menimpa
 
 Laporan membedakan preview, download yang dilayani, upload, dan konfirmasi penerimaan. Preview/download tetap dicatat bila penerima lupa melakukan konfirmasi. Penyajian file bukan bukti bahwa isinya telah dibaca atau disetujui.
 
+
+## Ekspor laporan sesi
+Pada versi terbaru yang diuji lokal, pemilik sesi saat ini dapat memilih **Laporan JSON** atau **Aktivitas CSV** pada **Laporan peristiwa**. Langganan aktif dan sesi workspace terverifikasi wajib. JSON memuat metadata sesi/file, aktivitas terfilter serta catatan/riwayat yang boleh terlihat. CSV berisi aktivitas terfilter dan melindungi dari formula spreadsheet. Keduanya tidak memuat file asli, URL storage atau draft privat milik pihak lain.
+
+Ekspor dibatasi dan diaudit. Persempit filter aktivitas atau gunakan CSV jika JSON terlalu besar. Laporan data ini terpisah dari PDF tinjauan beranotasi; anchor native Office/sel dan ekspor representasi historis belum selesai. Ketersediaan production mengikuti versi yang telah dirilis.
+
 ## Pemakaian dan keamanan
 Aktivasi untuk satu penerima memakai **1 Process**; setiap penerima tambahan menambah satu Process. Undangan ulang eksplisit yang berhasil setelah revocation menambah satu Process baru. Retry transport dan kirim ulang OTP bukan reinvitation. File, anotasi, dan preview tidak menambah Process per dokumen seperti [dokumen approval yang ditandatangani](/guides/workflow-signing).
 
 Isolasi account/tenant tetap berlaku. Operator server/database/storage saat ini masih berpotensi membaca konten. Enkripsi dengan kunci di luar kendali operator dan dormant-data retention otomatis masih direncanakan. Langganan tidak aktif tidak otomatis menghapus dokumen.
 
-Aturan retensi yang disetujui adalah **210 hari setelah masa langganan berbayar terakhir berakhir**. Untuk organisasi yang terverifikasi belum pernah membayar, hitungan dimulai saat **trial berakhir**. Tiga notifikasi direncanakan dua bulan, satu bulan, dan tiga hari sebelum penghapusan. Implementasi lokal sudah menyimpan bukti/jadwal dan membatalkan jadwal lama saat renewal; pengiriman notifikasi, purge otomatis dan migrasi production belum aktif. Riwayat pembayaran/trial yang belum jelas memerlukan peninjauan.
+Kebijakan retensi yang disetujui memisahkan file dari data akun:
+
+| Organisasi | File upload, termasuk PDF final bertanda tangan | Akun, konfigurasi, workflow dan template |
+|---|---|---|
+| Trial yang terverifikasi belum pernah membayar | 60 hari setelah trial berakhir | Empat bulan kalender setelah trial berakhir |
+| Organisasi berbayar | Empat bulan kalender setelah paket berbayar berakhir | Satu tahun kalender setelah paket berbayar berakhir |
+
+Audit dan bukti verifikasi dokumen tetap tersimpan tanpa batas waktu; file PDF final ikut dihapus bersama file lain. Setiap tenggat file/akun memiliki notifikasi satu bulan kalender, 14 hari dan tiga hari sebelumnya. Renewal terverifikasi membatalkan jadwal lama. Riwayat/notifikasi yang belum lengkap atau hold aktif menghalangi penghapusan. Worker notifikasi dan purge file terkontrol sudah diuji lokal; switch production tetap nonaktif. Penghapusan akun, expiry backup dan penerimaan R2 nyata masih terbuka.
 
 Rancangan dan pemeriksa konfigurasi kunci tenant telah disiapkan. Infrastruktur dan pemrosesan terlindungi belum tersedia, sehingga konfigurasi tersebut belum membuat operator tidak dapat membaca dokumen.

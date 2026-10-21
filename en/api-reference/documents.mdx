@@ -6,7 +6,7 @@ List/read with `GET /api/v1/documents` and `/documents/{id}` using `documents:re
 
 ## Upload
 `POST /api/v1/documents` requires `documents:write`, an idempotency key, and multipart form-data:
-- `file`: exactly one PDF, maximum 15 MB, 1–200 pages.
+- `file`: exactly one PDF, maximum 30 MB, 1–200 pages.
 - `logicalPurpose`: `ATTACHMENT` (default) or `SIGNATURE_TARGET`.
 
 ```bash

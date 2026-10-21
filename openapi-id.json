@@ -2658,7 +2658,7 @@
         "tags": [
           "documents"
         ],
-        "description": "Memerlukan scope documents:write. Tepat satu PDF, maksimum 15 MB dan 1–200 halaman. Hanya sandbox.",
+        "description": "Memerlukan scope documents:write. Tepat satu PDF, maksimum 30 MB dan 1–200 halaman. Hanya sandbox.",
         "security": [
           {
             "SandboxBearer": []

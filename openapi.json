@@ -2658,7 +2658,7 @@
         "tags": [
           "documents"
         ],
-        "description": "Required scope documents:write. One PDF, maximum 15 MB and 1–200 pages. Sandbox only.",
+        "description": "Required scope documents:write. One PDF, maximum 30 MB and 1–200 pages. Sandbox only.",
         "security": [
           {
             "SandboxBearer": []
