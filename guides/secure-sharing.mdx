@@ -36,3 +36,7 @@ Laporan membedakan preview, download yang dilayani, upload, dan konfirmasi pener
 Aktivasi untuk satu penerima memakai **1 Process**; setiap penerima tambahan menambah satu Process. Undangan ulang eksplisit yang berhasil setelah revocation menambah satu Process baru. Retry transport dan kirim ulang OTP bukan reinvitation. File, anotasi, dan preview tidak menambah Process per dokumen seperti [dokumen approval yang ditandatangani](/guides/workflow-signing).
 
 Isolasi account/tenant tetap berlaku. Operator server/database/storage saat ini masih berpotensi membaca konten. Enkripsi dengan kunci di luar kendali operator dan dormant-data retention otomatis masih direncanakan. Langganan tidak aktif tidak otomatis menghapus dokumen.
+
+Aturan retensi yang disetujui adalah **210 hari setelah masa langganan berbayar terakhir berakhir**. Untuk organisasi yang terverifikasi belum pernah membayar, hitungan dimulai saat **trial berakhir**. Tiga notifikasi direncanakan dua bulan, satu bulan, dan tiga hari sebelum penghapusan. Implementasi lokal sudah menyimpan bukti/jadwal dan membatalkan jadwal lama saat renewal; pengiriman notifikasi, purge otomatis dan migrasi production belum aktif. Riwayat pembayaran/trial yang belum jelas memerlukan peninjauan.
+
+Rancangan dan pemeriksa konfigurasi kunci tenant telah disiapkan. Infrastruktur dan pemrosesan terlindungi belum tersedia, sehingga konfigurasi tersebut belum membuat operator tidak dapat membaca dokumen.

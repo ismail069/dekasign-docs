@@ -36,3 +36,7 @@ Reports distinguish previews, downloads served, uploads, and receipt acknowledge
 Activation for one recipient uses **1 Process**; each additional recipient adds one Process. A successful explicit reinvitation after revocation adds one new Process. Transport retries and OTP resends are not reinvitations. Files, annotations, and previews do not add the per-document Process used by [signed approval documents](/en/guides/workflow-signing).
 
 Account and tenant isolation still apply. Server/database/storage operators can potentially read content in the current system. Encryption with keys outside operator control and automated dormant-data retention remain planned. Subscription inactivity does not automatically delete documents.
+
+The approved retention rule is **210 days after the last paid subscription coverage ends**. For verified never-paid organizations, the period starts at **trial end**. Three notices are planned two months, one month, and three days before deletion. The local implementation stores evidence/schedules and cancels old schedules on renewal; notification delivery, automatic purge and production migration are not active. Unclear payment/trial history requires review.
+
+The tenant-key architecture and configuration checker are prepared. Independent infrastructure and protected processing are not available yet, so configuring a manifest does not make documents unreadable to operators.
