@@ -10,7 +10,14 @@ Pada implementasi lokal terbaru, **Settings → Account security** menampilkan m
 
 Untuk memakai authenticator, login ulang jika sesi sudah melewati lima menit, pilih **Set up authenticator**, verifikasi password jika akun memilikinya, lalu pindai QR. Simpan sepuluh recovery code secara pribadi dan konfirmasikan dengan kode authenticator. Email OTP tetap berlaku sampai konfirmasi berhasil. Aktivasi mencabut sesi lama; login berikutnya memakai TOTP atau satu recovery code. Email OTP tidak menjadi pilihan cadangan selama TOTP aktif.
 
-Untuk kembali ke Email OTP, pilih **Switch to Email OTP**, masukkan password jika diperlukan dan kode authenticator terbaru atau recovery code yang belum dipakai. Pergantian mencabut authenticator, recovery code dan semua sesi; login kembali dengan OTP email. Pemulihan MFA oleh Owner dan transfer kepemilikan masih belum tersedia dalam increment ini.
+Untuk kembali ke Email OTP, pilih **Switch to Email OTP**, masukkan password jika diperlukan dan kode authenticator terbaru atau recovery code yang belum dipakai. Pergantian mencabut authenticator, recovery code dan semua sesi; login kembali dengan OTP email. Transfer kepemilikan dokumen masih belum tersedia dalam increment ini.
+
+## Pemulihan MFA oleh Owner
+Pada implementasi lokal terbaru, Owner membuka **Settings → User management → Recover MFA** pada anggota yang kehilangan ponsel dan recovery code. Login Owner harus sudah diverifikasi dengan MFA dalam lima menit terakhir. Pilih **Review recovery**, periksa email anggota, isi alasan, ketik email tersebut dan verifikasi password Owner jika akun memilikinya.
+
+Konfirmasi mengganti authenticator anggota menjadi Email OTP serta mencabut kunci, recovery code dan sesi lama. Anggota login kembali menggunakan kredensial miliknya dan kode pada email terdaftar. Pemulihan tidak mengganti email/password, status anggota, izin atau kepemilikan dokumen; Owner tidak mendapat akses dokumen melalui tindakan ini. Tindakan dicatat atomik dalam audit. Jika hasil belum pasti, **Retry same recovery** mengulangi perintah yang sama.
+
+Pemulihan terbatas pada workspace Owner. Admin, identitas tamu dan akun lama yang masih terdaftar di beberapa workspace tidak dapat diproses melalui alur ini. Akun Anda sendiri memakai pemulihan pribadi pada Account security. Migrasi dan penerapan produksi tetap memerlukan verifikasi rilis.
 
 <Note>Alur ini telah diuji di server lokal dan browser desktop/mobile. Migrasi database lama, kesiapan SMTP autentikasi operator dan penerapan produksi masih harus diselesaikan. Kanal OTP login terpisah dari kanal notifikasi organisasi.</Note>
 

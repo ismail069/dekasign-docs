@@ -10,7 +10,14 @@ In the latest local implementation, **Settings → Account security** shows your
 
 To use an authenticator, sign in again if your session is older than five minutes, select **Set up authenticator**, verify your password if your account has one, and scan the QR. Save ten recovery codes privately and confirm an authenticator code. Email OTP remains active until confirmation succeeds. Enrollment revokes old sessions; subsequent sign-in uses TOTP or one recovery code. Email OTP is unavailable as a fallback while TOTP is active.
 
-To return to Email OTP, select **Switch to Email OTP**, provide your password if required, and enter a fresh authenticator code or an unused recovery code. Switching revokes the authenticator, recovery codes and all sessions; sign in again with Email OTP. Owner-assisted MFA recovery and ownership transfer are not available in this increment.
+To return to Email OTP, select **Switch to Email OTP**, provide your password if required, and enter a fresh authenticator code or an unused recovery code. Switching revokes the authenticator, recovery codes and all sessions; sign in again with Email OTP. Document ownership transfer remains unavailable in this increment.
+
+## Owner-assisted MFA recovery
+In the latest local implementation, the Owner opens **Settings → User management → Recover MFA** for a member who lost their phone and recovery codes. The Owner's sign-in must have completed MFA within the last five minutes. Select **Review recovery**, check the member's email, enter a reason, type that email and verify the Owner password if the account has one.
+
+Confirmation switches the member's authenticator to Email OTP and revokes the old keys, recovery codes and sessions. The member signs in again with their own credentials and a code at their registered email. Recovery preserves email/password, member status, permissions and document ownership; it grants the Owner no document access. The action is audited atomically. If the result is uncertain, **Retry same recovery** repeats the exact command.
+
+Recovery is limited to the Owner's workspace. Admins, guest identities and legacy accounts still registered in multiple workspaces cannot use this flow. Use personal recovery under Account security for your own account. Migration and production rollout still require release verification.
 
 <Note>This flow has been tested on a local server and desktop/mobile browsers. Retained database migration, operator authentication SMTP readiness and production rollout remain pending. Sign-in OTP delivery is separate from organization notification channels.</Note>
 
