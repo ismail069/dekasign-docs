@@ -20,17 +20,57 @@ The Owner opens **Notification channels**, selects **Add channel / SMTP**, names
 | SMTP_FROM_NAME | Organization name |
 | SMTP_FROM_EMAIL | notifications@example.com |
 
-Save, send a test to an inbox you control, inspect the result, then activate. Configuration changes clear tested/active status. Port 25, disabled TLS, and private hosts are not supported by this secure configuration.
+Save, select **Test connection**, inspect the result, then activate. The SMTP test checks the connection without sending a message. Configuration changes clear tested/active status. Port 25, disabled TLS, and private hosts are not supported.
 
-## WhatsApp
-Select **WatZap**, **Convia**, **Wati**, **Bird**, or general REST. Enter provider credentials, sender identity, approved template/language/variables, and the destination number with country code. Configure mapping, test an authorized number, then activate.
+## Connect WhatsApp without JSON
 
-Providers have their own charges, template approvals, and messaging rules. Connector documentation does not approve your template. The release does not claim every provider has been tested with a real account.
+As Owner, open **Management → Notification channels → Add channel**, then choose **Wati**, **Convia**, or **Bird**. Prepare your provider account and WhatsApp-approved templates first.
 
-## General REST and Bird email
-Choose **Email** or **WhatsApp**, name the channel, and configure the public HTTPS endpoint, authentication, headers, and JSON body. Map the destination to the correct email/phone parameter and the message to its body parameter. Use variables offered by the UI; do not send unnecessary customer data.
+<Steps>
+  <Step title="Enter the connection">
+    Name your channel and enter the API key. Wati also requires its connected sender number with country code, digits only, such as `6281234567890`. Convia offers an optional Sender ID. Bird uses a workspace API key starting with `bk_`, not a `bm_` master key; workspace-owned templates require a sender number with `+`, such as `+6281234567890`.
+  </Step>
+  <Step title="Test and get templates">
+    Click **Test & get templates**. DekaSign checks API access and retrieves the provider's template list. If it is empty, create and approve a template with the provider first, then retry. Search templates by name or language.
+  </Step>
+  <Step title="Select and review details">
+    Select an **APPROVED** template. DekaSign retrieves that template's details and shows a message illustration, header, body, footer, buttons, and required parameter count. Unsupported components show an explanation and prevent saving.
+  </Step>
+  <Step title="Save the verified channel">
+    Click **Save verified channel** after list and detail verification succeeds. The saved channel is active. Your API key is encrypted and never displayed again. When editing, leave the API key blank to keep it or enter a replacement, then test again.
+  </Step>
+</Steps>
 
-Endpoints must use HTTPS without private hosts or secrets in the URL. Store credentials in the dedicated fields. A successful test is required before activation. See [integrations and webhooks](/en/integrations/outgoing-webhooks).
+<Note>
+**Test & get templates** only reads the catalog and details. HTTP 200 verifies API access; it sends no message and does not prove delivery or reading. Your provider sets its own fees, quotas, and template approval rules.
+</Note>
+
+WatZap does not currently offer guided template setup in DekaSign. Its provider screen explains this limitation. Use **Custom API** when the provider documents the API you need. Existing channels remain available; review them before using them in new designs.
+
+## WhatsApp parameters and media
+
+On the canvas, select the **Notification** element, choose **Phone number** as recipient type, then select your WhatsApp channel. Choose a template and fill each required parameter using **Enter a value** or **Workflow parameter**. Controls follow the selected template; you do not write a JSON payload.
+
+| Template component | Value to provide |
+|---|---|
+| Header/body placeholder | Fixed text or a workflow parameter value. |
+| Image, video, or document header | A public HTTPS URL for the matching media type. |
+| Dynamic URL button | The value replacing the dynamic part of the provider-approved URL. |
+| Static footer/button | Preserved from the provider template design. |
+
+Your provider must be able to read media URLs without a DekaSign login. Do not use private DekaSign document URLs, private network URLs, or credentials in a URL. Choose media you are authorized to share. Private files are not automatically made public. WhatsApp recipients need a registered or mapped organization phone number.
+
+If a template changes, select it again and review parameter mappings before **Publish**. Carousel, Flow, authentication, and other unsupported components cannot be forced into a plain-text template.
+
+## Email content on the canvas
+
+Select **Email** and a delivery channel in the **Notification** element. Choose your content source:
+
+- **DekaSign default**: use the built-in message design.
+- **Message Template**: select a published template version available to the workflow category.
+- **Manual**: enter a subject and message in **Plain text** or **HTML** mode.
+
+Use the offered parameters and inspect **Preview**. HTML is still checked for safety; scripts are not supported. Content selection does not change the recipient or document access permissions. See [Approval Workflow Engine](/en/guides/approval-workflows) and [Email Studio](/en/guides/email-studio).
 
 ## Custom API: Email or Phone number
 Open **Management → Notification channels** as Owner. Choose **Email** or **Phone number** so the canvas Notification element offers channels matching its recipient type. Channels are outbound only; success means provider acceptance, not proof of reading.

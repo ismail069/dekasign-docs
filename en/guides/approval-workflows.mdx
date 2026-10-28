@@ -28,6 +28,31 @@ Direct Manager resolves the **requester’s** manager, including an Owner reques
 
 Optional Operation Task Conditions choose All Staff or one/multiple Specific Staff. The category follows the workflow. See [Operation Task](/en/guides/operation-tasks).
 
+## Configure the Notification element
+
+Prepare the channel in **Management → Notification channels** first. Select a **Notification** element on the canvas, then configure **Recipient type**, **Delivery channel**, and **Recipient**. **Email** offers email channels; **Phone number** offers phone and WhatsApp channels. Choose the requester or current approver as recipient.
+
+### WhatsApp
+
+1. Choose a verified Wati, Convia, or Bird WhatsApp channel.
+2. Search and select an **APPROVED** template. Details are retrieved when selected.
+3. Review the header, body, footer, buttons, and required parameter count in the message illustration.
+4. Fill each parameter using **Enter a value** or choose a **Workflow parameter** available to this workflow.
+5. Supply a public HTTPS URL accessible to the provider for image, video, or document headers. Do not use private DekaSign document URLs.
+6. Review all mappings before saving and **Publish**.
+
+Guided WhatsApp channels require no JSON configuration. Complete missing parameters, review changed templates, and replace unsupported components before publishing. Dynamic URL buttons only fill the variable part of a provider-approved URL.
+
+### Email
+
+Choose **DekaSign default**, **Message Template**, or **Manual** content. Message Template uses a published version available to the workflow category. Manual provides a subject and **Plain text** or **HTML** mode. Use the offered parameters and open **Preview**; HTML must not contain scripts.
+
+<Note>
+The WhatsApp catalog test verifies access and template details without sending a message. Notifications run through the queue without waiting for proof of receipt. A successful provider response means acceptance, not delivery or reading. Inspect **Delivery logs** for sending attempts and responses.
+</Note>
+
+See [Notification channels](/en/guides/notification-channels) for provider connections, API key replacement, media, and Custom API.
+
 ## Save, Publish and Logging
 Save stores a draft, Validate checks configuration/connections, and Sandbox uses test data with node name/ID traces. Publish creates a version for new submissions. Then create/publish a [Request Form Template](/en/guides/request-form-templates).
 

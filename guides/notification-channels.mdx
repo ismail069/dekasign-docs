@@ -19,17 +19,57 @@ Owner membuka **Notification channels**, memilih **Add channel / SMTP**, memberi
 | SMTP_FROM_NAME | Nama organisasi |
 | SMTP_FROM_EMAIL | notifications@example.com |
 
-Simpan, kirim test ke inbox yang Anda kendalikan, periksa hasil, lalu aktifkan. Mengubah konfigurasi menghapus status teruji/aktif. Port 25, TLS yang dimatikan dan host privat tidak didukung oleh pengaturan aman ini.
+Simpan, pilih **Test connection**, periksa hasil, lalu aktifkan. Uji SMTP memeriksa koneksi tanpa mengirim pesan. Mengubah konfigurasi menghapus status teruji/aktif. Port 25, TLS yang dimatikan dan host privat tidak didukung.
 
-## WhatsApp
-Pilih kartu **WatZap**, **Convia**, **Wati**, **Bird**, atau REST umum. Masukkan akun/credential provider, identitas pengirim, template/language/variabel yang disetujui provider, dan nomor tujuan berformat kode negara. Konfigurasikan pemetaan, test ke nomor yang sah, lalu aktifkan.
+## Hubungkan WhatsApp tanpa JSON
 
-Provider mempunyai biaya, persetujuan template dan aturan pesan sendiri. Dokumentasi konektor tidak berarti template Anda sudah disetujui. Rilis tidak menjanjikan semua provider telah diuji dengan akun nyata.
+Owner membuka **Management → Notification channels → Add channel**, lalu memilih **Wati**, **Convia**, atau **Bird**. Siapkan akun provider dan template yang sudah disetujui WhatsApp.
 
-## REST umum dan Bird email
-Pilih jenis **Email** atau **WhatsApp**, beri nama, masukkan endpoint HTTPS publik, metode autentikasi, header dan JSON body. Petakan tujuan ke parameter email atau phone yang tepat dan pesan ke message body. Gunakan parameter yang ditawarkan UI; jangan mengirim seluruh data pelanggan tanpa kebutuhan.
+<Steps>
+  <Step title="Isi koneksi">
+    Beri nama channel, lalu masukkan API key. Wati juga memerlukan nomor pengirim termasuk kode negara dalam format angka, misalnya `6281234567890`. Convia menyediakan Sender ID opsional. Bird memakai API key workspace `bk_`, bukan master key `bm_`; template milik workspace memerlukan nomor pengirim dengan `+`, misalnya `+6281234567890`.
+  </Step>
+  <Step title="Uji dan ambil daftar template">
+    Klik **Test & get templates**. DekaSign memeriksa akses API dan mengambil daftar template dari provider. Jika daftar kosong, buat dan setujui template di provider terlebih dahulu, lalu ulangi. Anda dapat mencari template berdasarkan nama atau bahasa.
+  </Step>
+  <Step title="Pilih dan tinjau detail">
+    Pilih template berstatus **APPROVED**. DekaSign mengambil detail template tersebut, lalu menampilkan ilustrasi pesan, header, body, footer, tombol, dan jumlah parameter wajib. Komponen yang belum didukung menampilkan penjelasan dan mencegah penyimpanan.
+  </Step>
+  <Step title="Simpan channel terverifikasi">
+    Klik **Save verified channel** setelah uji daftar dan detail berhasil. Channel tersimpan dan aktif. API key disimpan terenkripsi dan tidak ditampilkan lagi. Saat mengedit, kosongkan API key untuk memakai key tersimpan atau isi key baru untuk menggantinya, lalu uji ulang.
+  </Step>
+</Steps>
 
-Endpoint harus HTTPS, tanpa host privat atau secret di URL. Simpan credential di field khusus. Test harus diterima sebelum aktivasi. Lihat [integrasi dan webhook](/integrations/outgoing-webhooks).
+<Note>
+**Test & get templates** hanya membaca katalog dan detail. Respons HTTP 200 memverifikasi akses API; langkah ini tidak mengirim pesan dan tidak membuktikan pesan sampai atau dibaca. Provider mempunyai biaya, kuota, serta persetujuan template sendiri.
+</Note>
+
+WatZap belum menyediakan alur template terpandu dalam DekaSign. Halaman provider menjelaskan keterbatasannya. Anda dapat memakai **Custom API** jika API provider yang diperlukan terdokumentasi. Channel lama tetap tersedia; periksa ulang sebelum menggunakannya pada rancangan baru.
+
+## Parameter dan media WhatsApp
+
+Pada Canvas, pilih elemen **Notification**, jenis penerima **Phone number**, lalu channel WhatsApp. Pilih template dan isi setiap parameter wajib dengan **Enter a value** atau **Workflow parameter**. DekaSign menampilkan parameter sesuai template yang dipilih; Anda tidak menulis payload JSON.
+
+| Komponen template | Data yang diisi |
+|---|---|
+| Header/body dengan placeholder | Teks tetap atau nilai dari parameter workflow. |
+| Header image, video, atau document | URL HTTPS publik untuk media yang sesuai. |
+| Tombol URL dinamis | Nilai pengganti pada bagian dinamis URL yang telah disetujui provider. |
+| Footer/tombol statis | Tetap mengikuti desain template provider. |
+
+URL media harus dapat dibaca provider tanpa login DekaSign. Jangan memakai URL dokumen privat DekaSign, URL jaringan internal, atau menaruh kredensial di URL. Pilih media yang memang diizinkan dibagikan. File privat tidak otomatis diubah menjadi publik. Penerima WhatsApp memerlukan nomor HP yang terdaftar atau dipetakan dalam organisasi.
+
+Jika template berubah, pilih kembali dan tinjau pemetaan parameternya sebelum **Publish**. Template dengan carousel, Flow, autentikasi, atau komponen khusus yang belum didukung tidak dapat dipaksakan menjadi template teks biasa.
+
+## Isi notifikasi email di Canvas
+
+Pada elemen **Notification**, pilih jenis penerima **Email** dan channel pengiriman. Pilih sumber isi:
+
+- **DekaSign default**: gunakan desain pesan bawaan.
+- **Message Template**: pilih versi template yang telah dipublikasikan dan sesuai kategori workflow.
+- **Manual**: isi subject dan pesan dalam mode **Plain text** atau **HTML**.
+
+Gunakan parameter yang tersedia, lalu periksa **Preview**. HTML tetap melalui validasi keamanan; script tidak didukung. Pilihan isi tidak mengubah penerima atau izin akses dokumen. Lihat [Approval Workflow Engine](/guides/approval-workflows) dan [Email Studio](/guides/email-studio).
 
 ## Custom API: Email atau Phone number
 Buka **Management → Notification channels** sebagai Owner. Pilih **Email** atau **Phone number** agar elemen Notification pada Canvas menawarkan channel sesuai penerimanya. Channel ini hanya untuk pengiriman; respons sukses berarti provider menerima permintaan, bukan bukti pesan dibaca.
