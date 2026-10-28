@@ -1,31 +1,34 @@
 ---
 title: "Approval Workflow Engine"
-description: "Canvas, semua node, AND/OR, SLA dan publish."
+description: "Canvas, assignment, routing, Operation Task, Sandbox dan penelusuran alur."
 ---
-## Persiapan
-Buat kategori serta form dan pastikan approver mempunyai kewenangan kategori. Buka **Approval Workflows**, buat workflow, pilih kategori/template, lalu masuk Canvas. Sidebar utama diperkecil untuk workspace.
 
-## Navigasi canvas
-Gunakan pan pada latar, Zoom, Fit view dan Focus node. Seret header node untuk mengatur posisi; posisi bukan routing. Hubungkan output ke input/target yang benar. Auto layout membantu merapikan, bukan mengganti keputusan bisnis. Gunakan Undo/Redo dan Save sesuai kebutuhan.
+Owner/Admin membuka **Create Design → Workflow Engines**. Buat workflow dari Form Builder, pilih kategori dan buka editor. Panel kiri memuat elemen; Properties di kanan mengatur elemen yang dipilih.
 
-## Elemen
-| Node | Fungsi | Pemeriksaan |
-|---|---|---|
-| Start | Memulai pengajuan dengan form | Form/kategori/version harus benar. |
-| Actor | Memberi tugas approver internal | Approver berwenang; approved, rejected, revision dan SLA memiliki routing yang sah. |
-| Rule | Memilih jalur berdasarkan data form | Pilih field/operator/value dari schema. Gabungkan kondisi AND/OR. |
-| Wait | Menahan proses sesuai konfigurasi | Durasi dan jalur berikutnya harus valid. |
-| Notification | Mengantrekan pesan pada alur | Penerima, kanal dan jalur lanjutan harus benar. |
-| Revision | Membuka pekerjaan perbaikan | Batas dan target kembali jelas. |
-| Loop | Kembali ke tugas sesuai pola yang didukung | Bukan loop bebas/tanpa batas. |
-| Finish | Hasil akhir Approved atau Rejected | Jalur final tidak disamakan dengan selesainya seluruh signing. |
+## Canvas dan tracing
+Gunakan Zoom, Fit view, Focus node, Pan, Undo/Redo dan daftar langkah. Seret header node untuk merapikan posisi; konektor menentukan routing. Properties menampilkan **Node/Step ID**. Cari ID untuk menyorot serta fokus ke node terkait. Cocokkan ID tersebut dengan execution trace dan log.
 
-Rule memakai field form, bukan kode bebas. Jalur approved berwarna hijau; output Rule memiliki warna berbeda. Need revision dan SLA dipisahkan secara visual pada Actor.
+## Elemen workflow
+| Elemen | Tujuan |
+|---|---|
+| Start | Mulai dari data form dan versi yang dipilih. |
+| Actor | Approval oleh pengguna tertentu atau Direct Manager pemohon. Atur SLA, revisi dan delegasi. |
+| External Actor | Tugas khusus approver eksternal sesuai undangan, verifikasi dan data yang diizinkan. |
+| Rule | Pilih jalur berdasarkan parameter dan kondisi AND/OR bertipe. |
+| Parallel Split / Join | Kerjakan cabang sejajar dengan aturan ALL/ANY yang didukung konfigurasi. Periksa cabang/join dalam Sandbox. |
+| Wait | Tunggu sesuai konfigurasi durasi. |
+| Notification | Kirim melalui kanal teruji; bedakan tujuan email dan nomor HP. |
+| HTTP Request | Panggil API sesuai konfigurasi, pemetaan dan hasil yang didukung. Respons HTTP sukses tidak selalu berarti pekerjaan bisnis selesai. |
+| Revision / Loop | Perbaikan dan pengulangan dengan batas serta target yang jelas. |
+| Finish | Keputusan akhir approval Approved atau Rejected. |
+| Operation Task | Tindak lanjut setelah Approved dan prasyarat signing; masuk kategori yang sama di Team Queue atau assignment otomatis. |
 
-## Kebijakan Actor
-Tentukan approver, SLA, delegasi, batas revisi dan kanal. Default email DekaSign; custom email eksplisit menonaktifkan email DekaSign pada node itu. WhatsApp add-on memerlukan channel aktif dan pemetaan tujuan.
+## Assignment dan kondisi
+Direct Manager memakai hubungan **requester**, termasuk requester Owner. Manager kosong/tidak aktif/tidak berwenang memblokir submit; atur [Organization Hierarchy](/guides/organization-hierarchy) dan permission.
 
-## Validasi dan Sandbox
-Jalankan Validate, perbaiki koneksi/otoritas yang salah, lalu [uji Sandbox](/guides/sandbox). Save menyimpan rancangan; Publish membuat versi alur untuk request baru. Drag node tidak boleh memutus konektor atau mengubah policy.
+Operation Task memakai Conditions opsional untuk memilih All Staff atau satu/beberapa Specific Staff. Kategori mengikuti workflow. Lihat [Operation Task](/guides/operation-tasks).
 
-<Warning>Parallel ALL/ANY dan penerimaan baru external Actor belum diaktifkan di produksi. External signer Document Sign berbeda dari external approval Actor. Jangan menganggap node draft yang dapat digambar sudah dapat dieksekusi.</Warning>
+## Save, Publish dan Logging
+Save menyimpan draft. Validate memeriksa koneksi dan konfigurasi. Sandbox memakai data uji dan trace nama/ID node. Publish membentuk versi untuk pengajuan baru. Selanjutnya buat/publikasikan [Request Form Template](/guides/request-form-templates).
+
+Pada daftar workflow pilih **Logging**, filter Request ID, pemohon atau tanggal/jam. Daftar menampilkan status dan sumber Form UI/API. Buka Request ID untuk melihat perjalanan dan langkah yang bermasalah. Permintaan aktif mempertahankan versi workflow yang dipakai; edit rancangan tidak menulis ulang riwayat.

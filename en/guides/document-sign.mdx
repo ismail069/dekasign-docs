@@ -1,33 +1,29 @@
 ---
-title: "Document Sign from template to completion"
-description: "PDFs, fields, previews, recipients, and internal integrity evidence."
+title: "Document Sign"
+description: "Templates, editor, API Data Source, visual signatures, sending and final PDFs."
 ---
-## Prepare a template
-Open **Document Sign**, choose the new-template tab, upload a source PDF, and name it. Open the editor. The main sidebar becomes icon-only; use the **Approvers** and **Field palette** tabs.
 
-Navigate every PDF page, including later pages. Click the palette to add a field in the visible area, or drag it onto the PDF. Move/resize fields and use Zoom, Fit, Pan, and Undo/Redo. Select a field to edit Properties. Save creates a new template version without overwriting the source file.
+## Create a document or use a template
+Open **Operations → Document Sign**, create a new document or choose an accessible template. Upload a source PDF up to **30 MB**. Owner/Admin can also manage templates through **Create Design → Document Sign template**.
 
-## Signatures and recipients
-Add approver slots for the design. **Visible Signature** uses a positioned signature area; **Digital Only** records consent without a visible signature image. Adding a Signature can enable Visible mode for its slot. Every recipient signature/input must have the correct **Assigned approver**.
+Use Signers and Field palette, select a field and configure Properties. Zoom, Fit, Pan, page navigation, resize, Undo/Redo and preview help inspect the PDF.
 
-## Data fields
-Choose **Filled by**:
-- **Template designer**: enter a fixed value in Properties.
-- **Sender**: complete before preview/send, manually or through a REST data source.
-- **Approver**: only the assigned recipient fills the input while signing.
+## Signature modes and value sources
+**Digital Only** records consent and signing evidence without a visible signature image. **Visual Signature** places a signature in the designed PDF area. Assign each slot/field to the correct recipient.
 
-Configure Required as needed. Date supports Date only or Place & Date, display formats, and month-name language. Place & Date uses two separate inputs. Check the preview and field space.
+Choose designer-fixed values, Sender inputs, recipient inputs or **API Data Source**. Text, multiline, numbers, checkboxes and date/place follow their field types. Fixed values are set in the editor; Sender values are prepared before sending.
 
-## Prepare & Send
-Choose a template and **Prepare & Send**. Complete sender inputs or Fetch API data, provide names/emails for every slot, and set expiry. Standalone signing defaults to 3 days; expiry is mandatory. Select registered members or custom recipients.
+## Save as template and sharing
+Every user can **Save as template** for personal reuse. Owner/Admin have a separate action to share templates with all or selected users. Template access does not authorize signing as a recipient.
 
-Emails outside the organization domain are external. External recipients require email and phone with country code. The number is contact information, not certified identity verification.
+## Prepare, Fetch, Preview and Send
+Choose internal/external recipients, complete Sender values and set an expiry. Default expiry is **3 days**; check the deadline before sending. If API Data Source is enabled, enter its lookup parameters, Fetch and review mapped results.
 
-## Mandatory preview
-Inspect the populated PDF, pages, positions, recipients, deadline, and disclaimer. Confirm the preview, then press **Send signing request** in the preview window. Changing the template/data requires a new preview. A receipt cannot silently substitute a different document.
+Preview the populated PDF, pages/fields, recipient names/emails and expiry, then confirm sending. Changed data/templates require a new preview. See [API Data Source](/en/guides/document-data).
 
-## Recipient steps
-Recipients open the invitation, sign in or verify their email as required, review the version, complete their assigned inputs, give consent, and finish signing. Senders do not fill Approver fields on recipients' behalf. Recipients cannot edit Sender data or another recipient's fields.
+## Recipients and outcomes
+Recipients open the invitation, verify their identity through the applicable flow, read the document, fill their fields and confirm consent. **Finish signing** is in the right panel below confirmation. To decline, enter a reason and choose Decline.
 
-## Results
-Track active packages separately from completed history. One recipient Signed does not mean the entire package is Completed. Internal DekaSign integrity is not a certified/PSrE seal or trusted timestamp; assess your transaction's requirements.
+Internal users can use [My Signature](/en/guides/my-signature), QR Sign or manual drawing for visual signing. One Signed recipient does not mean the entire package is Completed.
+
+Track Active packages and Completed history. Final PDFs include DekaSign integrity evidence and can be checked through Verify document. This is not a claim of a certified electronic seal or third-party trusted timestamp. Share completed documents with authorized internal users, or add them to Secure Document Sharing for the required external sharing flow.

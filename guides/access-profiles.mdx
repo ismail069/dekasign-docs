@@ -1,0 +1,39 @@
+---
+title: "Access Profiles"
+description: "Simpan kumpulan izin kategori dan template untuk digunakan saat invite atau edit anggota."
+---
+
+**Management → Access Profiles** menyimpan konfigurasi izin yang dapat digunakan kembali. Contohnya, profil Pengajuan Karyawan menyediakan akses form HR dan Finance, sedangkan profil Approver Finance menyediakan kewenangan approval Finance.
+
+## Buat profil
+
+1. Buka **Access Profiles** sebagai Owner, lalu klik **Create profile**.
+2. Isi nama dan deskripsi yang menjelaskan pengguna profil ini.
+3. Pilih kategori untuk **Create request**, **Approve**, serta **Design / publish** sesuai kebutuhan.
+4. Pada pengaturan form, pilih cakupan kategori atau template tertentu dan tindakan yang diizinkan.
+5. Periksa pengaturan Document Sign jika relevan, lalu simpan.
+
+Gunakan pencarian untuk menyaring kategori dan template yang banyak. Berikan hanya tindakan yang dibutuhkan; misalnya, hak menggunakan form tidak perlu disertai hak mengedit atau mempublikasikannya.
+
+## Terapkan pada anggota
+
+Saat **Invite member** atau mengedit akses anggota di **Settings → User management**, pilih **Access Profile** yang sesuai. Tinjau izin hasilnya sebelum menyimpan. Jika kebutuhan anggota berbeda dari profil yang tersedia, pilih **Manual** dan tentukan izin kategori/form secara langsung.
+
+| Pengaturan | Fungsi |
+| --- | --- |
+| Role | Menentukan kemampuan umum anggota, seperti Approver atau Operation. |
+| Access Profile | Mengisi konfigurasi izin kategori dan template yang dipilih. |
+| Direct Manager | Menentukan hubungan pelaporan untuk penugasan manager. |
+| Kategori Operation | Menentukan kategori pekerjaan operasional yang dikelola. |
+
+<Note>
+Access Profile tidak mengubah role, Direct Manager, atau kategori Operation secara otomatis. Izin yang dipilih tetap harus sesuai dengan role anggota. Semua menu dalam **Create Design** diperuntukkan bagi Owner dan Admin yang berwenang.
+</Note>
+
+## Edit dan terapkan ulang
+
+Klik **Edit profile** untuk memperbarui profil. Perubahan profil tidak langsung menyebarkan perubahan ke semua anggota yang pernah menggunakannya. Buka **User management**, pilih anggota terkait, terapkan kembali profil, lalu tinjau perubahan akses sebelum menyimpan.
+
+Jika kategori atau template tidak tersedia lagi, perbarui pilihan profil sebelum menggunakannya. Izin modul maupun profil tidak memberikan akses bebas ke isi dokumen privat milik pengguna lain.
+
+Lihat [alur persiapan Owner](/guides/owner-setup) dan [Organization Hierarchy](/guides/organization-hierarchy) untuk menyusun konfigurasi awal.

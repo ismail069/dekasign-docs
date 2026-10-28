@@ -1,0 +1,22 @@
+---
+title: "Verifikasi integritas dokumen"
+description: "Periksa PDF final DekaSign tanpa mengirimkan isi file."
+---
+
+<Note>Panduan ini menjelaskan implementasi yang diuji lokal. Ketersediaan mengikuti versi yang telah dirilis.</Note>
+
+## Periksa PDF
+Buka **Verifikasi dokumen** pada sidebar workspace atau halaman verifikasi publik. Halaman publik memakai English bila belum ada preferensi bahasa tersimpan; gunakan switch ID/EN untuk mengganti bahasa.
+
+Pilih PDF final, lalu tekan **Verify document**. Verifikasi menerima PDF maksimal **40 MB**, karena halaman bukti dan seal dapat memperbesar hasil signing. Upload sumber Document Sign mandiri, signing melalui Request Form dan Platform API tetap maksimal **30 MB**.
+
+Browser membaca PDF dan menghitung fingerprint SHA-256 pada perangkat Anda. Server hanya menerima referensi bukti minimum dan fingerprint. PDF serta nama filenya tidak diunggah atau disimpan melalui pemeriksaan ini.
+
+## Pahami hasilnya
+Hasil berhasil berarti fingerprint file dan bukti DekaSign yang didukung cocok dengan catatan tersimpan. DekaSign memakai hash dokumen dan attestation Ed25519. PDF yang diubah, bukti yang hilang/tidak didukung atau catatan yang tidak tersedia tidak mendapatkan hasil integritas berhasil.
+
+**DekaSign Document Seal** menjadi identitas visual bukti dokumen. **Verified by DekaSign** muncul pada halaman review dokumen selesai yang terlindungi setelah verifikasi server berhasil. Gambar bukan mekanisme verifikasinya. Pemeriksaan ini tidak membuktikan sertifikat signer independen atau timestamp pihak ketiga tepercaya.
+
+Hasil publik tidak menampilkan identitas tenant, rincian signer, isi dokumen atau lokasi storage. Audit dan bukti verifikasi yang disimpan dapat mendukung pemeriksaan setelah retensi file menghapus PDF final di storage. Simpan salinan file yang ingin Anda verifikasi.
+
+Lihat [Document Sign](/guides/document-sign) dan [Secure Document Sharing](/guides/secure-sharing) untuk batas signing dan retensi.

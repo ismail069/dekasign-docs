@@ -1,23 +1,47 @@
 ---
-title: "Signed documents in approval requests"
-description: "Per-document options, approvers, and decision evidence."
+title: "Request Form documents"
+description: "Prepare default documents, dynamic values, and workflow-linked signatures."
 ---
-## Per-document flow
-During Submit Request, upload supported documents and enable signing for each document that needs it. One request can contain several documents with different signing plans. A standalone signature template is not a universal prerequisite for every new workflow.
+## Choose the document type
+Request Form Templates can contain **mandatory** or **optional** default documents. Every submission receives its own copy; the source template remains unchanged.
 
-Open the selected document's editor and assign Actors/signers and fields/areas according to supported policy. Request documents follow the design and approvers actually visited; unexecuted branches do not automatically become signers.
+Upload choices:
+- **Supporting document** for review attachments.
+- **sign document or dynamic text** for documents prepared through the Request Form editor.
 
-## Review
-Approvers review form data, files, notes, and annotations before deciding. A note is not signing consent. Document approval and workflow approval must follow the configured permissions and modes.
+Signing documents support PDFs up to **30 MB**. Use the **Request Form Document Sign Editor**, rather than the standalone editor, to connect Actors to the workflow.
 
-## Document revisions
-The requester reads revision instructions/annotations, replaces files or data as needed, and reviews signing plans before Resubmit. Evidence for an older version must not be presented as approval of a newer file.
+## Prepare in the editor
+<Steps>
+<Step title="Choose Actors and modes">
+Assign **Digital Only** or **Visual Signature** to signing Actors. Digital Only records consent without a signature image. Visual Signature requires a signature position on the PDF.
+</Step>
+<Step title="Place fields">
+Add text, multiline, number, date/place, checkbox, or signature fields. Depending on field type, values can come from static designer input, Form Builder mappings, manual requester input, API Data Source, or the responsible Actor.
+</Step>
+<Step title="Check value sources">
+Requester fields without a form mapping appear as separate inputs in the document area. API fields require tested mappings. Actor fields remain assigned to that Actor; API values cannot substitute for signatures.
+</Step>
+<Step title="Save and attach">
+Choose **Save & attach to form**. Check readiness before Submit. The submission pins form, workflow, document design, and prepared values.
+</Step>
+</Steps>
 
-## Results
-Approved/signed documents retain action context and the evidence page provided by the system. Check the actor, time, and version/digest. Printing a final PDF to a new PDF does not preserve the same integrity evidence.
+The canvas Actor default applies when preparing new documents. Saved documents retain their modes and mappings. Unvisited workflow branches do not automatically become signers.
 
-## API
-Management API submissions support digital approval only for selected documents. API keys cannot create visual signatures or impersonate signers. API access remains sandbox-only; see the [request API](/en/api-reference/requests).
+## Drafts, review, and revisions
+Save a draft if preparation is incomplete, then continue from **My Requests**. Saving a draft does not start approval or use Credits. Submit is blocked when mandatory document preparation is invalid.
 
-## Boundaries
-Native signing uses internal DekaSign integrity, not a certified seal. External approval Actors and ALL/ANY activation are separate from external Document Sign recipients.
+Approvers inspect the document version, complete assigned fields, and confirm consent. Comments and annotations are not signature consent. Internal users can choose My Signature, QR Sign, or manual signing according to the configured mode.
+
+Prepare and review changed documents again before Resubmit. Earlier evidence continues to refer to its original version.
+
+## Credits
+One workflow submission uses **1 Credit**, plus **1 Credit per distinct signing document**. Two signing documents and several Supporting documents use **3 Credits**. Supporting attachments add no signing Credit.
+
+Identical original content counts once in the request cycle; different original content in a revision may add one Credit. Insufficient Credits cancel submission. Sandbox does not use Production Credits.
+
+## Results and access
+Evidence records identity, action, time, and document-version hash. Modifying the final PDF may cause integrity verification to fail. A DekaSign visual seal is not third-party certification.
+
+Document permissions still apply to requesters, approvers, and Owners. Owner/Admin roles do not automatically open every private file. See [API Data Source](/en/guides/document-data), [Request Form Templates](/en/guides/request-form-templates), and [Verify Document](/en/guides/verify-document).

@@ -7,7 +7,7 @@ Daftar/detail `GET /api/v1/documents` dan `/documents/{id}` memerlukan `document
 
 ## Upload
 `POST /api/v1/documents` membutuhkan `documents:write`, idempotency key, multipart form-data:
-- `file`: tepat satu PDF, maksimum 25 MB, 1–200 halaman.
+- `file`: tepat satu PDF, maksimum 30 MB, 1–200 halaman.
 - `logicalPurpose`: `ATTACHMENT` (default) atau `SIGNATURE_TARGET`.
 
 ```bash
@@ -20,6 +20,9 @@ curl "$DEKASIGN_BASE_URL/api/v1/documents" \
 ```
 
 Simpan variabel secret secara aman di server. API ini tidak menerima PPTX/gambar walaupun UI review mendukungnya. Kapasitas penuh dapat menghasilkan `UPLOAD_BUSY` dengan `Retry-After`.
+
+## Baca file sumber Production
+`GET /api/v1/documents/{id}/content` memerlukan `documents:read` pada lingkungan Production. Hanya PDF pendukung milik aplikasi dan pemohon terpetanya dengan izin privat saat ini yang dapat dibaca. Respons berupa `application/pdf`; ini file sumber, bukan PDF final bertanda tangan. Unggahan Production hanya menerima tujuan `ATTACHMENT`; dukungan Sandbox tidak otomatis memberi izin untuk tujuan lain di Production.
 
 ## Delete
 `DELETE /documents/{id}` membutuhkan `documents:delete`, idempotency key dan JSON alasan 5–500 karakter. Hanya dokumen belum dipakai yang memenuhi syarat dapat dihapus; bukti submitted/signed dilindungi.

@@ -12,6 +12,8 @@ X-Dekasign-Environment: sandbox
 
 Key sandbox berawalan `dks_test_`. Server memeriksa status key/app/requester, expiry, organisasi, host tenant, izin kategori, allowlist, scope dan rate limit. Key tidak melewati izin requester.
 
+Key Production berawalan `dks_live_` dan memakai `X-Dekasign-Environment: production`. Lingkungan key harus sama dengan header dan konfigurasi aplikasi. Production memerlukan paket berbayar aktif dan cakupan yang diizinkan untuk operasi tersebut; key Sandbox tidak dapat dipakai sebagai key Production.
+
 | Scope | Kegunaan |
 | --- | --- |
 | `catalog:read` | Katalog kategori/form/workflow/template |

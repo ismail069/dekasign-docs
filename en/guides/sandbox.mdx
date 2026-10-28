@@ -1,21 +1,21 @@
 ---
-title: "Sandbox and workflow testing"
-description: "Test branches and virtual time without submitting a real process."
+title: "Workflow Sandbox"
+description: "Test routes, decisions, and virtual time before using a workflow."
 ---
-## Start
-Open a workflow canvas and select **Run sandbox**. Choose the design/snapshot, enter a simulated requester, and supply form data with schema-compatible keys/types. If the panel uses JSON, make sure it is valid.
+## Start a simulation
+Open Workflow Canvas and choose **Run sandbox**. Check the active workflow name and version. Select a simulated requester and enter values matching field keys and types; **Load sample values** provides a starting point.
 
-## Test a path
-Start the simulation, inspect active nodes/events, and make simulated Actor decisions. Change inputs to check each Rule output, including AND/OR combinations and boundary values.
+Choose **Start New Run**. Simulations do not submit real requests, sign Production PDFs, send real messages, or consume Production Credits.
 
-## Test time
-Use the available virtual-time controls for Wait/SLA. Verify reminders, SLA routes, and controlled Loops do not create duplicate tasks or unlimited repetitions. Virtual time does not prove a server worker ran at a real-world deadline.
+## Read Execution Trace
+Trace includes node/element/step names, IDs, events, and timestamps so you can match it to the design. Scroll within the trace panel. Return to the canvas for the workflow being tested; search its ID to select, highlight, and focus the step.
 
-## Test revisions
-Choose Need revision, inspect the Revision task, edit simulated data, and Resubmit. Check the return node and revision limits. Final rejection must end as Rejected, not automatically open an editable form.
+## Test decisions and conditions
+At an active Actor, choose the simulated identity and decision. Enter a reason before **Request Revision** or **Reject**. Related validation messages appear within the action area.
 
-## Publish
-Save changes after testing. An older snapshot's result does not validate a newer design. Validate again and Publish only after important routes behave correctly. Sandbox does not sign production PDFs or send real notifications.
+Test each Rule output and optional Operation Task Condition using your own business scenarios. Include boundary values, unmatched conditions, invalid managers, and unavailable staff. Example values are not built-in business policies.
 
-## Troubleshoot
-Check form keys, number/date types, approver candidates, and connectors. Record inputs, expected/actual routes, and version. Send support reports with synthetic data and no credentials.
+## Time, revision, and Operation Task
+Use virtual time for Wait, SLA, and reminders. For revisions, change simulated data and Resubmit; check the return destination and revision limit. For Operation Task, inspect category, all/specific staff, singleton assignment, and simulated outcome.
+
+Virtual time does not prove real provider delivery or scheduled worker execution. After changing the design, repeat relevant Validate and simulation checks before Publish. Report issues with the version, step ID, inputs, expected result, and actual result.

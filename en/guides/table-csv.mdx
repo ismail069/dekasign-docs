@@ -1,0 +1,59 @@
+---
+title: "Import CSV into request form tables"
+description: "Fill a Dynamic Table using a schema template, column mapping and preview before applying rows."
+---
+
+Use **Import CSV** on a Dynamic Table field to enter many rows at once. Import is available in editable forms, including drafts and revisions; readonly or disabled tables cannot import data.
+
+## Prepare a file
+
+1. Select **CSV template** on the table to download headers matching its form columns.
+2. Open it in a spreadsheet or CSV editor. Enter data below the header; the template does not insert sample data into your request.
+3. Save as **CSV UTF-8**. Keep the headers unchanged for automatic mapping.
+
+Template headers use form column keys, which may differ from display labels. The import popup shows each column's label, key and type so you can check its mapping.
+
+## Import and review
+
+<Steps>
+  <Step title="Choose a CSV file">
+    Select **Import CSV** and choose your file. It is read on your device; selecting it does not change table rows.
+  </Step>
+  <Step title="Check column mapping">
+    The popup tries to match headers to column keys or labels. Select the correct header for unmatched columns. Required columns must be mapped; optional columns may use **Skip — leave empty**. Each CSV column may be mapped at most once.
+  </Step>
+  <Step title="Choose append or replace">
+    The default **Append to existing rows** keeps current rows and adds imported ones. **Replace all current draft rows** replaces the whole draft table. If data already exists, acknowledge the replacement confirmation first.
+  </Step>
+  <Step title="Review the preview and apply">
+    Review the row count and first 10 preview rows. Correct the file or mapping if validation fails. Select **Apply import** to apply the entire batch together. **Cancel** leaves the table unchanged.
+  </Step>
+</Steps>
+
+After importing, you can edit cells, add or remove rows, and use filtering/pagination. Continue with **Save draft**, **Submit** or **Resubmit** as usual. Import does not submit a request automatically.
+
+## Cell formats
+
+| Column type | CSV format |
+| --- | --- |
+| Text / Textarea | Literal text. Use double quotes for commas or multiline values. |
+| Integer | A whole number such as `2`, without thousands separators. |
+| Decimal | A decimal point, such as `125000.75`, without thousands separators. |
+| Date | `YYYY-MM-DD`, such as `2026-10-28`. |
+| Datetime | `YYYY-MM-DDTHH:mm`, such as `2026-10-28T09:30`. |
+| Checkbox | `true` / `false`, `yes` / `no`, `ya` / `tidak`, or `1` / `0`. |
+| Select | An available option value or a unique option label. |
+
+Double a quote inside a quoted value to escape it. CSV supports a UTF-8 BOM, comma or semicolon separators, and line breaks inside quoted cells. Spreadsheet formulas are not executed; they are read as literal text and must still match the column type.
+
+## Limits and errors
+
+- CSV files may contain up to **128 KB**, **10 columns**, and **500 data rows** or the form's lower configured limit.
+- The resulting table still has a **128 KB** data limit. Appending cannot exceed the total table row limit.
+- Headers must be nonempty and unique, including uppercase/lowercase variants. Every row must have the same cell count as its header.
+- Values must satisfy column types, options, min/max and required fields. Text is limited to **2,000 characters per cell**.
+- If the table or schema changes while the popup is open, close it and import again. A batch is not silently applied to a different table version.
+
+A failed validation does not partially import rows. If Append exceeds the row limit, use a smaller file or choose Replace after reviewing and confirming the replacement.
+
+See [Form Builder](/en/guides/form-builder) and [requests and revisions](/en/guides/requests-and-revisions).

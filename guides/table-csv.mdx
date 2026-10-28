@@ -1,0 +1,59 @@
+---
+title: "Impor CSV ke tabel request form"
+description: "Isi Dynamic Table dari CSV melalui template, pemetaan kolom dan preview sebelum diterapkan."
+---
+
+Gunakan **Import CSV** pada field Dynamic Table untuk memasukkan banyak baris sekaligus. Fitur ini tersedia pada form yang dapat diedit, termasuk draft dan revisi; tabel readonly atau disabled tidak menerima impor.
+
+## Siapkan file
+
+1. Pada tabel, klik **CSV template** untuk mengunduh header sesuai kolom form tersebut.
+2. Buka file di spreadsheet atau editor CSV. Isi baris data di bawah header; template tidak menambahkan contoh data ke pengajuan Anda.
+3. Simpan sebagai **CSV UTF-8**. Pertahankan nama header jika ingin pemetaan otomatis.
+
+Header template menggunakan key kolom form, yang dapat berbeda dari label tampilannya. Popup impor menampilkan label, key dan tipe tiap kolom agar Anda dapat memeriksa pemetaan.
+
+## Impor dan tinjau
+
+<Steps>
+  <Step title="Pilih file CSV">
+    Klik **Import CSV** dan pilih file. CSV dibaca di perangkat Anda; memilih file belum mengubah baris tabel.
+  </Step>
+  <Step title="Periksa pemetaan kolom">
+    Popup mencoba mencocokkan header dengan key atau label kolom. Pilih header yang benar untuk kolom yang belum cocok. Kolom wajib harus dipetakan; kolom opsional boleh menggunakan **Skip — leave empty**. Satu kolom CSV hanya boleh dipetakan satu kali.
+  </Step>
+  <Step title="Pilih tambah atau ganti">
+    Default **Append to existing rows** mempertahankan baris saat ini dan menambahkan baris impor. **Replace all current draft rows** mengganti seluruh baris draf; jika sudah ada data, centang konfirmasi penggantian terlebih dahulu.
+  </Step>
+  <Step title="Periksa preview lalu terapkan">
+    Periksa jumlah baris dan preview 10 baris pertama. Jika validasi gagal, perbaiki file atau pemetaan. Klik **Apply import** untuk menerapkan seluruh batch sekaligus. **Cancel** tidak mengubah tabel.
+  </Step>
+</Steps>
+
+Setelah impor, Anda tetap dapat mengedit sel, menghapus atau menambahkan baris, serta memakai filter/pagination. **Save draft**, **Submit**, atau **Resubmit** mengikuti alur form seperti biasa; impor tidak mengirim request secara otomatis.
+
+## Format nilai
+
+| Tipe kolom | Format CSV |
+| --- | --- |
+| Text / Textarea | Teks literal. Gunakan kutip ganda untuk nilai berkoma atau beberapa baris. |
+| Integer | Bilangan bulat, misalnya `2`, tanpa pemisah ribuan. |
+| Decimal | Titik desimal, misalnya `125000.75`, tanpa pemisah ribuan. |
+| Date | `YYYY-MM-DD`, misalnya `2026-10-28`. |
+| Datetime | `YYYY-MM-DDTHH:mm`, misalnya `2026-10-28T09:30`. |
+| Checkbox | `true` / `false`, `yes` / `no`, `ya` / `tidak`, atau `1` / `0`. |
+| Select | Nilai opsi yang tersedia atau label opsi yang unik. |
+
+Tanda kutip di dalam nilai ditulis dua kali. CSV mendukung BOM UTF-8, pemisah koma atau titik koma, serta baris baru di dalam sel berkutip. Formula spreadsheet tidak dieksekusi; nilainya dibaca sebagai teks dan tetap harus sesuai tipe kolom.
+
+## Batas dan perbaikan error
+
+- File CSV maksimal **128 KB**, maksimal **10 kolom**, dan maksimal **500 baris data** atau batas lebih kecil yang ditetapkan form.
+- Hasil tabel tetap tunduk pada batas data **128 KB**. Penambahan baris tidak boleh melebihi batas total tabel.
+- Header harus terisi dan unik, termasuk perbedaan huruf besar/kecil. Jumlah sel setiap baris harus sama dengan header.
+- Nilai harus memenuhi tipe, pilihan, min/max dan kolom wajib. Nilai teks maksimal **2.000 karakter per sel**.
+- Jika tabel atau skemanya berubah saat popup terbuka, tutup popup dan impor ulang. Sistem tidak menerapkan batch pada versi tabel yang berbeda secara diam-diam.
+
+Validasi yang gagal tidak mengimpor sebagian baris. Jika jumlah baris pada mode Append terlalu besar, gunakan file lebih kecil atau pilih Replace setelah meninjau dan mengonfirmasi penggantian.
+
+Lihat [Form Builder](/guides/form-builder) dan [requests dan revisions](/guides/requests-and-revisions).

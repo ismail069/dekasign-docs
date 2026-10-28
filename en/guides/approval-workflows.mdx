@@ -1,31 +1,34 @@
 ---
 title: "Approval Workflow Engine"
-description: "Canvas navigation, node types, AND/OR Rules, SLAs, and publishing."
+description: "Canvas design, assignment, routing, Operation Task, Sandbox and execution tracing."
 ---
-## Prerequisites
-Create a category and form, and confirm approvers have category authority. Open **Approval Workflows**, create a workflow, choose the category/template, and open Canvas. The main sidebar collapses to give the editor more room.
 
-## Navigate the canvas
-Pan the background and use Zoom, Fit view, and Focus node. Drag node headers to position them; positions do not define routing. Connect each output to the correct target/input. Auto layout arranges the design, not business decisions. Use Undo/Redo and Save as needed.
+Owner/Admin opens **Create Design → Workflow Engines**, creates a workflow from a Form Builder form, selects its category and opens the editor. The left panel contains elements; right-side Properties configures the selected element.
 
-## Elements
-| Node | Purpose | Check |
-|---|---|---|
-| Start | Start a request with its form | Correct form, category, and version. |
-| Actor | Assign an internal approver task | Authorized approver and valid approved, rejected, revision, and SLA routes. |
-| Rule | Choose a path from form data | Schema field/operator/value; combined AND/OR conditions. |
-| Wait | Hold the process as configured | Valid duration and next route. |
-| Notification | Queue a flow message | Correct recipients, channels, and continuation. |
-| Revision | Open correction work | Clear limits and return target. |
-| Loop | Return to a task using supported patterns | Not an unrestricted or unbounded loop. |
-| Finish | End with Approved or Rejected | Final approval does not mean all signing is complete. |
+## Canvas and tracing
+Use Zoom, Fit view, Focus node, Pan, Undo/Redo and the step list. Drag node headers to arrange the layout; connectors determine routing. Properties shows the **Node/Step ID**. Search an ID to highlight and focus that node and correlate it with execution traces and logs.
 
-Rules use form fields, not arbitrary code. Approved paths are green; Rule outputs have distinct colors. Need revision and SLA outputs are visually separated on Actor nodes.
+## Workflow elements
+| Element | Purpose |
+|---|---|
+| Start | Begin with the selected form and version. |
+| Actor | Approval by a named member or the requester’s Direct Manager; configure SLA, revision and delegation. |
+| External Actor | A scoped external approval assignment with invitation, verification and authorized data. |
+| Rule | Choose a route using typed parameters and AND/OR conditions. |
+| Parallel Split / Join | Run branches with supported ALL/ANY rules; verify branches and joining in Sandbox. |
+| Wait | Wait according to the configured duration. |
+| Notification | Send using tested channels, distinguishing email from phone recipients. |
+| HTTP Request | Call an API with supported configuration, mappings and outcomes; HTTP success need not mean business completion. |
+| Revision / Loop | Bounded correction/repetition with an explicit return target. |
+| Finish | Final approval outcome: Approved or Rejected. |
+| Operation Task | Follow-up after approval and required signing; category Team Queue visibility or automatic assignment. |
 
-## Actor policy
-Set the approver, SLA, delegation, revision limits, and channels. DekaSign email is the default. An explicit custom-email override disables DekaSign email for that node. WhatsApp is an add-on requiring an active channel and destination mapping.
+## Assignment and conditions
+Direct Manager resolves the **requester’s** manager, including an Owner requester. A missing/inactive/unauthorized manager blocks submission; configure [Organization Hierarchy](/en/guides/organization-hierarchy) and permissions.
 
-## Validate and test
-Run Validate, fix invalid connections/authority, then [test in Sandbox](/en/guides/sandbox). Save stores the design; Publish creates the release for new requests. Moving nodes must not disconnect edges or change policy.
+Optional Operation Task Conditions choose All Staff or one/multiple Specific Staff. The category follows the workflow. See [Operation Task](/en/guides/operation-tasks).
 
-<Warning>Parallel ALL/ANY and new external approval Actor admission are not enabled for production. An external Document Sign recipient is different from an external approval Actor. A draft node that can be drawn is not proof of runtime availability.</Warning>
+## Save, Publish and Logging
+Save stores a draft, Validate checks configuration/connections, and Sandbox uses test data with node name/ID traces. Publish creates a version for new submissions. Then create/publish a [Request Form Template](/en/guides/request-form-templates).
+
+Choose **Logging** on the workflow list and filter by Request ID, requester or date/time. Results show status and Form UI/API source. Open a Request ID to inspect its journey and problematic step. Running requests retain their workflow version; editing the design does not rewrite history.

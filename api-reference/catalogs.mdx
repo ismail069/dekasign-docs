@@ -7,6 +7,8 @@ Dengan `catalog:read`, baca daftar dan detail `categories`, `request-templates` 
 
 Ambil schema melalui `GET /approval-workflows/{id}/releases/{release}/submission-schema`. Respons workflow mencakup `workflow_release_id` seperti `workflow-id@3`, kategori, template, versi form dan versi publish. Gunakan key schema, bukan label tampilan. Request aktif mempertahankan snapshot versinya.
 
+Periksa `submission_supported` dan `submission_unavailable_reason` sebelum membangun form API. `signing_required` menunjukkan konfigurasi signing workflow lama; nilainya bukan instruksi agar setiap lampiran ditandatangani. `document_signing_mode:"request_documents"` menunjukkan dukungan signing per dokumen. Schema tidak membuktikan bahwa file sudah dipersiapkan atau boleh memulai request.
+
 `GET /document-sign-templates/{id}/content` mengembalikan PDF sumber. Query `version` adalah ID versi template, bukan nomor versinya.
 
 ## Tambah kategori

@@ -22,7 +22,7 @@
           "links": [
             {
               "label": "Dukungan",
-              "href": "mailto:halo@dekasign.com"
+              "href": "mailto:support@dekasign.com"
             }
           ],
           "primary": {
@@ -40,9 +40,18 @@
                 "pages": [
                   "index",
                   "quickstart",
+                  "guides/owner-setup",
                   "guides/accounts-and-roles",
                   "guides/settings",
                   "guides/availability"
+                ]
+              },
+              {
+                "group": "Pengelolaan organisasi",
+                "pages": [
+                  "guides/organization-hierarchy",
+                  "guides/access-profiles",
+                  "guides/owner-reports"
                 ]
               },
               {
@@ -57,7 +66,9 @@
                 "pages": [
                   "guides/categories-and-forms",
                   "guides/form-builder",
+                  "guides/table-csv",
                   "guides/approval-workflows",
+                  "guides/request-form-templates",
                   "guides/sandbox",
                   "guides/requests-and-revisions",
                   "guides/delegation",
@@ -68,12 +79,17 @@
                 "group": "Document Sign",
                 "pages": [
                   "guides/document-sign",
-                  "guides/document-data"
+                  "guides/my-signature",
+                  "guides/verify-document",
+                  "guides/document-data",
+                  "guides/secure-sharing"
                 ]
               },
               {
                 "group": "Operasional",
                 "pages": [
+                  "guides/my-projects",
+                  "guides/operation-tasks",
                   "guides/operations"
                 ]
               }
@@ -83,7 +99,7 @@
             "tab": "Developers",
             "groups": [
               {
-                "group": "API sandbox",
+                "group": "Referensi API",
                 "pages": [
                   "api-reference/overview",
                   "api-reference/authentication",
@@ -119,7 +135,7 @@
           "links": [
             {
               "label": "Support",
-              "href": "mailto:halo@dekasign.com"
+              "href": "mailto:support@dekasign.com"
             }
           ],
           "primary": {
@@ -137,9 +153,18 @@
                 "pages": [
                   "en/index",
                   "en/quickstart",
+                  "en/guides/owner-setup",
                   "en/guides/accounts-and-roles",
                   "en/guides/settings",
                   "en/guides/availability"
+                ]
+              },
+              {
+                "group": "Organization management",
+                "pages": [
+                  "en/guides/organization-hierarchy",
+                  "en/guides/access-profiles",
+                  "en/guides/owner-reports"
                 ]
               },
               {
@@ -154,7 +179,9 @@
                 "pages": [
                   "en/guides/categories-and-forms",
                   "en/guides/form-builder",
+                  "en/guides/table-csv",
                   "en/guides/approval-workflows",
+                  "en/guides/request-form-templates",
                   "en/guides/sandbox",
                   "en/guides/requests-and-revisions",
                   "en/guides/delegation",
@@ -165,12 +192,17 @@
                 "group": "Document Sign",
                 "pages": [
                   "en/guides/document-sign",
-                  "en/guides/document-data"
+                  "en/guides/my-signature",
+                  "en/guides/verify-document",
+                  "en/guides/document-data",
+                  "en/guides/secure-sharing"
                 ]
               },
               {
                 "group": "Operations",
                 "pages": [
+                  "en/guides/my-projects",
+                  "en/guides/operation-tasks",
                   "en/guides/operations"
                 ]
               }
@@ -180,7 +212,7 @@
             "tab": "Developers",
             "groups": [
               {
-                "group": "API sandbox",
+                "group": "API reference",
                 "pages": [
                   "en/api-reference/overview",
                   "en/api-reference/authentication",
@@ -216,7 +248,7 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:halo@dekasign.com"
+        "href": "mailto:support@dekasign.com"
       }
     ],
     "primary": {

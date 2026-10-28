@@ -1,5 +1,5 @@
 ---
-title: "Email and WhatsApp channels"
+title: "Notification Channels"
 description: "Configure, test, activate, and select notification channels."
 ---
 ## Routing principles
@@ -31,6 +31,25 @@ Providers have their own charges, template approvals, and messaging rules. Conne
 Choose **Email** or **WhatsApp**, name the channel, and configure the public HTTPS endpoint, authentication, headers, and JSON body. Map the destination to the correct email/phone parameter and the message to its body parameter. Use variables offered by the UI; do not send unnecessary customer data.
 
 Endpoints must use HTTPS without private hosts or secrets in the URL. Store credentials in the dedicated fields. A successful test is required before activation. See [integrations and webhooks](/en/integrations/outgoing-webhooks).
+
+## Custom API: Email or Phone number
+Open **Management → Notification channels** as Owner. Choose **Email** or **Phone number** so the canvas Notification element offers channels matching its recipient type. Channels are outbound only; success means provider acceptance, not proof of reading.
+
+Configure a fixed public HTTPS endpoint, GET/POST/PUT/PATCH method, JSON/form-urlencoded/multipart encoding, and None/API key/Bearer/Basic or custom authentication. GET parameters come from the payload. Additional headers use JSON; Content-Type is generated for the encoding. Credentials are encrypted, kept out of URLs, and never returned in channel lists.
+
+Recipient and message are mandatory. Example email with HTML message format:
+```json
+{
+  "to": "{{recipient}}",
+  "subject": "{{message.subject}}",
+  "html": "{{message}}"
+}
+```
+Phone channels use country-code numbers and text messages. Provider field names on the left follow its API documentation. Additional parameters are offered in the UI.
+
+Test a recipient you control. HTTP 200 is the default; select 201/202 when required. Activate after a matching test. Editing configuration resets verification/activation and requires another test. Logs show timestamps, status, response code, provider reference where available, and sanitized errors.
+
+This differs from document API Data Source lookups and workflow event webhooks. OTP continues through trusted platform channels.
 
 ## Monitor deliveries
 Use **Delivery logs** to inspect status, retries, and redacted errors. Check destinations, provider permissions, templates, and quotas on failure. Check deduplication before manually resending.

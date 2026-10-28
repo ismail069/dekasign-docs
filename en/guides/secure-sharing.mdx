@@ -1,0 +1,37 @@
+---
+title: "Secure Document Sharing"
+description: "Manage recipients, file permissions, previews, annotations, and history in private sessions."
+---
+## Create and activate a session
+Open **Operations → Secure Document Sharing**, create a session, add recipients and files, and configure expiry and access policies. Review the summary before activation.
+
+Each session has **6 active file slots**, shared by sender and recipients. Standard files support up to **25 MB**; ZIP files support **40 MB**. Removing a file frees its slot while its activity record remains.
+
+## Recipients and files
+The management tab combines recipient and file lists. Add recipients in the recipient area; use a row's management button to open its settings popup. Allow **preview**, **download**, or both. Recipients must still complete access verification.
+
+For each file, allow all eligible recipients or select specific recipients. Recipient and file permissions are checked together. Senders can update settings and expiry; policy changes may require verification again. Organization Owners/Admins do not automatically gain access to another user's private session.
+
+A recipient's **Info** button shows the first recorded page access, preview, and download. These events describe access served, not proof that the recipient read every page.
+
+## Previews, watermarks, and annotations
+Open Preview to review supported file representations. Policy watermarks are applied to served preview/download copies and can include recipient context. The original file is not overwritten. ZIP files are not watermarked.
+
+Save private annotation drafts before posting. Posted notes, replies, resolve/reopen actions, and marked areas follow permissions and file versions. Supported XLSX previews provide sheet/cell selection; formulas are not recalculated.
+
+Review PDF exports require the relevant permissions and include only visible annotations, excluding private drafts. Format, page, and size limits are shown in the preview. A review export does not create a Document Sign signature.
+
+## Reports and audit
+The reports tab records access, previews, downloads, invitations, permission changes, and file activity. Use filters and JSON/CSV exports where available. Reports contain neither original files nor access credentials.
+
+Recipients may upload replies when the policy and free slots allow it. Replies start private to the sender and uploader; further distribution requires an explicit sender action.
+
+## Archive
+Archiving closes the session and deletes uploaded files. Session information and audit remain accessible, but deleted files are no longer available. Review the archive confirmation carefully.
+
+## Credits and security
+Activation for the first recipient uses one Credit; each additional recipient uses one Credit. Resending an OTP is not a new recipient. Previews, annotations, and additional files do not consume a Credit per file.
+
+Uploads are encrypted at rest with service-managed keys. This is not customer-only end-to-end encryption. When the subscription becomes inactive, external access freezes; internal/owner access still follows authorization and retention.
+
+Final PDFs follow file deletion schedules. Audit, billing history, and verification evidence remain according to the [service terms](https://dekasign.com/en/terms). [My Projects](/en/guides/my-projects) groups sessions without changing their permissions.

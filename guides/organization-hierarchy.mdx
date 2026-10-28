@@ -1,0 +1,41 @@
+---
+title: "Organization Hierarchy dan Direct Manager"
+description: "Kelola hubungan pelaporan, diagram organisasi dan penugasan approval ke manager pemohon."
+---
+
+**Management → Organization Hierarchy** membantu Owner mengatur siapa melapor kepada siapa. Hubungan ini berlaku untuk semua role, termasuk Owner, Admin, Approver, dan Operation.
+
+## Atur Direct Manager
+
+Anda dapat memilih Direct Manager saat mengundang anggota atau mengubahnya setelah anggota bergabung.
+
+Direct Manager boleh belum diisi saat setup. Pengaturan ini menjadi wajib bagi pemohon ketika mengirim request dengan konfigurasi approver Direct Manager.
+
+1. Buka **Organization Hierarchy** sebagai Owner.
+2. Cari anggota berdasarkan nama, email, atau jabatan.
+3. Klik anggota pada diagram atau pilih tindakan edit pada tabel.
+4. Pilih manager aktif dalam organisasi yang sama. Isi alasan perubahan, lalu simpan.
+
+Anggota tidak boleh menjadi manager dirinya sendiri. Hubungan melingkar, misalnya A melapor ke B dan B melapor kembali ke A, ditolak. Owner tetap dapat memiliki manager tanpa mengubah atau mencabut role Owner.
+
+## Gunakan diagram penuh
+
+Pilih **Diagram** untuk melihat garis pelaporan. Geser latar untuk bergerak, gunakan **− / +** untuk zoom, dan **Fit** untuk menampilkan keseluruhan diagram. **Full screen** memperluas diagram; **Exit full screen** mengembalikan tampilan.
+
+Pencarian menandai anggota yang cocok. Klik **Focus result** untuk memusatkan hasil pertama. Pilih **Table** ketika Anda ingin membandingkan nama, jabatan, role, manager, dan status dalam daftar.
+
+## Pilih manager sebagai approver
+
+Pada Canvas Approval Workflow, pilih node **Actor**, lalu ubah **Approver source** menjadi **Requester’s Direct Manager**. Penugasan mengikuti manager pemohon yang mengirim request; bukan manager designer atau manager dari approver sebelumnya.
+
+<Warning>
+Jika workflow menggunakan Direct Manager tetapi manager pemohon belum diatur, pemohon tidak dapat Submit. Minta Owner mengaturnya terlebih dahulu. Manager juga harus aktif dan memiliki kewenangan approval yang diperlukan; sistem tidak memilih pengganti tanpa aturan.
+</Warning>
+
+Hubungan manager tidak otomatis menambahkan izin kategori atau form. Periksa izin di **User management** atau gunakan [Access Profiles](/guides/access-profiles). Larangan menyetujui pengajuan sendiri tetap berlaku.
+
+## Perubahan pada proses berjalan
+
+Mengedit hierarki tidak menulis ulang keputusan dan bukti yang sudah tercatat. Periksa penugasan pada request yang sedang berjalan; jangan menganggap perubahan manager otomatis memindahkan task yang telah dibuka.
+
+Jika perubahan ditolak karena data anggota berubah, muat ulang halaman lalu tinjau pilihan manager kembali. Untuk masalah penugasan, sertakan Request ID dan Node ID saat menghubungi [support@dekasign.com](mailto:support@dekasign.com).

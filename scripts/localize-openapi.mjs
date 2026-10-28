@@ -18,7 +18,7 @@ const translations = {
   "Sandbox disabled or operation temporarily unavailable.":"Sandbox tidak aktif atau operasi sementara tidak tersedia.",
   "Workspace-scoped identifier.":"Identitas dalam lingkup workspace.",
   "Private PDF bytes.":"Data berkas PDF privat.",
-  "Required scope documents:write. One PDF, maximum 25 MB and 1–200 pages. Sandbox only.":"Memerlukan scope documents:write. Tepat satu PDF, maksimum 25 MB dan 1–200 halaman. Hanya sandbox.",
+  "Required scope documents:write. One PDF, maximum 30 MB and 1–200 pages. Sandbox only.":"Memerlukan scope documents:write. Tepat satu PDF, maksimum 30 MB dan 1–200 halaman. Hanya sandbox.",
   "Secret frozen receipt; valid for 10 minutes. Do not log.":"Receipt rahasia yang dibekukan; berlaku 10 menit. Jangan dicatat ke log.",
   "Not an integration-key endpoint. Requires the dedicated session/identity flow described in the guide.":"Bukan endpoint integration-key. Memerlukan alur sesi/identitas khusus sesuai panduan.",
   "Opaque secret session credential; do not log.":"Kredensial sesi opaque yang rahasia; jangan dicatat ke log.",

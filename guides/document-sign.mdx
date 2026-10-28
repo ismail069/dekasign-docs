@@ -1,33 +1,29 @@
 ---
-title: "Document Sign dari template sampai selesai"
-description: "PDF, field, preview, penerima dan hasil integritas internal."
+title: "Document Sign"
+description: "Template, editor, API Data Source, visual signature, pengiriman dan PDF final."
 ---
-## Siapkan template
-Buka **Document Sign**, gunakan tab buat baru, unggah PDF sumber dan beri nama. Buka editor. Sidebar utama menjadi icon-only; gunakan tab **Approvers** dan **Field palette**.
 
-Navigasikan halaman PDF, termasuk halaman setelah pertama. Klik palette untuk menambah field di area terlihat, atau drag ke PDF. Geser/resize, Zoom, Fit, Pan, serta Undo/Redo tersedia. Pilih field untuk mengatur Properties. Save membuat versi template baru; file sumber tidak ditimpa.
+## Buat dokumen atau gunakan template
+Buka **Operations → Document Sign**, pilih buat baru atau template yang dapat diakses. Unggah PDF sumber maksimal **30 MB**. Owner/Admin juga mengelola template melalui **Create Design → Document Sign template**.
 
-## Tanda tangan dan penerima
-Tambahkan slot approver sesuai desain. **Visible Signature** memakai area tanda tangan yang ditentukan; **Digital Only** merekam consent tanpa gambar visual. Menambah Signature dapat mengaktifkan mode Visible untuk slot terkait. Setiap signature/input penerima harus mempunyai Assigned approver yang benar.
+Pada editor gunakan Signers dan Field palette, lalu pilih field untuk mengatur Properties. Zoom, Fit, Pan, pindah halaman, resize, Undo/Redo dan preview membantu memeriksa PDF.
 
-## Field data
-Pilih **Filled by**:
-- **Template designer**: isi nilai tetap pada Properties.
-- **Sender**: pengirim mengisi sebelum preview/send, manual atau REST data source.
-- **Approver**: hanya penerima yang ditentukan mengisi saat signing.
+## Mode signature dan sumber nilai
+**Digital Only** merekam persetujuan dan bukti signing tanpa gambar tanda tangan. **Visual Signature** menempatkan signature di area PDF yang dirancang. Pastikan slot/field ditugaskan ke penerima yang benar.
 
-Gunakan Required sesuai kebutuhan. Date mendukung Date only atau Place & Date, format tanggal dan bahasa nama bulan. Place & Date memakai dua input terpisah; periksa preview dan ruang field.
+Pilih nilai tetap dari designer, input Sender, input penerima atau **API Data Source**. Text, multiline, angka, checkbox dan date/place mengikuti tipe field. Nilai tetap diatur di editor; nilai Sender disiapkan sebelum pengiriman.
 
-## Prepare & Send
-Pilih template lalu **Prepare & Send**. Isi sender fields atau Fetch API data, tetapkan nama/email untuk semua slot, dan isi batas waktu. Default mandiri 3 hari; kedaluwarsa wajib ditetapkan. Daftar member tersedia atau gunakan custom recipient.
+## Save as template dan berbagi
+Setiap pengguna dapat **Save as template** untuk template pribadinya. Owner/Admin mempunyai tindakan berbagi template ke semua pengguna atau pengguna tertentu. Akses template tidak berarti dapat menandatangani atas nama penerima.
 
-Email di luar domain organisasi diperlakukan external. External recipient membutuhkan email dan phone dengan kode negara; nomor ini kontak, bukan verifikasi identitas tersertifikasi.
+## Prepare, Fetch, Preview dan Send
+Pilih penerima internal atau eksternal, isi data Sender dan batas waktu. Default expiry adalah **3 days**; periksa deadline sebelum mengirim. Jika API Data Source aktif, isi parameter yang diminta dan Fetch, lalu periksa hasil mapping.
 
-## Preview wajib
-Buka preview, periksa PDF terisi, halaman, posisi, penerima, deadline dan disclaimer. Centang konfirmasi lalu tekan **Send signing request** pada jendela preview. Mengubah template/data memerlukan preview baru; receipt tidak boleh digunakan untuk mengganti dokumen diam-diam.
+Buka preview PDF terisi, periksa halaman/field, nama/email penerima dan expiry, lalu konfirmasi pengiriman. Perubahan data/template memerlukan preview baru. Lihat [API Data Source](/guides/document-data).
 
-## Penerima
-Penerima membuka undangan, login atau memverifikasi email sesuai konteks, meninjau versi, mengisi field miliknya, lalu memberi consent dan menyelesaikan signing. Pengirim tidak mengisi field Approver atas namanya; penerima tidak mengubah data Sender atau field orang lain.
+## Penerima dan hasil
+Penerima membuka undangan, memverifikasi identitas sesuai alur, membaca dokumen, mengisi field miliknya dan mencentang consent. **Finish signing** berada di panel kanan di bawah konfirmasi. Untuk menolak, isi reason lalu pilih Decline.
 
-## Hasil
-Pantau paket aktif dan riwayat selesai terpisah. Signed satu penerima belum berarti Completed seluruh paket. Internal DekaSign integrity bukan segel bersertifikat/PSrE atau trusted timestamp; cek kebutuhan transaksi.
+User internal dapat memakai [My Signature](/guides/my-signature), QR Sign atau menggambar manual pada signing visual. Satu penerima Signed belum berarti seluruh paket Completed.
+
+Pantau Active packages dan Completed history. PDF final memiliki bukti integritas DekaSign dan dapat diverifikasi melalui Verify document. Bukti DekaSign bukan klaim segel elektronik tersertifikasi atau trusted timestamp pihak ketiga. Bagikan dokumen selesai kepada pengguna internal sesuai akses, atau tambahkan ke Secure Document Sharing untuk alur eksternal yang memerlukannya.

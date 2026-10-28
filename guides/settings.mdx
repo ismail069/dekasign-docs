@@ -1,22 +1,33 @@
 ---
 title: "Settings dan organisasi"
-description: "Profil, password, identitas organisasi, anggota dan API Access."
+description: "Kelola profil, keamanan akun, anggota, branding, dan timezone."
 ---
-## Pengaturan pribadi
-Buka menu profil di top bar, lalu **Settings**. Periksa nama dan identitas akun. Ganti password dengan memenuhi verifikasi dan aturan form; perubahan password tidak dikerjakan melalui komentar atau pesan dukungan.
+## Profil dan availability
+Buka **Settings → Profile** untuk memperbarui informasi pribadi. Staf dapat mengatur **Not available until** saat cuti atau tidak tersedia. Penugasan baru Operation Task mempertimbangkan availability; task yang sudah diambil tetap dimiliki penanggung jawabnya.
 
-## Pengaturan organisasi
-Owner membuka bagian **Organization** pada Settings. Isi nama organisasi, domain email yang sah, logo dan warna tema. Preview logo/warna sebelum menyimpan. Domain email digunakan untuk klasifikasi penerima internal/eksternal; label internal bukan bukti kewenangan hukum.
+## Account security
+Email OTP digunakan secara default setelah autentikasi akun. Kode berlaku lima menit, dengan jeda kirim ulang dan batas percobaan. Akun Google memakai identitas Google lalu verifikasi DekaSign yang diperlukan; tidak berarti akun tersebut mempunyai password lokal.
 
-Logo organisasi ditampilkan pada konteks organisasi yang sesuai, termasuk login tenant jika dikonfigurasi. Subdomain salah atau organisasi tidak ditemukan tidak boleh dipakai untuk memasukkan data organisasi lain.
+Untuk authenticator, buka **Account security → Set up authenticator**, lengkapi verifikasi yang diminta, pindai QR dan simpan recovery codes secara pribadi. Aktivasi baru berlaku setelah kode dikonfirmasi. Login berikutnya memakai TOTP atau recovery code; Email OTP bukan fallback selama TOTP aktif.
 
-## Anggota dan kewenangan
-Gunakan bagian **User management / Members** sesuai role. Undang email yang benar, pilih role seperlunya, dan tetapkan izin kategori atau form. Tinjau masa berlaku dan status aktif. Jangan memberikan Owner hanya untuk membuat seseorang dapat Approve; beri kewenangan kategori yang tepat.
+Pilih **Switch to Email OTP** bila ingin mengganti metode, lalu verifikasi password jika akun memilikinya serta TOTP/recovery code. Perubahan keamanan dapat mencabut sesi lama. Jangan mengirim OTP, password, atau recovery code melalui dukungan.
 
-## API key workspace
-Owner dapat membuka **Settings → API Access**. Buat aplikasi integrasi, pilih mapped requester, kategori/workflow/template yang boleh diakses, scope minimum dan masa berlaku key. Salin key sekali ke secret manager server Anda. Rotasi atau cabut key jika bocor. Jangan menaruhnya pada form, frontend, URL atau source repo.
+## Organisasi
+Owner membuka tab **Organization** untuk nama, domain email, logo, favicon dan tema. Logo utama pelanggan dipakai pada konteks organisasi; bila belum diunggah, DekaSign menjadi default.
 
-API manajemen masih sandbox dan menggunakan data workspace sesuai allowlist; sandbox bukan isolasi data otomatis. Jangan menggunakannya untuk transaksi pelanggan produksi sampai aktivasi dan cakupan komersial benar-benar tersedia.
+Timezone default **Asia/Jakarta (GMT+7)**. Pilih zona global yang sesuai organisasi. Tanggal/jam tampilan dan filter mengikuti pengaturan organisasi; data waktu tetap disimpan secara konsisten. Periksa timezone sebelum mengatur jadwal atau tenggat.
 
-## Checklist sebelum operasi
-Pastikan organisasi, anggota, izin kategori, kanal email teruji, form/workflow published, serta pengganti approver sesuai kebijakan. Lihat [kanal notifikasi](/guides/notification-channels).
+## User management
+Undang email baru yang belum terdaftar di organisasi mana pun di DekaSign. Tetapkan role, jabatan, Access Profile atau izin manual, kategori, serta Direct Manager bila sudah tersedia. Penerima membuat password, mengisi nomor HP, dan memverifikasi email melalui alur undangan.
+
+Gunakan menu tindakan pada baris anggota untuk mengelola akses, tag Internal/External, recovery MFA, status dan review dokumen. Bulk invitation menerima CSV/XLSX dari template unduhan. Periksa preview import sebelum mengirim.
+
+Owner tidak dapat dihapus atau dicabut perannya secara biasa. Gunakan **Transfer Ownership** untuk menyerahkan organisasi ke anggota yang memenuhi syarat, lalu ikuti konfirmasi keamanan. Manager dan Access Profiles dikelola melalui menu Management masing-masing.
+
+## Recovery dan serah terima
+**Recover MFA** membantu anggota yang kehilangan authenticator serta recovery code. Owner harus melewati verifikasi keamanan terbaru, meninjau target, dan memberi alasan. Pemulihan mengembalikan metode ke Email OTP tanpa memberikan akses dokumen kepada Owner.
+
+**Review documents** membuka popup untuk meninjau inventaris sebelum serah terima. Review saja tidak memindahkan data. Pilih penerima, tinjau konflik, lalu konfirmasikan tindakan yang diizinkan. Identitas penanda tangan, keputusan dan audit historis tetap dipertahankan.
+
+## Integrasi
+Konfigurasi integrasi dan API mengikuti role Owner serta izin yang tersedia pada workspace. Simpan key di server/secret manager, bukan frontend atau URL. [Notification Channels](/guides/notification-channels), [Organization Hierarchy](/guides/organization-hierarchy), dan [Owner setup](/guides/owner-setup) menjelaskan langkah terkait.

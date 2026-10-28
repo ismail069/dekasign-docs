@@ -1,0 +1,37 @@
+---
+title: "Secure Document Sharing"
+description: "Kelola penerima, izin file, preview, anotasi, dan riwayat dalam sesi privat."
+---
+## Buat dan aktifkan sesi
+Buka **Operations → Secure Document Sharing**, buat sesi, tambahkan penerima dan file, lalu atur masa berlaku serta kebijakan akses. Periksa ringkasan sebelum aktivasi.
+
+Satu sesi memiliki **6 slot file aktif** bersama. File biasa maksimal **25 MB**, khusus ZIP **40 MB**. Menghapus file membebaskan slot; catatan tindakannya tetap ada.
+
+## Penerima dan file
+Tab pengelolaan menggabungkan daftar penerima dan file. Tambahkan penerima dari bagian penerima; gunakan tombol kelola pada baris untuk membuka popup pengaturan. Pilih izin **preview**, **download**, atau keduanya. Penerima tetap harus melewati verifikasi akses.
+
+Pada setiap file, pilih akses untuk semua penerima yang diizinkan atau penerima tertentu. Izin penerima dan file diperiksa bersama. Pengirim dapat memperbarui konfigurasi dan expiry; perubahan kebijakan dapat meminta verifikasi ulang. Owner/Admin tidak otomatis dapat membuka sesi privat pengguna lain.
+
+Tombol **Info** penerima menampilkan waktu akses halaman, preview, dan download pertama yang tercatat. Ini mencatat akses yang dilayani, bukan membuktikan bahwa seseorang membaca seluruh isi file.
+
+## Preview, watermark, dan anotasi
+Buka Preview untuk meninjau representasi file yang didukung. Watermark diterapkan pada salinan preview/unduhan sesuai kebijakan saat disajikan, sehingga dapat mencantumkan konteks penerima. File asli tidak ditimpa. ZIP tidak diberi watermark.
+
+Catatan dapat disimpan sebagai draft privat sebelum diposting. Catatan yang diposting, balasan, resolve/reopen, dan area yang ditandai mengikuti izin serta versi file. XLSX menyediakan pemilihan lembar/sel pada preview yang mendukungnya. Formula tidak dihitung ulang.
+
+Ekspor PDF tinjauan memerlukan izin yang sesuai; salinan berisi anotasi yang boleh terlihat, tidak menyertakan draft privat. Batas format, halaman, dan ukuran ekspor ditampilkan pada preview. Ekspor ini tidak membuat tanda tangan Document Sign.
+
+## Laporan dan audit
+Tab laporan memuat peristiwa akses, preview, download, undangan, perubahan izin, serta aktivitas file. Gunakan filter dan ekspor JSON/CSV bila tersedia. Laporan tidak mengandung file asli atau kredensial akses.
+
+Penerima dapat mengunggah balasan bila kebijakan dan slot mengizinkan. File balasan awalnya privat untuk pengirim dan pengunggah; pengirim mengatur pembagian berikutnya secara eksplisit.
+
+## Archive
+Archive menutup sesi dan menghapus file unggahannya. Informasi sesi dan audit tetap dapat dibuka, tetapi file yang telah dihapus tidak tersedia kembali. Periksa konfirmasi archive dengan teliti.
+
+## Kredit dan keamanan
+Aktivasi sesi untuk penerima pertama menggunakan satu Kredit; setiap penerima tambahan menggunakan satu Kredit. Kirim ulang OTP bukan penerima baru. Preview, anotasi, dan jumlah file tidak menambah Kredit per file.
+
+Unggahan disimpan terenkripsi dengan kunci layanan. Ini tidak berarti end-to-end encryption dengan kunci yang hanya dikuasai pelanggan. Ketika paket tidak aktif, akses eksternal dibekukan; akses internal/pemilik tetap mengikuti kewenangan dan retensi.
+
+PDF final termasuk file yang mengikuti jadwal penghapusan. Audit, riwayat billing, dan bukti verifikasi dipertahankan sesuai [kebijakan layanan](https://dekasign.com/id/terms). [My Projects](/guides/my-projects) mengelompokkan sesi tanpa mengubah izin.
