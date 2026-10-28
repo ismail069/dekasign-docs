@@ -28,6 +28,31 @@ Direct Manager memakai hubungan **requester**, termasuk requester Owner. Manager
 
 Operation Task memakai Conditions opsional untuk memilih All Staff atau satu/beberapa Specific Staff. Kategori mengikuti workflow. Lihat [Operation Task](/guides/operation-tasks).
 
+## Atur elemen Notification
+
+Siapkan channel terlebih dahulu di **Management → Notification channels**. Pilih elemen **Notification** pada Canvas, lalu atur **Recipient type**, **Delivery channel**, dan **Recipient**. Jenis **Email** hanya menawarkan channel email; jenis **Phone number** menawarkan channel nomor telepon dan WhatsApp. Penerima mengikuti pilihan pemohon atau approver saat ini.
+
+### WhatsApp
+
+1. Pilih channel WhatsApp terverifikasi dari Wati, Convia, atau Bird.
+2. Cari dan pilih template **APPROVED**. Detail diambil saat dipilih.
+3. Periksa ilustrasi header, body, footer dan tombol, serta jumlah parameter wajib.
+4. Isi setiap parameter dengan **Enter a value** atau pilih **Workflow parameter** yang tersedia pada alur ini.
+5. Untuk header image, video atau document, isi URL HTTPS publik yang dapat dibaca provider. URL dokumen privat DekaSign tidak boleh dipakai.
+6. Tinjau seluruh pemetaan sebelum menyimpan dan **Publish**.
+
+Tidak ada konfigurasi JSON untuk channel WhatsApp terpandu. Parameter kosong, template yang berubah, atau komponen yang belum didukung perlu diperbaiki sebelum rancangan dapat dipublikasikan. URL tombol dinamis hanya mengisi bagian variabel dari URL yang sudah disetujui provider.
+
+### Email
+
+Pilih sumber konten **DekaSign default**, **Message Template**, atau **Manual**. Message Template memakai versi yang telah dipublikasikan dan tersedia untuk kategori workflow. Manual menyediakan subject serta mode **Plain text** atau **HTML**. Gunakan parameter yang ditawarkan dan buka **Preview**; HTML tidak boleh memuat script.
+
+<Note>
+Uji katalog WhatsApp memverifikasi akses dan detail template tanpa mengirim pesan. Pengiriman notifikasi berjalan melalui antrean tanpa menunggu bukti penerimaan. Respons sukses provider berarti permintaan diterima, bukan bukti pesan sampai atau dibaca. Lihat **Delivery logs** untuk percobaan pengiriman dan respons.
+</Note>
+
+Lihat [Notification channels](/guides/notification-channels) untuk koneksi provider, penggantian API key, media dan Custom API.
+
 ## Save, Publish dan Logging
 Save menyimpan draft. Validate memeriksa koneksi dan konfigurasi. Sandbox memakai data uji dan trace nama/ID node. Publish membentuk versi untuk pengajuan baru. Selanjutnya buat/publikasikan [Request Form Template](/guides/request-form-templates).
 
