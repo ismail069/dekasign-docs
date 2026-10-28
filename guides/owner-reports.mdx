@@ -1,0 +1,60 @@
+---
+title: "Laporan organisasi untuk Owner"
+description: "Baca volume pengajuan, approval dan SLA, pekerjaan operasional, dokumen serta sumber daya organisasi."
+---
+
+Owner membuka **Management → Reports** untuk melihat ringkasan organisasi. Halaman ini tersedia di `/dashboard/owner/reports`; role Admin, Approver, dan Operation tidak memberikan akses laporan Owner.
+
+![Halaman Reports DekaSign dalam bahasa Indonesia dengan data organisasi QA sintetis](/images/app/owner-reports.png)
+
+## Pilih periode
+
+Default laporan mencakup **30 hari kalender terakhir**, termasuk hari ini. Pilih **From date** dan **To date**, lalu klik **Apply period**. Batas awal dan akhir mengikuti timezone organisasi; rentang maksimal **366 hari kalender**, termasuk kedua tanggal.
+
+Periksa waktu **Updated** untuk mengetahui kapan ringkasan diambil. Mengubah input tanggal saja belum menerapkan filter. **Export CSV** menggunakan periode yang sudah diterapkan pada laporan.
+
+## Pahami dasar penghitungannya
+
+| Bagian | Data yang masuk periode | Status yang ditampilkan |
+| --- | --- | --- |
+| Request | Pengajuan dibuat pada periode, termasuk Draft. | Status saat laporan diperbarui. |
+| Approval & SLA | Step approval dibuka pada periode. | Keadaan step saat laporan diperbarui. |
+| Operational work | Operation Task dibuat pada periode. | Status task saat laporan diperbarui. |
+| Documents & sharing | Paket Document Sign atau sesi Secure Document Sharing dibuat pada periode. | Status paket/sesi saat laporan diperbarui. |
+| Sumber daya | Inventaris anggota dan storage saat ini. | Bukan snapshot historis pada tanggal akhir filter. |
+
+Pengajuan lama yang baru selesai hari ini tidak masuk total request jika tanggal pembuatannya di luar periode. Step approval untuk pengajuan lama masih dapat masuk statistik approval jika step tersebut dibuka dalam periode.
+
+## Overview
+
+**Requests created** mencakup Draft. Grafik harian menampilkan tanggal pembuatan request; hari tanpa data bernilai nol. Status dan kategori membantu membedakan request yang masih diproses, perlu revisi, Approved, Rejected, dan Cancelled.
+
+**Approval turnaround** adalah rata-rata waktu dari request dibuat sampai hasil Approved atau Rejected, hanya untuk request dalam periode pembuatan yang memiliki waktu selesai valid. Penyebutnya adalah jumlah request selesai yang ditampilkan pada panel; bukan seluruh request. Durasi tersebut tidak menunggu tindak lanjut Operation Task.
+
+## Approvals & SLA
+
+- **Pending**: step masih menunggu keputusan.
+- **Overdue now**: step Pending telah melewati tenggat awalnya.
+- **Average completed step**: rata-rata waktu buka sampai tutup hanya dari step Completed dengan waktu valid. Step Cancelled tidak masuk rata-rata ini.
+- **Steps have an SLA deadline**: jumlah step dengan tenggat dibagi seluruh step yang dibuka dalam periode.
+- **Finished late**: jumlah step Completed yang ditutup setelah tenggat dibagi step Completed yang memiliki tenggat dan waktu tutup tercatat. Step tanpa tenggat dikecualikan.
+
+Tabel titik tunggu menampilkan 20 kelompok workflow/versi/Node ID teratas, diurutkan berdasarkan keterlambatan dan waktu tunggu saat ini. Klik nama step untuk membuka log workflow terkait.
+
+## Operational work
+
+Lihat status task, task menunggu signing, dan rata-rata penyelesaian. Rata-rata hanya menggunakan task Completed yang dibuat pada periode dan memiliki waktu selesai valid.
+
+Usia pekerjaan belum selesai dihitung sejak task dibuat dan mencakup waktu menunggu signing maupun Blocked. Kelompok usianya: di bawah 1 hari, 1–3 hari, 3–7 hari, serta 7 hari atau lebih.
+
+Tabel kategori menampilkan 50 kategori teratas. Kolom **In progress** menggabungkan Open dan In Progress; Blocked ditampilkan terpisah. Tabel beban kerja menampilkan 20 penanggung jawab teratas, termasuk pekerjaan tanpa penanggung jawab, dan tabel task terlama menampilkan 20 task belum selesai.
+
+## Documents & sharing
+
+Bandingkan jumlah paket Document Sign dan sesi Secure Document Sharing serta statusnya. **Signing past deadline** berarti paket masih In Progress meskipun batas waktunya lewat. **Sharing past expiry** berarti status sesi masih Active sementara waktu kedaluwarsanya lewat; angka tersebut bukan bukti akses masih diizinkan.
+
+## Ekspor dan tindak lanjut
+
+Klik **Export CSV** untuk mengunduh ringkasan agregat. CSV bukan salinan seluruh form, isi file, atau daftar kontak penerima. Data anggota/storage pada ekspor tetap merupakan inventaris saat ini. Jika inventaris storage belum terverifikasi, angka objek tercatat tidak boleh dianggap pengukuran lengkap seluruh file.
+
+Gunakan [Operation Task](/guides/operation-tasks) dan log workflow untuk memeriksa penyebab pekerjaan yang menunggu. Ringkasan laporan tidak memberikan izin tambahan untuk membuka dokumen privat.

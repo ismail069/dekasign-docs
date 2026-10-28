@@ -11,6 +11,8 @@ X-Dekasign-Environment: sandbox
 
 Sandbox keys start with `dks_test_`. The server checks key/app/requester status, expiry, organization, tenant host, category authority, allowlists, scopes, and rate limits. Keys do not bypass the requester's permissions.
 
+Production keys start with `dks_live_` and use `X-Dekasign-Environment: production`. Key, header, and app environments must match. Production requires an active paid plan and scopes allowed for that operation; a Sandbox key cannot act as a Production key.
+
 | Scope | Purpose |
 |---|---|
 | `catalog:read` | Category/form/workflow/template catalogs |

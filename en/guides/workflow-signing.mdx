@@ -1,62 +1,47 @@
 ---
-title: "Signed documents in approval requests"
-description: "Per-document options, approvers, and decision evidence."
+title: "Request Form documents"
+description: "Prepare default documents, dynamic values, and workflow-linked signatures."
 ---
-## Per-document flow
-<Note>
-The classification, saved preparation templates, and Process policy below were tested locally in the 20 October 2026 update. Migration and deployment remain separate. Confirm that your workspace uses the corresponding release before following this flow.
-</Note>
+## Choose the document type
+Request Form Templates can contain **mandatory** or **optional** default documents. Every submission receives its own copy; the source template remains unchanged.
 
-The workflow must enable request-document signing. After upload, choose each document's purpose:
+Upload choices:
+- **Supporting document** for review attachments.
+- **sign document or dynamic text** for documents prepared through the Request Form editor.
 
-| Choice | Use |
-| --- | --- |
-| **Attachment** | An ordinary attachment to review. |
-| **Supporting document** | Supporting evidence to review. |
-| **Document to sign** | A document requiring digital or visual signing. |
+Signing documents support PDFs up to **30 MB**. Use the **Request Form Document Sign Editor**, rather than the standalone editor, to connect Actors to the workflow.
 
-For **Document to sign**, open the editor, select Actors/signers and **Digital Only** or **Visible Signature**, and configure the required fields. Click **Save & attach to form** to save a private template and attach it automatically. It is bound to that file, release, and layout; you do not need to create a standalone template first.
+## Prepare in the editor
+<Steps>
+<Step title="Choose Actors and modes">
+Assign **Digital Only** or **Visual Signature** to signing Actors. Digital Only records consent without a signature image. Visual Signature requires a signature position on the PDF.
+</Step>
+<Step title="Place fields">
+Add text, multiline, number, date/place, checkbox, or signature fields. Depending on field type, values can come from static designer input, Form Builder mappings, manual requester input, API Data Source, or the responsible Actor.
+</Step>
+<Step title="Check value sources">
+Requester fields without a form mapping appear as separate inputs in the document area. API fields require tested mappings. Actor fields remain assigned to that Actor; API values cannot substitute for signatures.
+</Step>
+<Step title="Save and attach">
+Choose **Save & attach to form**. Check readiness before Submit. The submission pins form, workflow, document design, and prepared values.
+</Step>
+</Steps>
 
-Signing documents allow up to 30 MB/file. You can save a draft before preparation is complete, but **Submit** is refused until every signing document has valid saved preparation.
+The canvas Actor default applies when preparing new documents. Saved documents retain their modes and mappings. Unvisited workflow branches do not automatically become signers.
 
-Open the selected document's editor and assign Actors/signers and fields/areas according to supported policy. Request documents follow the design and approvers actually visited; unexecuted branches do not automatically become signers.
+## Drafts, review, and revisions
+Save a draft if preparation is incomplete, then continue from **My Requests**. Saving a draft does not start approval or use Credits. Submit is blocked when mandatory document preparation is invalid.
 
-## Assign every field
-The form/workflow Document Sign Editor uses workflow Actor slots. For **every** text, multiline, number, date/place, checkbox and signature field, select its responsible Actor in **Filled by** or **Signature supplied by**. Optional values still need an assigned Actor. Unmapped or invalid ownership blocks saving and server submission.
+Approvers inspect the document version, complete assigned fields, and confirm consent. Comments and annotations are not signature consent. Internal users can choose My Signature, QR Sign, or manual signing according to the configured mode.
 
-Digital-only Actors can fill non-signature fields without a signature rectangle. Visible signature fields belong only to visual-signature slots. This editor ends with **Save & attach to form**. Standalone Document Sign has a separate recipient editor and prepare/send flow.
+Prepare and review changed documents again before Resubmit. Earlier evidence continues to refer to its original version.
 
-In Canvas, select an Actor and choose **New document signing default**: **Digital Only** or **Visual Signature**. New documents take defaults from the workflow release pinned to the upload, not the latest draft. Visual mode still requires placing a signature rectangle. Saved documents retain their own modes and assignments.
+## Credits
+One workflow submission uses **1 Credit**, plus **1 Credit per distinct signing document**. Two signing documents and several Supporting documents use **3 Credits**. Supporting attachments add no signing Credit.
 
-Each document supports up to 20 signing Actors. For a larger workflow, remove an unneeded slot and choose another Actor from the workflow catalog.
+Identical original content counts once in the request cycle; different original content in a revision may add one Credit. Insufficient Credits cancel submission. Sandbox does not use Production Credits.
 
-The two editor entries, mandatory field mapping and mode defaults passed local checks in the 21 October update. Desktop checks cover upload, Save & attach, reopening a template and standalone Ready. Mobile checks cover text/date/checkbox/signature assignment, Save & attach, reopening a draft and standalone Ready. Complete requester-supplied external identity/audience handling, full review and deployment remain separate; they are not activated by this guide.
+## Results and access
+Evidence records identity, action, time, and document-version hash. Modifying the final PDF may cause integrity verification to fail. A DekaSign visual seal is not third-party certification.
 
-## Continue a draft
-Open your draft from **My Requests**, then click **Continue draft**. The form restores saved values and signing preparation. Click **Configure signing** to finish an unprepared document, then **Save draft** or **Submit**. The draft keeps the same request number and initial revision; saving it starts no approval task and uses no Processes.
-
-The first Submit starts the workflow and accounts for Process usage once. If another tab changes the draft, reload to obtain the current version before saving again. A draft pinned to an older workflow release is not silently moved to a new design. This flow applies to initial drafts under the new document policy; corrections after a revision request still use Resubmit.
-
-## Review
-Approvers review form data, files, notes, and annotations before deciding. A note is not signing consent. Document approval and workflow approval must follow the configured permissions and modes.
-
-In the document reviewer, open **Preview & download audit** to see who received a preview/download, when, and for which revision. This activity is separate from confirmation and decisions. Serving a file does not prove that its contents were read or approved.
-
-In the local21 October update, private-document restrictions apply to **Attachment**, **Supporting document**, and **Document to sign**, including when the assigned approver is an Owner. An Owner who is not a participant gains no automatic file access; only the requester can change request attachment permissions. Participant downloads require explicit permission. When upload-wide and attachment-specific policies differ, the stricter restriction applies.
-
-## Process usage
-For new requests under this policy, one workflow uses **1 Process**, plus **1 Process for each distinct signing document**. Two signing documents and several ordinary attachments use **3 Processes**. Attachment and Supporting document do not add signing Processes.
-
-The same original content is counted once in that request cycle, including additional approvers, retries, layout revisions, and reuploads. Different original content adds one Process when submitted in a later revision. Insufficient credit rolls back the complete submission transaction. Historical requests retain their previous policy; sandbox does not debit production credit.
-
-## Document revisions
-The requester reads revision instructions/annotations, replaces files or data as needed, and reviews signing plans before Resubmit. Evidence for an older version must not be presented as approval of a newer file.
-
-## Results
-Approved/signed documents retain action context and the evidence page provided by the system. Check the actor, time, and version/digest. Printing a final PDF to a new PDF does not preserve the same integrity evidence.
-
-## API
-Management API submissions support digital approval only for selected documents. API keys cannot create visual signatures or impersonate signers. API access remains sandbox-only; see the [request API](/en/api-reference/requests).
-
-## Boundaries
-Native signing uses internal DekaSign integrity, not a certified seal. External approval Actors and ALL/ANY activation are separate from external Document Sign recipients.
+Document permissions still apply to requesters, approvers, and Owners. Owner/Admin roles do not automatically open every private file. See [API Data Source](/en/guides/document-data), [Request Form Templates](/en/guides/request-form-templates), and [Verify Document](/en/guides/verify-document).

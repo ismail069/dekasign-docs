@@ -1,0 +1,39 @@
+---
+title: "Access Profiles"
+description: "Reuse category and template permissions when inviting members or updating their access."
+---
+
+**Management → Access Profiles** stores reusable permission configurations. For example, an Employee Requests profile can provide HR and Finance forms, while a Finance Approver profile can define Finance approval authority.
+
+## Create a profile
+
+1. Open **Access Profiles** as Owner and select **Create profile**.
+2. Enter a name and description that identify its intended users.
+3. Select categories for **Create request**, **Approve**, and **Design / publish** as needed.
+4. In form settings, choose category scope or specific templates and permitted actions.
+5. Review Document Sign permissions when relevant, then save.
+
+Use search to filter long category and template lists. Grant only necessary actions; permission to use a form does not need to include editing or publishing it.
+
+## Apply it to a member
+
+When inviting a member or editing their access in **Settings → User management**, select the appropriate **Access Profile**. Review the resulting permissions before saving. Choose **Manual** to configure category/form permissions directly when no saved profile fits.
+
+| Setting | Purpose |
+| --- | --- |
+| Role | Defines broad member capabilities, such as Approver or Operation. |
+| Access Profile | Supplies the selected category and template permission configuration. |
+| Direct Manager | Defines the reporting relationship used by manager assignment. |
+| Operation categories | Define which operational work categories the member manages. |
+
+<Note>
+An Access Profile does not automatically change roles, Direct Manager or Operation categories. Selected permissions must still fit the member's role. Menus in **Create Design** are reserved for authorized Owners and Admins.
+</Note>
+
+## Edit and reapply
+
+Select **Edit profile** to update a profile. Editing does not immediately change every member who previously used it. Open **User management**, select the affected member, reapply the profile, and review access changes before saving.
+
+If a category or template is no longer available, revise the profile's selections before applying it. Module and profile permissions do not provide unrestricted access to other users' private documents.
+
+See [Owner setup](/en/guides/owner-setup) and [Organization Hierarchy](/en/guides/organization-hierarchy) for the initial setup sequence.

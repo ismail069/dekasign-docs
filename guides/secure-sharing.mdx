@@ -1,63 +1,37 @@
 ---
 title: "Secure Document Sharing"
-description: "Sesi privat, slot file, upload penerima, anotasi, dan audit."
+description: "Kelola penerima, izin file, preview, anotasi, dan riwayat dalam sesi privat."
 ---
+## Buat dan aktifkan sesi
+Buka **Operations → Secure Document Sharing**, buat sesi, tambahkan penerima dan file, lalu atur masa berlaku serta kebijakan akses. Periksa ringkasan sebelum aktivasi.
 
-<Note>
-Panduan ini menjelaskan implementasi session-first yang diuji lokal. Migrasi, rilis production, dan penerimaan provider tetap terpisah. Gunakan alur ini bila tersedia pada versi workspace Anda.
-</Note>
+Satu sesi memiliki **6 slot file aktif** bersama. File biasa maksimal **25 MB**, khusus ZIP **40 MB**. Menghapus file membebaskan slot; catatan tindakannya tetap ada.
 
-## Siapkan sesi
-Buat sesi, atur penerima, masa berlaku, dan keamanan. Unggah file, periksa kebijakan global atau override per file, lalu tinjau dampak penerima dan pemakaian Process sebelum aktivasi.
+## Penerima dan file
+Tab pengelolaan menggabungkan daftar penerima dan file. Tambahkan penerima dari bagian penerima; gunakan tombol kelola pada baris untuk membuka popup pengaturan. Pilih izin **preview**, **download**, atau keduanya. Penerima tetap harus melewati verifikasi akses.
 
-Satu sesi mempunyai **6 slot file aktif**, dipakai bersama oleh pengirim dan seluruh penerima. File biasa maksimal **25 MB**, ZIP maksimal **40 MB**, memakai MB biner. Menghapus file membebaskan slot; audit dan hubungan file tetap dipertahankan.
+Pada setiap file, pilih akses untuk semua penerima yang diizinkan atau penerima tertentu. Izin penerima dan file diperiksa bersama. Pengirim dapat memperbarui konfigurasi dan expiry; perubahan kebijakan dapat meminta verifikasi ulang. Owner/Admin tidak otomatis dapat membuka sesi privat pengguna lain.
 
-## Akses dan upload penerima
-Penerima membuka undangan dan melakukan verifikasi. Email adalah default; WhatsApp atau kedua kanal hanya dipakai bila dikonfigurasi dan tersedia. Audience, expiry, revocation, dan izin per file tetap diperiksa. Perubahan versi/kebijakan file dapat memerlukan verifikasi ulang.
+Tombol **Info** penerima menampilkan waktu akses halaman, preview, dan download pertama yang tercatat. Ini mencatat akses yang dilayani, bukan membuktikan bahwa seseorang membaca seluruh isi file.
 
-Owner/Admin organisasi tidak otomatis mendapat akses ke sesi privat account lain. Logo tenant dapat tampil di halaman eksternal; footer **Powered by DekaSign** mempertahankan identitas platform.
+## Preview, watermark, dan anotasi
+Buka Preview untuk meninjau representasi file yang didukung. Watermark diterapkan pada salinan preview/unduhan sesuai kebijakan saat disajikan, sehingga dapat mencantumkan konteks penerima. File asli tidak ditimpa. ZIP tidak diberi watermark.
 
-Penerima dapat mengunggah ketika slot kosong dan kebijakan mengizinkan. File masuk privat untuk pengirim dan pengunggah. Pengirim harus melakukan republication eksplisit untuk membagikan salinannya kepada penerima lain.
+Catatan dapat disimpan sebagai draft privat sebelum diposting. Catatan yang diposting, balasan, resolve/reopen, dan area yang ditandai mengikuti izin serta versi file. XLSX menyediakan pemilihan lembar/sel pada preview yang mendukungnya. Formula tidak dihitung ulang.
 
-## Hasil tanda tangan basah
-Pengirim menambahkan instruksi tanda tangan basah pada sumber. Penerima menandatangani, memindai, lalu mengunggah PDF/gambar melalui tindakan balasan file tersebut. Scan terhubung ke original pada thread yang sama dan menggunakan satu slot aktif. Ini berbeda dari signing melalui Document Sign.
+Ekspor PDF tinjauan memerlukan izin yang sesuai; salinan berisi anotasi yang boleh terlihat, tidak menyertakan draft privat. Batas format, halaman, dan ukuran ekspor ditampilkan pada preview. Ekspor ini tidak membuat tanda tangan Document Sign.
 
-## Catatan dan anotasi
-Preview yang mendukungnya menyediakan note, pin, area, highlight, ellipse, arrow, dan freehand. Pilih **Save private draft**, lalu **Post** saat siap. Draft hanya terlihat oleh penulis. Thread penerima ditujukan kepada pengirim dan penulis; pengirim dapat memilih audience yang sudah mempunyai akses file.
+## Laporan dan audit
+Tab laporan memuat peristiwa akses, preview, download, undangan, perubahan izin, serta aktivitas file. Gunakan filter dan ekspor JSON/CSV bila tersedia. Laporan tidak mengandung file asli atau kredensial akses.
 
-Reply, resolve/reopen, dan riwayat memakai versi untuk mencegah tab lama menimpa perubahan baru. Anotasi terikat pada sumber, versi, dan representasi preview. Anotasi spasial XLSX belum tersedia; gunakan file note. Anchor native sheet/cell dan visual historis masih terpisah.
+Penerima dapat mengunggah balasan bila kebijakan dan slot mengizinkan. File balasan awalnya privat untuk pengirim dan pengunggah; pengirim mengatur pembagian berikutnya secara eksplisit.
 
-## Unduh dan audit
-**Download** mengikuti izin file. Preview-only tidak menyajikan original sebagai fallback. PDF, Office dan gambar dapat diunduh sebagai salinan visual ber-watermark. ZIP dikecualikan dari watermark, termasuk pratinjau isinya; unduhan ZIP menyajikan arsip asli jika izin mengizinkan. Verifikasi, batas unduh, masa akses dan audit tetap berlaku. Salinan visual bukan original yang dapat diedit atau ekspor anotasi.
+## Archive
+Archive menutup sesi dan menghapus file unggahannya. Informasi sesi dan audit tetap dapat dibuka, tetapi file yang telah dihapus tidak tersedia kembali. Periksa konfirmasi archive dengan teliti.
 
-Laporan membedakan preview, download yang dilayani, upload, dan konfirmasi penerimaan. Preview/download tetap dicatat bila penerima lupa melakukan konfirmasi. Penyajian file bukan bukti bahwa isinya telah dibaca atau disetujui.
+## Kredit dan keamanan
+Aktivasi sesi untuk penerima pertama menggunakan satu Kredit; setiap penerima tambahan menggunakan satu Kredit. Kirim ulang OTP bukan penerima baru. Preview, anotasi, dan jumlah file tidak menambah Kredit per file.
 
+Unggahan disimpan terenkripsi dengan kunci layanan. Ini tidak berarti end-to-end encryption dengan kunci yang hanya dikuasai pelanggan. Ketika paket tidak aktif, akses eksternal dibekukan; akses internal/pemilik tetap mengikuti kewenangan dan retensi.
 
-## Ekspor laporan sesi
-Pada versi terbaru yang diuji lokal, pemilik sesi saat ini dapat memilih **Laporan JSON** atau **Aktivitas CSV** pada **Laporan peristiwa**. Langganan aktif dan sesi workspace terverifikasi wajib. JSON memuat metadata sesi/file, aktivitas terfilter serta catatan/riwayat yang boleh terlihat. CSV berisi aktivitas terfilter dan melindungi dari formula spreadsheet. Keduanya tidak memuat file asli, URL storage atau draft privat milik pihak lain.
-
-Ekspor dibatasi dan diaudit. Persempit filter aktivitas atau gunakan CSV jika JSON terlalu besar. Laporan data ini terpisah dari PDF tinjauan beranotasi. Ketersediaan production mengikuti versi yang telah dirilis.
-
-## Unduh PDF tinjauan beranotasi
-
-Versi terbaru yang diuji lokal menambahkan **Izinkan ekspor PDF tinjauan (PDF/gambar saja)** pada kebijakan sesi dan file. Izin ini nonaktif sampai diaktifkan secara eksplisit. Izin unduh dan catatan juga wajib. Pada preview yang diizinkan, pemilik saat ini atau penerima terverifikasi dapat memilih **Unduh PDF tinjauan**.
-
-Salinan menggabungkan PDF/gambar saat ini, tanda visual bernomor, catatan diposting/diselesaikan dan reply yang boleh terlihat. Draft privat tidak disertakan. Anchor sumber/versi/preview harus tetap sesuai. Watermark kebijakan diterapkan pada salinan tinjauan; original tetap utuh.
-
-Satu ekspor dibatasi 20 halaman sumber dan keluaran 25 MB. Teks yang tidak didukung, anchor stale atau halaman/ukuran berlebih menolak seluruh ekspor. ZIP, Office dan representasi historis tidak disertakan. Salinan membantu peninjauan, bukan bukti signing. Salinan dibuat sementara, dicatat dalam audit download/ekspor dan memakai jatah unduh, tanpa Process tambahan. Ekspor native Office/sel belum selesai.
-
-## Pemakaian dan keamanan
-Aktivasi untuk satu penerima memakai **1 Process**; setiap penerima tambahan menambah satu Process. Undangan ulang eksplisit yang berhasil setelah revocation menambah satu Process baru. Retry transport dan kirim ulang OTP bukan reinvitation. File, anotasi, dan preview tidak menambah Process per dokumen seperti [dokumen approval yang ditandatangani](/guides/workflow-signing).
-
-Isolasi account/tenant tetap berlaku. Operator server/database/storage saat ini masih berpotensi membaca konten. Enkripsi dengan kunci di luar kendali operator dan dormant-data retention otomatis masih direncanakan. Langganan tidak aktif tidak otomatis menghapus dokumen.
-
-Kebijakan retensi yang disetujui memisahkan file dari data akun:
-
-| Organisasi | File upload, termasuk PDF final bertanda tangan | Akun, konfigurasi, workflow dan template |
-|---|---|---|
-| Trial yang terverifikasi belum pernah membayar | 60 hari setelah trial berakhir | Empat bulan kalender setelah trial berakhir |
-| Organisasi berbayar | Empat bulan kalender setelah paket berbayar berakhir | Satu tahun kalender setelah paket berbayar berakhir |
-
-Audit dan bukti verifikasi dokumen tetap tersimpan tanpa batas waktu; file PDF final ikut dihapus bersama file lain. Setiap tenggat file/akun memiliki notifikasi satu bulan kalender, 14 hari dan tiga hari sebelumnya. Renewal terverifikasi membatalkan jadwal lama. Riwayat/notifikasi yang belum lengkap atau hold aktif menghalangi penghapusan. Worker notifikasi dan purge file terkontrol sudah diuji lokal; switch production tetap nonaktif. Penghapusan akun, expiry backup dan penerimaan R2 nyata masih terbuka.
-
-Rancangan dan pemeriksa konfigurasi kunci tenant telah disiapkan. Infrastruktur dan pemrosesan terlindungi belum tersedia, sehingga konfigurasi tersebut belum membuat operator tidak dapat membaca dokumen.
+PDF final termasuk file yang mengikuti jadwal penghapusan. Audit, riwayat billing, dan bukti verifikasi dipertahankan sesuai [kebijakan layanan](https://dekasign.com/id/terms). [My Projects](/guides/my-projects) mengelompokkan sesi tanpa mengubah izin.

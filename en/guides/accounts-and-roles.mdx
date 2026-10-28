@@ -1,27 +1,27 @@
 ---
-title: "Login, onboarding, and roles"
-description: "Use your own identity, active membership, and appropriate permissions."
+title: "Accounts, onboarding and navigation"
+description: "Sign-in, invitations, automatic Trial and permission-aware navigation."
 ---
-## Login and organizations
-Sign in with your account email. For invitations, use the address the invitation was sent to. Select the correct organization and its subdomain. One internal account email may register in only one organization workspace, including while its membership is inactive. External users, external signers and external approvers are separate guest identities; this internal account rule does not grant them workspace membership.
 
-The latest local implementation requires Email OTP after a password; you may choose TOTP under **Settings → Account security**. See [sign-in verification](/en/guides/settings). Migration and production rollout await authentication readiness acceptance. Google login uses a central gateway and still requires acceptance with the real Google provider; provider sign-in does not bypass the local factor or document permissions.
+## Register and sign in
+Register with email or Google on the main site, verify and complete organization onboarding. A Google-created account may not have a local password. Google does not bypass DekaSign OTP/TOTP or permissions. Use the correct organization subdomain.
 
-Onboarding collects the organization identity and setup information supported by the release. Check **Settings** before inviting members or publishing workflows. If organization creation or purchasing is gated, contact the team; clicking a button is not proof of activation.
+A **30-day Trial starts automatically** after organization onboarding. Check the Trial banner, end date, Credits, seats and storage on the dashboard or Plans & billing. Paid plans require verified payment; a redirect alone does not prove payment.
 
-## Roles
-| Role | Main responsibility | Important boundary |
-|---|---|---|
-| Owner | Organization, members, settings, channels, billing, and API keys | Cannot retrieve another person's OTP/private key or sign as them. |
-| Admin | Forms, categories, workflows, and permitted management | Not automatically an approver for every category; Owner-only settings remain restricted. |
-| Approver | Review assigned tasks and make decisions | Requires a valid assignment, category authority, and validity period. |
-| Creator / Requester | Submit requests and revisions | Limited to authorized forms, categories, and data. |
-| External signer | Review and sign an assigned document | Not a general organization member or approval Actor. |
+## Invitations and roles
+The Owner invites an email not registered in any organization, selects roles, a job title and an Access Profile or manual permissions. The invitee enters their name, phone number and password, verifies email and joins through the invitation link. Phone numbers are contact information.
 
-Multiple roles do not bypass permission checks. Admin status alone does not make a member an eligible approver.
+[Roles and Access Profiles](/en/guides/access-profiles) define authority. Owner/Admin manage Create Design, Approvers make decisions, Creators submit requests and Operation staff perform follow-up work. Roles can be combined. Manager relationships and Internal/External tags do not automatically grant permissions.
 
-## Profile menu
-Click your name/avatar in the top bar for **Settings** and **Sign out**. Profile settings let you change your name and password through the available verification flow. Never reuse demo passwords for customer accounts.
+## Navigation
+| Group | Contents |
+|---|---|
+| Create Design | Form Builder, Categories, Workflow Engines, Request Form Templates, Document Sign template; Owner/Admin only. |
+| Operations | My Requests, Team Queue, Document Sign, Secure Document Sharing and Verify document. |
+| My Works | My Tasks, My Approvals, My Delegation, My Signature and My Documents according to role. |
+| Management | Organization Hierarchy, Access Profiles, Reports, channels/templates, billing, integrations, audits and Support as authorized. |
+| Settings | Profile, account security and permitted organization settings. |
 
-## When access is denied
-Check the active organization, membership, form/category grants, task assignment, and delegation validity. Ask the Owner to correct permissions. A direct URL does not bypass server checks. SSO is not active in this scope.
+Email OTP protects sign-in; enable TOTP Authenticator in **Settings → Account security** if desired. Store recovery codes safely. Never share accounts, OTPs or invitation links.
+
+New Owners can follow [Owner getting started](/en/guides/owner-setup). Self-approval is prohibited; prepare another approver before testing an Owner's own request.

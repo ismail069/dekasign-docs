@@ -1,0 +1,49 @@
+---
+title: "Menyiapkan organisasi sebagai Owner"
+description: "Urutan pengaturan organisasi, anggota, desain form, workflow dan pengajuan pertama."
+---
+
+Sebagai Owner, siapkan kewenangan anggota sebelum menggunakan request form. Role, kategori, template, dan hubungan manager memiliki fungsi yang berbeda.
+
+![Tampilan setup Owner DekaSign dalam bahasa Indonesia menggunakan organisasi QA sintetis](/images/app/owner-setup.png)
+
+## Sebelum mulai
+
+Selesaikan verifikasi akun dan onboarding. Pastikan Anda berada di workspace organisasi yang benar. Trial 30 hari aktif setelah organisasi dibuat; periksa status dan kapasitasnya di **Plans & billing**.
+
+<Steps>
+  <Step title="Lengkapi Settings">
+    Buka **Settings → Organization**. Periksa nama organisasi, domain email, logo, serta timezone. Default timezone adalah **Asia/Jakarta (GMT+7)**; pilih timezone lain jika diperlukan. Waktu pada halaman organisasi mengikuti pengaturan ini.
+  </Step>
+  <Step title="Siapkan Categories">
+    Buka **Create Design → Categories**. Gunakan kategori yang tersedia atau tambahkan kategori sesuai kebutuhan. Kategori juga menjadi pengelompokan pekerjaan pada **Team Queue**.
+  </Step>
+  <Step title="Undang approver lain">
+    Buka **Settings → User management**, pilih **Invite member**, lalu isi email baru, role, dan jabatan. Tetapkan Direct Manager, Access Profile atau izin manual, dan kategori yang boleh disetujui. Penerima melengkapi nama, nomor HP, password, serta verifikasi email untuk bergabung.
+  </Step>
+  <Step title="Buat Form Builder">
+    Buka **Create Design → Form Builder**. Susun field, aturan wajib, pilihan data, tabel, dan lampiran. Simpan form yang akan digunakan oleh workflow.
+  </Step>
+  <Step title="Desain dan publish workflow">
+    Buka **Create Design → Workflow Engines**, pilih Form Builder, lalu atur jalur approval. Pilih approver tertentu atau **Requester’s Direct Manager**. Jalankan **Validate** dan **Run sandbox**, lalu **Publish**.
+  </Step>
+  <Step title="Buat Request Form Template">
+    Buka **Create Design → Request Form Templates**. Isi nama, pilih kategori dan workflow published. Siapkan dokumen bawaan jika diperlukan, lalu simpan dan publikasikan template.
+  </Step>
+  <Step title="Petakan kewenangan pengguna">
+    Di **User management**, berikan pemohon akses kategori serta hak menggunakan form. Berikan approver role dan izin approval pada kategori terkait. Untuk task operasional, tambahkan role **Operation** dan kategori yang dikelola. Access Profile dapat membantu mengulang pengaturan izin.
+  </Step>
+  <Step title="Kirim pengajuan pertama">
+    Masuk sebagai pemohon, buka **My Requests**, pilih form, lengkapi data dan dokumen, lalu tinjau sebelum **Submit**. Periksa **My Approvals** pada akun approver. Jika workflow memiliki Operation Task, lanjutkan pengujian sampai pekerjaan tercatat **Completed**.
+  </Step>
+</Steps>
+
+<Warning>
+Anda tidak dapat menyetujui pengajuan sendiri. Organisasi baru perlu memiliki approver lain sebelum Owner mengirim pengajuan yang memerlukan approval. Memilih Direct Manager juga tetap tunduk pada larangan ini.
+</Warning>
+
+## Jika form belum terlihat
+
+Periksa kategori aktif, workflow published, Request Form Template published, keanggotaan aktif, dan izin kategori/form pemohon. Role saja tidak otomatis memberikan semua izin atau akses ke isi dokumen privat.
+
+Lanjutkan ke [Organization Hierarchy](/guides/organization-hierarchy), [Access Profiles](/guides/access-profiles), [Request Form Templates](/guides/request-form-templates), atau [Operation Task](/guides/operation-tasks).

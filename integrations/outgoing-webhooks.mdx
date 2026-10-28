@@ -5,6 +5,14 @@ description: "REST dan HMAC app events adalah transport berbeda."
 
 Outgoing webhook mengirim kejadian ke server Anda; berbeda dengan API untuk submit request.
 
+| Kebutuhan | Fitur |
+|---|---|
+| Mengambil data untuk field dokumen sebelum dikirim | [API Data Source](/guides/document-data) |
+| Mengirim email atau pesan telepon melalui provider | [Custom API Notification Channel](/guides/notification-channels) |
+| Memberi tahu aplikasi Anda tentang peristiwa workflow/dokumen | Event webhook pada panduan ini |
+
+Pilih endpoint dan konfigurasi event melalui editor workflow/dokumen atau Integrations sesuai jenis transport. Event webhook bukan form untuk memasukkan data dokumen secara langsung.
+
 ## REST workflow dan Document Sign
 Konfigurasikan endpoint HTTPS publik port 443 tanpa credential/query/fragment pada URL. Server membatasi private address, metadata cloud, redirect dan header terlarang. Pilih **None**, **Bearer**, **API key**, atau **Basic**, lalu custom header. Jangan taruh secret dalam custom body.
 

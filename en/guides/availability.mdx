@@ -1,20 +1,21 @@
 ---
-title: "Availability and release boundaries"
-description: "Distinguish documented application features from deferred or provider-dependent capabilities."
+title: "Feature availability"
+description: "Understand permissions, configuration, and integration boundaries."
 ---
-## Subject to release configuration
-The documented application surfaces include Form Builder, category/request cards, serial workflow canvas with AND/OR Rules, Sandbox, document review/revision, delegation, email templates, configured channels, and Native Document Sign. Permissions, versions, and configuration determine actual access.
+## Application features
+Guides cover Form Builder, Categories, Request Form Templates, Workflow Canvas, serial/parallel ALL/ANY approval, external Actors, revisions, delegation, Document Sign, Secure Document Sharing, My Signature, Organization Hierarchy, Access Profiles, Operation Task, My Projects, and Owner Reports.
 
-## Deferred or not enabled
-- SSO is outside the current implementation scope.
-- Parallel ALL/ANY groups require separate runtime acceptance and activation.
-- External approval Actor admission is not enabled for new production requests.
-- Management REST APIs remain sandbox-only, not commercial production APIs.
-- A pricing page does not automatically enable live checkout.
-- Certified electronic seals, signer certificates, trusted timestamps, and external KYC are not part of the internal integrity profile.
+Actions depend on roles, categories, document permissions, subscription status, and workflow version. A sample design does not grant access to another user's data. Check readiness with the [Owner setup guide](/en/guides/owner-setup).
 
-## Customer provider dependencies
-Email/WhatsApp providers require valid accounts, credentials, templates, and testing. Contract/mock tests do not prove real deliverability. Provider accepted is not delivered/read. Documentation does not claim that backup restoration, provider bounce handling, or every disaster-recovery scenario has been proven.
+## APIs and providers
+Use Sandbox APIs for testing. Production APIs require an active paid plan, Production integration app/key, and allowed scopes. Catalog, submission, signing, attachment, and revision support follow available configuration; do not assume every Sandbox operation is available in Production. Management REST APIs remain sandbox-only for design-management operations not supported in Production.
 
-## Publication
-Feature descriptions reflect the source snapshot recorded with the API catalog. If the guide differs from your deployment, check the version and contact the team. Do not bypass guards or enable feature flags yourself.
+Custom channels require provider credentials and a successful test. Accepted does not mean delivered/read. Payments activate capacity only after provider verification; a browser redirect alone is not evidence of payment.
+
+## Deferred integrations
+Google Drive, OneDrive, n8n, and expanded SSO are outside this core feature scope. Google login is separate from Google Drive storage integration.
+
+DekaSign integrity evidence does not claim a certified electronic seal, third-party signer certificate, trusted timestamp, or external KYC verification. Choose a method appropriate to your transaction.
+
+## Help
+If a screen or action differs, note its process reference, timestamp, and error message. Contact support@dekasign.com without sharing OTPs, passwords, API keys, or private links.

@@ -1,21 +1,21 @@
 ---
-title: "Sandbox dan pengujian alur"
-description: "Uji cabang dan waktu virtual tanpa mengirim proses nyata."
+title: "Workflow Sandbox"
+description: "Uji jalur, keputusan, dan waktu virtual sebelum workflow dipakai."
 ---
-## Mulai
-Buka workflow pada canvas dan pilih **Run sandbox**. Pilih snapshot/rancangan yang hendak diuji, isi pemohon simulasi dan form data sesuai key/tipe schema. Jika panel menggunakan JSON, pastikan valid.
+## Mulai simulasi
+Buka Workflow Canvas dan pilih **Run sandbox**. Periksa nama serta versi workflow aktif. Pilih pemohon simulasi dan isi nilai form sesuai key serta tipe field; gunakan **Load sample values** sebagai titik awal.
 
-## Uji satu jalur
-Mulai simulasi, lihat node aktif dan event. Beri keputusan simulasi pada Actor. Ubah input untuk memastikan setiap output Rule terpilih pada kondisi yang tepat, termasuk gabungan AND/OR dan nilai batas.
+Pilih **Start New Run** untuk membuat simulasi. Ini tidak mengirim request nyata, menandatangani PDF produksi, mengirim pesan nyata, atau memakai Kredit Production.
 
-## Uji waktu
-Gunakan kontrol waktu virtual untuk Wait/SLA yang tersedia. Verifikasi pengingat, jalur SLA dan Loop terkontrol tidak membuat tugas ganda atau pengulangan tanpa batas. Jangan menyamakan waktu virtual dengan bukti worker server sudah berjalan pada jam nyata.
+## Baca Execution Trace
+Trace menampilkan nama node/element/step, ID, event, dan waktu sehingga Anda dapat mencocokkannya dengan desain. Panel trace dapat di-scroll. Gunakan navigasi kembali ke Canvas workflow yang sedang diuji; di Canvas, cari ID untuk memilih, menyorot, dan memfokuskan step.
 
-## Uji revisi
-Pilih Need revision, lihat task Revision, ubah data simulasi lalu Resubmit. Pastikan kembali ke node yang ditentukan dan batas revisi dipakai dengan benar. Reject final harus berakhir sebagai Rejected, bukan otomatis membuka form edit.
+## Uji keputusan dan kondisi
+Pada Actor aktif, pilih identitas simulasi dan keputusan. Isi alasan sebelum **Request Revision** atau **Reject**. Pesan validasi muncul pada area tindakan yang terkait.
 
-## Publish
-Simpan perubahan setelah tes; hasil snapshot lama bukan bukti rancangan baru telah lulus. Jalankan Validate ulang dan Publish hanya setelah jalur penting benar. Sandbox tidak menandatangani PDF produksi atau mengirim notifikasi nyata.
+Uji setiap output Rule dan optional Condition Operation Task memakai contoh sesuai kebutuhan Anda. Sertakan nilai batas, kondisi tidak terpenuhi, manager tidak valid, serta staf tidak tersedia. Nilai contoh bukan aturan bisnis bawaan.
 
-## Bila gagal
-Periksa key form, tipe angka/tanggal, candidate approver dan konektor. Catat input, expected route, actual route dan versi. Kirim laporan dukungan dengan data sintetis tanpa credential.
+## Waktu, revisi, dan Operation Task
+Gunakan waktu virtual untuk Wait, SLA, dan pengingat. Untuk revisi, ubah data simulasi lalu Resubmit; periksa tujuan kembali dan batas revisi. Untuk Operation Task, periksa kategori, all/specific staff, penugasan tunggal, dan hasil simulasi.
+
+Waktu virtual bukan bukti pengiriman provider atau eksekusi worker pada jam nyata. Setelah desain berubah, ulangi Validate dan simulasi yang relevan sebelum Publish. Catat versi, ID step, input, expected result, serta hasil aktual saat melaporkan masalah.

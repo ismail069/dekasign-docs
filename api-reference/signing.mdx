@@ -6,6 +6,14 @@ description: "Receipt mengikat template, nilai, penerima dan expiry."
 Desain template di platform dan izinkan pada app. API key tidak mengisi consent atas nama penerima.
 
 ## Preview
+Untuk template dengan API Data Source, panggil `POST /api/v1/signature-packages/data-fetch` terlebih dahulu dengan `packages:create`:
+
+```json
+{"template_id":"template-id","parameters":{"project_id":"PRJ-001"}}
+```
+
+Parameter mengikuti desain template, dapat kosong atau lebih dari satu (maksimal 20). Respons memuat variabel yang didukung dan `lookup_token` rahasia yang terikat issuing key serta berlaku 10 menit. Sertakan token tersebut pada body Preview. Jangan menaruh API key provider pada pemanggilan ini; koneksi tersimpan dipakai server. Fetch tidak membuat paket atau undangan. Production memerlukan kapabilitas data source dan akses berbayar yang sesuai.
+
 `POST /api/v1/signature-packages/preview` membutuhkan `packages:create`.
 
 ```json
@@ -33,6 +41,8 @@ Setelah pengirim mengonfirmasi, `POST /signature-packages` dengan `packages:crea
 Send memakai snapshot preview, bukan fetch REST ulang. Perubahan memerlukan preview baru. `201` dan `invitation_status:"queued"` berarti antrean, bukan bukti email delivered atau consent selesai.
 
 ## Status dan archive
+`GET /api/v1/signature-packages/{id}/document` dengan `packages:read` mengunduh PDF untuk paket **COMPLETED** dalam cakupan privat aplikasi/pemohon. Sebelum selesai, server mengembalikan `409 FINAL_DOCUMENT_NOT_READY`. Akses dan versi diperiksa kembali sebelum file disajikan; ini bukan tautan publik.
+
 `GET /signature-packages` mendukung `q`, `status`, `archived=only`, pagination. Detail `GET /signature-packages/{id}`. Keduanya `packages:read`.
 
 `POST /signature-packages/{id}/archive` memakai `packages:archive`, alasan 5–500 karakter, idempotency key. Paket harus terminal; paket aktif ditolak `PACKAGE_NOT_CLOSED`. Bukti dipertahankan.

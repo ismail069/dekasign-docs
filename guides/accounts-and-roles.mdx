@@ -1,27 +1,27 @@
 ---
-title: "Login, onboarding, dan role"
-description: "Identitas sendiri, keanggotaan aktif, dan kewenangan yang tepat."
+title: "Akun, onboarding dan menu"
+description: "Login, undangan, Trial otomatis dan navigasi sesuai kewenangan."
 ---
-## Login dan organisasi
-Masuk menggunakan email akun Anda. Saat menerima undangan, gunakan email tujuan undangan tersebut. Pilih organisasi yang benar; URL organisasi menggunakan subdomain. Satu email akun internal hanya boleh terdaftar pada satu workspace organisasi, termasuk ketika keanggotaannya tidak aktif. External user, external signer dan external approver adalah identitas tamu terpisah; aturan akun internal ini tidak memberi mereka keanggotaan workspace.
 
-Implementasi lokal terbaru mewajibkan Email OTP setelah password; Anda dapat memilih TOTP pada **Settings → Account security**. Lihat [verifikasi login](/guides/settings). Migrasi dan penerapan produksi masih ditunda sampai kesiapan autentikasi diterima. Login Google menggunakan satu gateway pusat dan masih memerlukan penerimaan dengan provider Google sebenarnya; login provider tidak melewati faktor lokal atau izin dokumen.
+## Register dan login
+Daftar dengan email atau Google melalui situs utama, verifikasi lalu ikuti onboarding organisasi. Akun yang dibuat melalui Google mungkin belum mempunyai password lokal. Google tidak melewati OTP/TOTP atau permission DekaSign. Masuk melalui subdomain organisasi yang benar.
 
-Onboarding mengumpulkan identitas organisasi dan kebutuhan dasar yang tersedia pada rilis. Setelah selesai, periksa Settings sebelum mengundang anggota atau memublikasikan workflow. Jika pembuatan organisasi atau pembelian ditahan oleh konfigurasi rilis, hubungi tim; jangan menganggap menekan tombol berarti aktivasi selesai.
+**Trial 30 hari otomatis aktif** setelah onboarding organisasi selesai. Periksa banner Trial, tanggal berakhir, Kredit, seat dan storage pada dashboard atau Plans & billing. Pembelian paket memerlukan pembayaran terverifikasi; redirect bukan bukti pembayaran berhasil.
 
-## Peran
-| Peran | Tugas utama | Batas penting |
-|---|---|---|
-| Owner | Organisasi, anggota, pengaturan, kanal, billing dan API key | Tidak dapat mengambil OTP/private key atau menandatangani sebagai orang lain. |
-| Admin | Form, kategori, workflow, dan pengelolaan yang diizinkan | Bukan otomatis approver semua kategori; pengaturan Owner-only tetap terbatas. |
-| Approver | Memeriksa tugas dan memberikan keputusan | Memerlukan assignment, izin kategori dan masa berlaku yang sah. |
-| Creator / Requester | Membuat pengajuan dan mengirim revisi | Hanya form/kategori yang diizinkan dan data yang berhak diakses. |
-| External signer | Meninjau dan menandatangani dokumen yang ditugaskan | Bukan member atau approver organisasi secara umum. |
+## Undangan dan role
+Owner mengundang email yang belum terdaftar di organisasi mana pun, mengisi role, jabatan dan Access Profile atau izin manual. Penerima menyiapkan nama, nomor HP dan password, memverifikasi email lalu bergabung melalui link undangan. Nomor HP adalah data kontak.
 
-Multi-role tidak menghilangkan pemeriksaan permission. Role Admin saja tidak membuat seseorang kandidat approver yang memenuhi syarat.
+[Role dan Access Profiles](/guides/access-profiles) mengatur kewenangan. Owner/Admin mengelola Create Design, Approver memberi keputusan, Creator membuat pengajuan dan Operation mengerjakan tindak lanjut. Role dapat dikombinasikan. Manager dan tag Internal/External tidak otomatis memberikan permission.
 
-## Menu profil
-Klik nama/avatar pada top bar untuk **Settings** dan **Sign out**. Settings profil memungkinkan perubahan nama serta ganti password melalui alur yang tersedia. Jangan membagikan password demo untuk akun pelanggan.
+## Navigasi
+| Kelompok | Isi |
+|---|---|
+| Create Design | Form Builder, Categories, Workflow Engines, Request Form Templates, Document Sign template; khusus Owner/Admin. |
+| Operations | My Requests, Team Queue, Document Sign, Secure Document Sharing dan Verify document. |
+| My Works | My Tasks, My Approvals, My Delegation, My Signature dan My Documents sesuai role. |
+| Management | Organization Hierarchy, Access Profiles, Reports, kanal/pesan, billing, integrasi, audit dan Support sesuai kewenangan. |
+| Settings | Profil, keamanan akun dan pengaturan organisasi yang diizinkan. |
 
-## Bila akses ditolak
-Periksa organisasi aktif, status keanggotaan, izin form/kategori, tugas yang ditetapkan dan validitas delegasi. Minta Owner memperbaiki izin; membuka URL langsung tidak melewati pemeriksaan server. SSO belum aktif dalam cakupan ini.
+Email OTP melindungi login; TOTP Authenticator dapat diaktifkan pada **Settings → Account security**. Simpan recovery code secara aman. Jangan berbagi akun, OTP atau link undangan.
+
+Owner baru mengikuti [panduan awal Owner](/guides/owner-setup). Pengajuan sendiri tidak boleh disetujui sendiri; siapkan approver lain sebelum mencoba pengajuan Owner.

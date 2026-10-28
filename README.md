@@ -2,13 +2,19 @@
 
 Public user guides and developer reference for https://docs.dekasign.com, maintained from the DekaSign application source. The connected Mintlify project is `deka-sign/deka-sign`; pushes to `ismail069/dekasign-docs` branch `main` deploy automatically.
 
-## Content
+## Current guide coverage
 
-- Native language switcher: Indonesian (`id`, default, original root URLs) and English (`en`, `/en/...`). All 27 authored pages have English counterparts, including developer guides. Each language has its own navbar labels and endpoint-reference directory. Technical API action labels stay in English to preserve existing endpoint URLs; Indonesian endpoint explanations are translated.
-- 18 product guides cover onboarding, roles/settings, email/WhatsApp, Email Studio, categories, Form Builder, canvas/Sandbox, request/revision/delegation, Document Sign and Secure Sharing.
-- 9 developer/integration guides explain sandbox keys, catalog/versions, request/revision, PDF upload, preview/send, session authentication, errors and outgoing webhooks.
-- `openapi.json` covers all 44 HTTP methods found in the application's 37 v1 route files. Human-session and retired routes are labelled separately. Read responses are extensible rather than pretending every response has the same schema.
-- Availability gates are explicit: SSO deferred, ALL/ANY and external approval admission not active, management API sandbox-only, certified seal not provided.
+The site has paired Indonesian and English content. Indonesian is the default and keeps root URLs; English pages use `/en/...`. Navigation currently contains 37 authored pages per language. Each language has its own navbar labels and endpoint-reference directory. Product names and technical identifiers remain in English where required by the product.
+
+- **Owner setup:** organization settings and timezone, categories, inviting another approver, category/form permissions, Form Builder, published workflow, Request Form Template, Sandbox and first submission. Self-approval remains prohibited.
+- **Organization management:** Organization Hierarchy with table/full diagram, Direct Manager, Access Profiles and Owner Reports.
+- **Forms and approval:** Form Builder, Dynamic Table CSV templates/import, request templates and default documents, optional/mandatory documents, field data sources, workflow canvas/logging, Sandbox, requests/revisions and delegation.
+- **Operational work:** Operation Task, My Tasks, Team Queue, category-based staff visibility, availability, returning work and requester-visible results.
+- **Personal work:** My Projects for private request/document collections and My Signature for drawn, typed, uploaded or document-specific QR signatures.
+- **Documents and communication:** Document Sign, Verify Document, document data, Secure Document Sharing, notification channels and Email Studio.
+- **Developers:** authentication/scopes, catalogs and versions, requests/revisions, document preparation, signing packages, hosted editor, errors and outgoing webhooks. Availability and environment requirements belong in the current guides and API specification rather than being inferred from an old release receipt.
+
+`docs.json` owns the paired navigation. Add a page to both languages and both navigation trees. The verifier checks required pages, locale parity, internal paths, branding, shared application upload limits and API route/specification parity; it does not depend on a fixed historical page count.
 
 ## Development
 
@@ -22,30 +28,28 @@ mint broken-links
 node scripts/verify-docs.mjs
 ```
 
-The source-parity check expects the app in sibling `../dekasign-app`, or use `DEKASIGN_APP_SOURCE` with the app checkout path. Regenerate the reviewed specification with `node scripts/generate-openapi.mjs`, then `node scripts/localize-openapi.mjs`. The localizer fails on unknown explanatory text instead of silently publishing untranslated prose. Review command schemas against source whenever endpoints change; generation is not runtime proof.
+Read `AGENTS.md` and the installed Mintlify skill before editing. Match existing MDX frontmatter, use root-relative internal URLs without extensions, and keep both language versions synchronized. Do not regenerate navigation from an older page catalog without preserving the current guides.
 
-Keep translated pages under `en/` with the same file names and structure as the Indonesian originals. Update both language versions together, preserve technical identifiers, and run `node scripts/verify-docs.mjs`, `mint validate`, and `mint broken-links`. `node scripts/configure-languages.mjs` refreshes the paired navigation without moving the original Indonesian pages. Legal policy text remains authoritative Indonesian; this translation does not publish an English legal agreement.
+The source-parity check expects the app in sibling `../dekasign-app`. Set `DEKASIGN_APP_SOURCE` to use another application checkout. Regenerate a reviewed API specification with `node scripts/generate-openapi.mjs`, then `node scripts/localize-openapi.mjs`. Review request schemas and availability against the actual application. Generating a specification is not proof that the runtime flow succeeded.
 
-Windows CLI note (Mint4.2.819): `mint broken-links` reports false positives for forward-slash links to nested `en/guides/...` files. Its installed link resolver compares forward-slash URL directories with backslash filesystem directories. The existing file and empty resolver result were reproduced without modifying the CLI. Do not rewrite valid public URLs to bypass this. The repository's cross-platform link/parity check and actual deployed route checks are required alongside successful `mint validate`; do not describe this CLI run as a clean broken-links pass.
+Windows CLI note: `mint broken-links` can report false positives for forward-slash links to nested `en/guides/...` files. This was reproduced in Mint4.2.819: the installed resolver compared URL directories with backslash filesystem directories. Do not rewrite valid public URLs to bypass it. Run the repository's cross-platform link/parity check and deployed route checks alongside `mint validate`; record a flagged CLI run as a limitation, not as a clean broken-links pass.
 
-Brand assets in `images/` are byte-identical to the Owner-supplied `logo-dekasign.png` and `favicon-dekasign.png`. The same original logo is used for both themes, with a white backing in dark mode so its dark wordmark stays legible.
+## Screenshots and branding
 
-Live acceptance on 18 October 2026: `node scripts/verify-live-locales.mjs` passed all 52 authored routes, translated titles, hreflang, supplied logo, isolation marker, and absence of response cookies. Edge verified English search → delegation guide, the same-page English → Indonesian switch, and Indonesian → English endpoint navigation with translated explanations and unchanged parameters. Hydrated document language is `id`/`en` respectively. Mintlify currently emits `lang=en` in its initial SSR shell even for Indonesian routes; this vendor limitation is not recorded as a passing SSR-language check. Light/dark branding was checked and the theme restored to System.
+Use actual application screenshots with reviewed customer/synthetic content and descriptive alt text. Do not create screenshots that imply an untested UI or expose tokens, credentials or private documents. Shared screenshots under `images/app/` may be used by both language guides; explain the steps in each guide's language.
 
-Local reconciliation on 20 October 2026 adds the Secure Sharing pair (54 authored pages total), request-document preparation and Process rules, shared 15 MB signing/API limits, six sharing slots with 15 MB/25 MB ZIP limits, hosted-session expiry/revocation, callback selection and webhook read/archive. `node scripts/verify-docs.mjs` checks both localized contracts against all 44 source operations and shared upload limits. These changes are not published; the earlier 52-route live receipt does not cover the new pages or content. Customer/provider acceptance and n8n/Drive/OneDrive remain paused under integration item 12.
+Brand assets in `images/` are the Owner-supplied `logo-dekasign.png` and `favicon-dekasign.png`. Preserve their original bytes. The logo uses a white backing in dark mode to keep its wordmark readable.
 
 ## Publishing and security
 
-No secret, API token, OTP, production customer file or private signing URL belongs in this repository. API playground is disabled to discourage entering secrets in a public browser reference. Use only an authorized sandbox with synthetic data for examples.
+No secret, API token, OTP, production customer file or private signing URL belongs in this repository. The API playground is disabled to discourage entering secrets into a public reference page. Use authorized test data when capturing examples.
 
-The public site uses halo@dekasign.com. DekaSign integrity evidence is internal, not a certified electronic seal or trusted timestamp. Documentation does not enable feature flags or constitute successful production acceptance.
+Support links use `support@dekasign.com`. General and sales inquiries use `halo@dekasign.com`. Legal content remains in the application at https://dekasign.com/id/privacy and https://dekasign.com/id/terms; these guides do not replace those policies.
 
-Legal content is published by the application, not duplicated here: https://dekasign.com/id/privacy and https://dekasign.com/id/terms. Authoritative legal text is Indonesian.
+Review application changes before publishing their documentation. A documentation push does not deploy the application, apply its database changes, activate an integration or establish successful production acceptance. Google Drive, OneDrive, n8n and expanded SSO remain separate from the core documentation work unless explicitly resumed.
 
-Reviewed 18 October 2026 against application source `99f3cbe4` plus the accompanying public-site/documentation change. Verify current deployed version before relying on a newly described UI feature.
+## Historical acceptance receipts
 
-The local 20 October reconciliation was reviewed against application checkpoint `199b9d7`. It preserves sandbox-only availability and separates locally tested updates from production acceptance. Publishing this repository remains a separate rollout action.
+The 18 October 2026 live receipt checked the then-current 52 authored routes, locale switching, branding and language behavior. The 20–21 October source reconciliations covered a smaller, earlier product scope and were not evidence for later UI, upload limits or production availability. These historical receipts do not replace a current validation of the expanded guides.
 
-Local 21 October source update against application checkpoint `ee4b9cf`: ZIP and its member previews are excluded from watermarking; permitted ZIP downloads retain the original archive. Document Sign has separate workflow and standalone editor entries. Every workflow field requires a valid Actor assignment, including optional inputs. Automatic workflow mode defaults and full external submission mapping remain open. No publishing or deployed acceptance is implied.
-
-Local21 October follow-up against application checkpoint `d5fad21`: new document signing modes derive from the pinned published workflow Actor design. Internal/external Actor catalogs remain available with the existing20 selected-signers-per-document limit. Actual desktop upload/field mapping/Save & attach and standalone Ready were checked locally. A390px Canvas/keyboard smoke is scoped separately; full external request/review, runtime visual acceptance and production deployment remain pending. This source checkpoint was not published.
+`scripts/verify-live-locales.mjs` checks deployed routes. Review its current page coverage before relying on a new live receipt. Mintlify's initial SSR language shell was previously observed as `lang=en` for Indonesian routes; do not describe that vendor behavior as a passing Indonesian SSR-language check without revalidation.

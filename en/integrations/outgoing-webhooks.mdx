@@ -4,6 +4,14 @@ description: "General REST callbacks and HMAC app events use different transport
 ---
 Outgoing webhooks send events to your server. They differ from the API used to submit requests.
 
+| Need | Feature |
+|---|---|
+| Fetch document field values before sending | [API Data Source](/en/guides/document-data) |
+| Send email or phone messages through a provider | [Custom API Notification Channel](/en/guides/notification-channels) |
+| Notify your application of workflow/document events | Event webhooks described here |
+
+Choose the endpoint and event configuration through the workflow/document editor or Integrations for the relevant transport. An event webhook does not directly fill document fields.
+
 ## Workflow and Document Sign REST callbacks
 Configure a public HTTPS endpoint on port 443 without credentials, query parameters, or fragments in its URL. The server restricts private addresses, cloud metadata endpoints, redirects, and forbidden headers. Choose **None**, **Bearer**, **API key**, or **Basic** authentication and custom headers. Do not put secrets in custom body data.
 

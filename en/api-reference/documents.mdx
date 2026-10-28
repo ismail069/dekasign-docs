@@ -20,6 +20,9 @@ curl "$DEKASIGN_BASE_URL/api/v1/documents" \
 
 Store secret environment variables securely on your server. This API does not accept PPTX/images even though the review UI supports them. Capacity exhaustion may return `UPLOAD_BUSY` with `Retry-After`.
 
+## Read Production source content
+`GET /api/v1/documents/{id}/content` requires `documents:read` in Production. It serves only the app's authorized supporting PDF for its mapped requester with current private-document rights. The response is `application/pdf`, containing source content rather than a final signed PDF. Production uploads accept `ATTACHMENT` only; Sandbox support does not authorize additional Production purposes.
+
 ## Delete
 `DELETE /documents/{id}` requires `documents:delete`, an idempotency key, and a JSON reason of 5–500 characters. Only eligible unused documents can be deleted; submitted/signed evidence is protected.
 

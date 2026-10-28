@@ -17,7 +17,14 @@ const localePages = language => {
  visit(language);return found;
 };
 const idPages=localePages(languages[0]),enPages=localePages(languages[1]);
-assert.equal(idPages.length,28);
+const requiredPages = [
+ "index", "quickstart",
+ ...["owner-setup", "accounts-and-roles", "settings", "availability", "organization-hierarchy", "access-profiles", "owner-reports", "notification-channels", "email-studio", "categories-and-forms", "form-builder", "table-csv", "approval-workflows", "request-form-templates", "sandbox", "requests-and-revisions", "delegation", "workflow-signing", "document-sign", "my-signature", "verify-document", "document-data", "secure-sharing", "operation-tasks", "my-projects", "operations"].map(name => "guides/" + name),
+ ...["overview", "authentication", "catalogs", "requests", "documents", "signing", "hosted-editor", "errors"].map(name => "api-reference/" + name),
+ "integrations/outgoing-webhooks",
+];
+for (const required of requiredPages) assert.ok(idPages.includes(required), "Required guide missing from navigation: " + required);
+assert.ok(idPages.every(page => !page.startsWith("en/")), "Indonesian navigation must use root-locale pages");
 assert.deepEqual(enPages,idPages.map(page=>"en/"+page),"Every Indonesian guide needs an English counterpart");
 assert.equal(languages[0].navbar.primary.label,"Buka DekaSign");
 assert.equal(languages[1].navbar.primary.label,"Open DekaSign");

@@ -1,35 +1,25 @@
 ---
 title: "Form Builder"
-description: "General fields, date/time inputs, dynamic tables, and attachments."
+description: "Design fields, tables, CSV references, validation and consistent request forms."
 ---
-## Build a form
-Open **Request templates**, create a clearly named template, and add palette elements. Select a field to set its label, helper text, required state, validation, and choices. Use Preview to try the form before saving a version.
 
-Field keys remain stable when labels change. Rules and APIs use keys; a visible label is not necessarily an API parameter name.
+Owner/Admin opens **Create Design → Form Builder**. Use a standard form or create one. Add fields, select them on the canvas and set labels, help text, required values, validation and options in Properties. Test Preview before saving.
 
-## Field types
-Use text/multiline for descriptions, integer/decimal for numbers, select/multiple choice/checkbox for choices, date for dates, file for attachments, and dynamic table for repeated rows. Configure conditional visibility with supported fields and type-appropriate operators.
+## Fields and conditions
+Choose text/multiline, integer/decimal, options, checkboxes, date/date-time, files and dynamic tables. Conditions use available fields and type-appropriate operators. Field keys are used by mappings and APIs; changing a label does not change its key.
 
-## Dates
-Date fields support **Date only** or **Date & time**. Check format and time-zone context before Submit. A displayed date is not the same as a server decision timestamp.
+## Tables and CSV import
+A table supports **10 columns**, **500 rows** or a lower designer limit, and 128 KB of table data. Use it for purchasing items, expenses, overtime or event requirements. Required values, numeric ranges and dropdown options remain validated.
 
-## Dynamic tables
-Dynamic tables are general-purpose, not limited to attendance/overtime. Add up to **10 columns**, set supported labels/keys/types/validation, and let requesters add rows within configured limits. Examples include procurement items, expenses, overtime dates, or event requirements.
+Requesters can download **CSV template**, fill many rows and choose **Import CSV**. Review mapping, preview and Append/Replace before Apply. Import does not submit the form. See [CSV table import](/en/guides/table-csv).
 
-Preview empty rows, required values, numeric inputs, and row limits. Rules must not use arbitrary expressions or keys outside the schema.
+## CSV reference data
+Text fields can obtain values from a CSV reference list through a searchable dropdown or popup. Designers select the value column; requesters search a code/name and select it. This differs from table-row import.
 
 ## Documents
-Use upload fields for supported PDFs, PPTX files, or images. Request attachments allow 30 MB/file and 10 files per field; documents to sign allow 30 MB/file. The Platform API accepts one PDF up to 30 MB per upload, matching Document Sign.
+Upload fields accept the formats offered by the UI, with a 30 MB/file request/Document Sign limit. Choose **Supporting document** or **sign document or dynamic text**. Signing documents use the Request Form Document Sign Editor with workflow Actor mappings.
 
-On a release supporting document classification, the requester chooses **Attachment**, **Supporting document**, or **Document to sign**. The last option opens the editor to choose **Digital Only** or **Visible Signature**, followed by **Save & attach to form**. See the [request-document flow and charges](/en/guides/workflow-signing).
+Configure mandatory/optional default documents, static values, manual requester inputs, form mappings and API Data Source in [Request Form Templates](/en/guides/request-form-templates). Every request receives its own copies.
 
-### Pin a signing template for the API
-
-In the locally tested API preparation flow, select an upload field and open **API signing template**. Choose an exact private Document Sign template version. Map every signer slot to a different Actor in one linked workflow. Publish a new form/workflow release after saving.
-
-Changing the template version clears the mappings. **Clear Actor mappings** lets you choose another workflow. Fixed and sender-filled inputs are supported; REST data templates and external/parallel API approval remain unavailable. The API key's mapped requester must have current private access to the source template. A form binding does not grant that access.
-
-This setting controls API preparation. Requesters uploading their own files still use the separate workflow signing editor. See [prepared API documents](/en/api-reference/requests).
-
-## After saving
-Save a new version, open the workflow using the template, check its Rules, and Validate again. Publish pins form/workflow versions for new requests. Test with synthetic data before organizational use.
+## From form to request
+Save the form, select it in Workflow Engines, check routing, Validate/test Sandbox and Publish. Then create a Request Form Template from the published workflow and grant requester category/form access. Editing the form does not change pinned versions on running requests.

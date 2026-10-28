@@ -1,14 +1,14 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "API sandbox dan sesi DekaSign",
-    "version": "2026-10-20",
-    "description": "Endpoint manajemen hanya untuk sandbox dan dapat mengembalikan SANDBOX_API_DISABLED pada host produksi. Desain template dan keputusan manusia bukan API machine-key. Rute sesi memakai autentikasi terpisah. Respons dapat diperluas; panduan menjelaskan field penting. Spesifikasi ini tidak memberikan akses atau mengaktifkan fitur."
+    "title": "DekaSign integration and session API",
+    "version": "2026-10-28",
+    "description": "API Production memerlukan paket berbayar aktif, key/aplikasi Production, cakupan dan kapabilitas yang diizinkan. Operasi manajemen desain tertentu hanya untuk sandbox. Desain template dan keputusan approval manusia tidak diambil alih API key. Rute sesi memakai identitas terpisah. Spesifikasi ini tidak memberikan akses atau mengaktifkan kapabilitas."
   },
   "servers": [
     {
       "url": "https://{workspace}.dekasign.com",
-      "description": "Gunakan workspace sandbox berwenang yang diberikan administrator.",
+      "description": "Gunakan workspace organisasi yang diizinkan untuk aplikasi integrasi Anda.",
       "variables": {
         "workspace": {
           "default": "your-workspace"
@@ -24,10 +24,13 @@
         "tags": [
           "categories"
         ],
-        "description": "Memerlukan scope catalog:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope catalog:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -38,7 +41,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -266,10 +270,13 @@
         "tags": [
           "categories"
         ],
-        "description": "Memerlukan scope catalog:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope catalog:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -289,7 +296,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -341,10 +349,13 @@
         "tags": [
           "request-templates"
         ],
-        "description": "Memerlukan scope catalog:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope catalog:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -355,7 +366,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -475,10 +487,13 @@
         "tags": [
           "request-templates"
         ],
-        "description": "Memerlukan scope catalog:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope catalog:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -498,7 +513,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -550,10 +566,13 @@
         "tags": [
           "approval-workflows"
         ],
-        "description": "Memerlukan scope catalog:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope catalog:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -564,7 +583,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -705,10 +725,13 @@
         "tags": [
           "approval-workflows"
         ],
-        "description": "Memerlukan scope catalog:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope catalog:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -728,7 +751,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -780,10 +804,13 @@
         "tags": [
           "request-forms"
         ],
-        "description": "Memerlukan scope catalog:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope catalog:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -794,7 +821,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -935,10 +963,13 @@
         "tags": [
           "request-forms"
         ],
-        "description": "Memerlukan scope catalog:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope catalog:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -958,7 +989,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -1010,10 +1042,13 @@
         "tags": [
           "document-sign-templates"
         ],
-        "description": "Memerlukan scope catalog:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope catalog:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -1024,7 +1059,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -1144,10 +1180,13 @@
         "tags": [
           "document-sign-templates"
         ],
-        "description": "Memerlukan scope catalog:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope catalog:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -1167,7 +1206,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -1540,10 +1580,13 @@
         "tags": [
           "approval-workflows"
         ],
-        "description": "Memerlukan scope catalog:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope catalog:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -1572,7 +1615,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -1667,10 +1711,13 @@
         "tags": [
           "document-sign-templates"
         ],
-        "description": "Memerlukan scope catalog:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope catalog:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -1690,7 +1737,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -1749,10 +1797,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Memerlukan scope requests:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope requests:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -1763,7 +1814,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -1888,10 +1940,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Memerlukan scope requests:create. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope requests:create. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -1902,7 +1957,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -1965,7 +2021,8 @@
                     "environment": {
                       "type": "string",
                       "enum": [
-                        "sandbox"
+                        "sandbox",
+                        "production"
                       ]
                     },
                     "document_approval_mode": {
@@ -2117,10 +2174,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Memerlukan scope documents:write. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope documents:write. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2131,7 +2191,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -2182,7 +2243,8 @@
                     "environment": {
                       "type": "string",
                       "enum": [
-                        "sandbox"
+                        "sandbox",
+                        "production"
                       ]
                     },
                     "signed": {
@@ -2376,10 +2438,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Memerlukan scope documents:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope documents:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2399,7 +2464,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -2451,10 +2517,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Memerlukan scope requests:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope requests:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2474,7 +2543,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -2526,10 +2596,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Memerlukan scope requests:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope requests:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2549,7 +2622,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -2601,10 +2675,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Memerlukan scope requests:revise. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope requests:revise. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2624,7 +2701,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -2772,10 +2850,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Memerlukan scope requests:revise. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope requests:revise. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2795,7 +2876,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -2943,10 +3025,13 @@
         "tags": [
           "documents"
         ],
-        "description": "Memerlukan scope documents:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope documents:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2957,7 +3042,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -3079,6 +3165,9 @@
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -3089,7 +3178,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -3180,10 +3270,13 @@
         "tags": [
           "documents"
         ],
-        "description": "Memerlukan scope documents:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope documents:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -3203,7 +3296,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -3926,10 +4020,13 @@
         "tags": [
           "signature-packages"
         ],
-        "description": "Memerlukan scope packages:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope packages:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -3940,7 +4037,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -4072,10 +4170,13 @@
         "tags": [
           "signature-packages"
         ],
-        "description": "Memerlukan scope packages:create. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope packages:create. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -4086,7 +4187,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -4135,7 +4237,8 @@
                     "environment": {
                       "type": "string",
                       "enum": [
-                        "sandbox"
+                        "sandbox",
+                        "production"
                       ]
                     },
                     "integrity_profile": {
@@ -4215,10 +4318,13 @@
         "tags": [
           "signature-packages"
         ],
-        "description": "Memerlukan scope packages:read. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope packages:read. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -4238,7 +4344,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -4342,10 +4449,13 @@
         "tags": [
           "signature-packages"
         ],
-        "description": "Memerlukan scope packages:create. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope packages:create. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -4356,7 +4466,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -4554,6 +4665,12 @@
                       ],
                       "additionalProperties": false
                     }
+                  },
+                  "lookup_token": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 450000,
+                    "description": "Receipt rahasia dari data-fetch, wajib ketika template memakai API Data Source."
                   }
                 },
                 "required": [
@@ -4575,10 +4692,13 @@
         "tags": [
           "signature-packages"
         ],
-        "description": "Memerlukan scope packages:create. Hanya sandbox; allowlist aplikasi dan kewenangan pemohon juga diperiksa.",
+        "description": "Memerlukan scope packages:create. Sandbox dan konfigurasi Production yang didukung; allowlist aplikasi dan kewenangan pemohon tetap berlaku.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -4589,7 +4709,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -5267,6 +5388,716 @@
         },
         "deprecated": true
       }
+    },
+    "/api/v1/approval-requests/{id}/history": {
+      "get": {
+        "operationId": "get_approval_requests_id_history",
+        "summary": "Read visited approval history",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Mengembalikan status, revisi, langkah yang dikunjungi dan perkiraan sisa layer tanpa nilai form. Otorisasi aplikasi, pemohon dan cakupan request tetap berlaku.",
+        "security": [
+          {
+            "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            "description": "ID dalam cakupan workspace."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox",
+                "production"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hasil terotorisasi saat ini.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "environment": {
+                      "type": "string",
+                      "enum": [
+                        "sandbox",
+                        "production"
+                      ]
+                    },
+                    "approval_status": {
+                      "type": "string"
+                    },
+                    "request_revision": {
+                      "type": "integer"
+                    },
+                    "visited_approval_steps": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "node_id": {
+                            "type": "string"
+                          },
+                          "request_revision": {
+                            "type": "integer"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "opened_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "closed_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
+                          },
+                          "sla_due_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
+                          },
+                          "decisions": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "action": {
+                                  "type": "string"
+                                },
+                                "comment": {
+                                  "type": "string",
+                                  "nullable": true
+                                },
+                                "actor_name": {
+                                  "type": "string"
+                                },
+                                "decided_at": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                }
+                              },
+                              "required": [
+                                "action",
+                                "comment",
+                                "actor_name",
+                                "decided_at"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "node_id",
+                          "request_revision",
+                          "status",
+                          "opened_at",
+                          "closed_at",
+                          "sla_due_at",
+                          "decisions"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "remaining_approval_layers": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "known": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "count",
+                        "known"
+                      ],
+                      "additionalProperties": false,
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "environment",
+                    "approval_status",
+                    "request_revision",
+                    "visited_approval_steps",
+                    "remaining_approval_layers"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Operasi atau layout tidak valid."
+          },
+          "401": {
+            "description": "Kredensial/sesi tidak valid atau kedaluwarsa."
+          },
+          "403": {
+            "description": "Scope, environment, tenant atau kewenangan ditolak."
+          },
+          "404": {
+            "description": "Tidak ditemukan atau di luar lingkup aplikasi."
+          },
+          "409": {
+            "description": "Hasil belum siap, integritas gagal, versi berubah, atau konfigurasi sumber tidak tersedia."
+          },
+          "422": {
+            "description": "Schema atau idempotency key wajib tidak valid."
+          },
+          "429": {
+            "description": "Batas laju permintaan tercapai."
+          },
+          "503": {
+            "description": "Kapabilitas lingkungan belum tersedia atau layanan sementara tidak tersedia."
+          }
+        },
+        "x-dekasign-scope": "requests:read"
+      }
+    },
+    "/api/v1/approval-requests/{id}/final-documents": {
+      "get": {
+        "operationId": "get_approval_requests_id_final_documents",
+        "summary": "List final request documents",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Khusus Production. Memerlukan requests:read dan documents:read serta kewenangan pemohon/dokumen saat ini. Approval selesai berbeda dari kesiapan hasil dokumen: status pending/failed memiliki daftar kosong. Hanya nama file, ID artefak dan metadata integritas, tanpa URL penyimpanan.",
+        "security": [
+          {
+            "ProductionBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            "description": "ID dalam cakupan workspace."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "production"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hasil terotorisasi saat ini.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "request_id": {
+                      "type": "string"
+                    },
+                    "request_revision": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ready",
+                        "failed",
+                        "pending"
+                      ]
+                    },
+                    "documents": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "digest": {
+                            "type": "string",
+                            "pattern": "^[a-f0-9]{64}$"
+                          },
+                          "size_bytes": {
+                            "type": "integer",
+                            "minimum": 1
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "digest",
+                          "size_bytes"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "request_id",
+                    "request_revision",
+                    "status",
+                    "documents"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Operasi atau layout tidak valid."
+          },
+          "401": {
+            "description": "Kredensial/sesi tidak valid atau kedaluwarsa."
+          },
+          "403": {
+            "description": "Scope, environment, tenant atau kewenangan ditolak."
+          },
+          "404": {
+            "description": "Tidak ditemukan atau di luar lingkup aplikasi."
+          },
+          "409": {
+            "description": "Hasil belum siap, integritas gagal, versi berubah, atau konfigurasi sumber tidak tersedia."
+          },
+          "422": {
+            "description": "Schema atau idempotency key wajib tidak valid."
+          },
+          "429": {
+            "description": "Batas laju permintaan tercapai."
+          },
+          "503": {
+            "description": "Kapabilitas lingkungan belum tersedia atau layanan sementara tidak tersedia."
+          }
+        },
+        "x-dekasign-scope": "documents:read"
+      }
+    },
+    "/api/v1/approval-requests/{id}/final-documents/{artifact}/content": {
+      "get": {
+        "operationId": "get_approval_requests_id_final_documents_artifact_content",
+        "summary": "Download final request PDF",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Khusus Production. Memerlukan requests:read dan documents:read. Cakupan, kepemilikan dan integritas artefak diperiksa sebelum PDF disajikan. Finalisasi pending/failed mengembalikan 409; artefak di luar akses 404. Penyajian file bukan bukti pembacaan.",
+        "security": [
+          {
+            "ProductionBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            "description": "ID dalam cakupan workspace."
+          },
+          {
+            "name": "artifact",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            "description": "ID dalam cakupan workspace."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "production"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hasil terotorisasi saat ini.",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Operasi atau layout tidak valid."
+          },
+          "401": {
+            "description": "Kredensial/sesi tidak valid atau kedaluwarsa."
+          },
+          "403": {
+            "description": "Scope, environment, tenant atau kewenangan ditolak."
+          },
+          "404": {
+            "description": "Tidak ditemukan atau di luar lingkup aplikasi."
+          },
+          "409": {
+            "description": "Hasil belum siap, integritas gagal, versi berubah, atau konfigurasi sumber tidak tersedia."
+          },
+          "422": {
+            "description": "Schema atau idempotency key wajib tidak valid."
+          },
+          "429": {
+            "description": "Batas laju permintaan tercapai."
+          },
+          "503": {
+            "description": "Kapabilitas lingkungan belum tersedia atau layanan sementara tidak tersedia."
+          }
+        },
+        "x-dekasign-scope": "documents:read"
+      }
+    },
+    "/api/v1/documents/{id}/content": {
+      "get": {
+        "operationId": "get_documents_id_content",
+        "summary": "Read uploaded production PDF",
+        "tags": [
+          "documents"
+        ],
+        "description": "Khusus Production. Membaca PDF pendukung yang diunggah aplikasi integrasi untuk pemohon terpetanya. Izin dokumen privat dan bukti unggahan tetap diperlukan; otorisasi diperiksa kembali setelah pemuatan. Ini file sumber, bukan PDF final bertanda tangan.",
+        "security": [
+          {
+            "ProductionBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            "description": "ID dalam cakupan workspace."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "production"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hasil terotorisasi saat ini.",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Operasi atau layout tidak valid."
+          },
+          "401": {
+            "description": "Kredensial/sesi tidak valid atau kedaluwarsa."
+          },
+          "403": {
+            "description": "Scope, environment, tenant atau kewenangan ditolak."
+          },
+          "404": {
+            "description": "Tidak ditemukan atau di luar lingkup aplikasi."
+          },
+          "409": {
+            "description": "Hasil belum siap, integritas gagal, versi berubah, atau konfigurasi sumber tidak tersedia."
+          },
+          "422": {
+            "description": "Schema atau idempotency key wajib tidak valid."
+          },
+          "429": {
+            "description": "Batas laju permintaan tercapai."
+          },
+          "503": {
+            "description": "Kapabilitas lingkungan belum tersedia atau layanan sementara tidak tersedia."
+          }
+        },
+        "x-dekasign-scope": "documents:read"
+      }
+    },
+    "/api/v1/signature-packages/{id}/document": {
+      "get": {
+        "operationId": "get_signature_packages_id_document",
+        "summary": "Download completed signing PDF",
+        "tags": [
+          "signature-packages"
+        ],
+        "description": "Memerlukan paket COMPLETED dalam cakupan aplikasi serta pengguna/kepemilikan terpetanya. Sebelum selesai, respons FINAL_DOCUMENT_NOT_READY (409); dokumen berubah menghasilkan DOCUMENT_CHANGED (409). Pembacaan Production memerlukan bukti paket Production tersimpan.",
+        "security": [
+          {
+            "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            "description": "ID dalam cakupan workspace."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox",
+                "production"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hasil terotorisasi saat ini.",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Operasi atau layout tidak valid."
+          },
+          "401": {
+            "description": "Kredensial/sesi tidak valid atau kedaluwarsa."
+          },
+          "403": {
+            "description": "Scope, environment, tenant atau kewenangan ditolak."
+          },
+          "404": {
+            "description": "Tidak ditemukan atau di luar lingkup aplikasi."
+          },
+          "409": {
+            "description": "Hasil belum siap, integritas gagal, versi berubah, atau konfigurasi sumber tidak tersedia."
+          },
+          "422": {
+            "description": "Schema atau idempotency key wajib tidak valid."
+          },
+          "429": {
+            "description": "Batas laju permintaan tercapai."
+          },
+          "503": {
+            "description": "Kapabilitas lingkungan belum tersedia atau layanan sementara tidak tersedia."
+          }
+        },
+        "x-dekasign-scope": "packages:read"
+      }
+    },
+    "/api/v1/signature-packages/data-fetch": {
+      "post": {
+        "operationId": "post_signature_packages_data_fetch",
+        "summary": "Fetch mapped signing data",
+        "tags": [
+          "signature-packages"
+        ],
+        "description": "Mengambil API Data Source template yang sudah diuji tanpa menampilkan kredensial. Body maksimal 20.000 byte dan 20 parameter bernama. Tidak membuat undangan/paket signing. Gunakan lookup_token pada preview dalam 10 menit. Production hanya mengembalikan variabel terpetakan yang didukung dan memerlukan kapabilitas serta kewenangan berbayar aktif.",
+        "security": [
+          {
+            "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox",
+                "production"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hasil terotorisasi saat ini.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "template_id": {
+                      "type": "string"
+                    },
+                    "template_version_id": {
+                      "type": "string"
+                    },
+                    "lookup_token": {
+                      "type": "string",
+                      "description": "Secret lookup receipt, bound to the issuing integration key; expires after 10 minutes. Do not log."
+                    },
+                    "valid_until": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "variables": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "template_id",
+                    "template_version_id",
+                    "lookup_token",
+                    "valid_until",
+                    "variables"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Operasi atau layout tidak valid."
+          },
+          "401": {
+            "description": "Kredensial/sesi tidak valid atau kedaluwarsa."
+          },
+          "403": {
+            "description": "Scope, environment, tenant atau kewenangan ditolak."
+          },
+          "404": {
+            "description": "Tidak ditemukan atau di luar lingkup aplikasi."
+          },
+          "409": {
+            "description": "Hasil belum siap, integritas gagal, versi berubah, atau konfigurasi sumber tidak tersedia."
+          },
+          "422": {
+            "description": "Schema atau idempotency key wajib tidak valid."
+          },
+          "429": {
+            "description": "Batas laju permintaan tercapai."
+          },
+          "503": {
+            "description": "Kapabilitas lingkungan belum tersedia atau layanan sementara tidak tersedia."
+          }
+        },
+        "x-dekasign-scope": "packages:create",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "template_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "parameters": {
+                    "type": "object",
+                    "maxProperties": 20,
+                    "additionalProperties": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 500
+                    },
+                    "description": "Nama mengikuti pola huruf awal, lalu huruf/angka/underscore, maksimal 64 karakter. Boleh kosong jika tidak ada parameter.",
+                    "default": {}
+                  }
+                },
+                "required": [
+                  "template_id"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -5275,6 +6106,11 @@
         "type": "http",
         "scheme": "bearer",
         "description": "Key sandbox dks_test_, hanya untuk server."
+      },
+      "ProductionBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Key Production dks_live_, hanya di server."
       }
     }
   }

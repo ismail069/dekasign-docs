@@ -1,0 +1,49 @@
+---
+title: "Set up your organization as Owner"
+description: "Configure your organization, members, forms, workflows and first request in the right order."
+---
+
+As Owner, configure member permissions before using request forms. Roles, categories, templates and manager relationships serve different purposes.
+
+![DekaSign Owner setup screen in Indonesian using a synthetic QA organization](/images/app/owner-setup.png)
+
+## Before you begin
+
+Complete account verification and onboarding. Check that you are in the correct organization workspace. Your 30-day Trial starts when the organization is created; check its status and capacity in **Plans & billing**.
+
+<Steps>
+  <Step title="Complete Settings">
+    Open **Settings → Organization**. Check the organization name, email domain, logo and timezone. The default is **Asia/Jakarta (GMT+7)**; choose another timezone when needed. Organization dates and times follow this setting.
+  </Step>
+  <Step title="Prepare Categories">
+    Open **Create Design → Categories**. Use existing categories or add the categories you need. Categories also group work in **Team Queue**.
+  </Step>
+  <Step title="Invite another approver">
+    Open **Settings → User management**, select **Invite member**, and enter a new email, role and job title. Set the Direct Manager, an Access Profile or manual permissions, and the approval categories. The recipient supplies their name, phone number and password, then verifies their email to join.
+  </Step>
+  <Step title="Create a Form Builder">
+    Open **Create Design → Form Builder**. Define fields, required values, list data, tables and attachments. Save the form your workflow will use.
+  </Step>
+  <Step title="Design and publish the workflow">
+    Open **Create Design → Workflow Engines**, select the Form Builder, and design the approval route. Choose a specific approver or **Requester’s Direct Manager**. Run **Validate** and **Run sandbox**, then **Publish**.
+  </Step>
+  <Step title="Create a Request Form Template">
+    Open **Create Design → Request Form Templates**. Enter a name and select the category and a published workflow. Prepare default documents when needed, then save and publish the template.
+  </Step>
+  <Step title="Map member permissions">
+    In **User management**, give requesters category access and permission to use the form. Give approvers the appropriate role and approval permission for that category. For operational work, add the **Operation** role and managed categories. Access Profiles help reuse permission settings.
+  </Step>
+  <Step title="Submit the first request">
+    Sign in as the requester, open **My Requests**, select a form, complete its data and documents, and review before **Submit**. Check **My Approvals** using the approver account. If the workflow includes an Operation Task, continue testing until that work is **Completed**.
+  </Step>
+</Steps>
+
+<Warning>
+You cannot approve your own request. A new organization needs another approver before its Owner submits a request requiring approval. Direct Manager assignment does not bypass this rule.
+</Warning>
+
+## If the form is missing
+
+Check the active category, published workflow, published Request Form Template, active membership, and requester category/form permissions. A role alone does not grant every permission or access to private document contents.
+
+Continue with [Organization Hierarchy](/en/guides/organization-hierarchy), [Access Profiles](/en/guides/access-profiles), [Request Form Templates](/en/guides/request-form-templates), or [Operation Task](/en/guides/operation-tasks).

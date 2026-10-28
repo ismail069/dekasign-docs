@@ -1,5 +1,5 @@
 ---
-title: "Kanal email dan WhatsApp"
+title: "Notification Channels"
 description: "Konfigurasi, test, aktivasi dan pemilihan kanal."
 ---
 ## Prinsip routing
@@ -30,6 +30,25 @@ Provider mempunyai biaya, persetujuan template dan aturan pesan sendiri. Dokumen
 Pilih jenis **Email** atau **WhatsApp**, beri nama, masukkan endpoint HTTPS publik, metode autentikasi, header dan JSON body. Petakan tujuan ke parameter email atau phone yang tepat dan pesan ke message body. Gunakan parameter yang ditawarkan UI; jangan mengirim seluruh data pelanggan tanpa kebutuhan.
 
 Endpoint harus HTTPS, tanpa host privat atau secret di URL. Simpan credential di field khusus. Test harus diterima sebelum aktivasi. Lihat [integrasi dan webhook](/integrations/outgoing-webhooks).
+
+## Custom API: Email atau Phone number
+Buka **Management → Notification channels** sebagai Owner. Pilih **Email** atau **Phone number** agar elemen Notification pada Canvas menawarkan channel sesuai penerimanya. Channel ini hanya untuk pengiriman; respons sukses berarti provider menerima permintaan, bukan bukti pesan dibaca.
+
+Atur endpoint HTTPS publik tetap, method GET/POST/PUT/PATCH, encoding JSON/form-urlencoded/multipart dan autentikasi None/API key/Bearer/Basic atau custom. Parameter GET dibentuk dari payload. Header tambahan memakai objek JSON; Content-Type diatur otomatis sesuai encoding. Secret disimpan terenkripsi pada field kredensial, bukan URL, dan tidak ditampilkan kembali pada daftar.
+
+Payload wajib memuat recipient dan message. Contoh email dengan format HTML:
+```json
+{
+  "to": "{{recipient}}",
+  "subject": "{{message.subject}}",
+  "html": "{{message}}"
+}
+```
+Untuk telepon, gunakan nomor berkode negara dan format teks. Nama field di sisi kiri mengikuti API provider. Parameter lainnya tersedia di UI.
+
+Test ke penerima yang Anda kendalikan. Default sukses HTTP 200; pilih 201/202 jika provider memakainya. Aktifkan setelah test sesuai. Edit konfigurasi membatalkan status teruji/aktif dan memerlukan test ulang. Log menampilkan waktu, status, kode respons, referensi provider bila tersedia, dan error yang disamarkan.
+
+Ini berbeda dari API Data Source yang mengambil data dokumen dan event webhook yang mengirim peristiwa workflow. OTP tetap memakai channel platform tepercaya.
 
 ## Memantau
 Gunakan **Delivery logs** untuk status, retry dan error yang disamarkan. Periksa alamat, izin provider, template dan kuota bila gagal. Jangan mengirim ulang secara manual tanpa mengecek deduplikasi.

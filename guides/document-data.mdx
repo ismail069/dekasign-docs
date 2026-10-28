@@ -1,22 +1,51 @@
 ---
-title: "Data dinamis dan REST lookup dokumen"
-description: "Test response, mapping field dan nilai sebelum Send."
+title: "API Data Source untuk dokumen"
+description: "Uji satu koneksi API, petakan respons, lalu gunakan data saat menyiapkan dokumen."
 ---
-## Desain field
-Buat field pada PDF dan pilih Filled by Sender untuk nilai yang harus disiapkan sebelum dikirim. Tanpa REST data source, form persiapan meminta isian manual. Pilih Template designer untuk nilai tetap; Approver untuk isian saat signing.
+API Data Source tersedia di Document Sign Editor biasa dan editor dokumen bawaan Request Form. Satu desain dokumen memakai satu koneksi API untuk seluruh field yang dipetakan.
 
-## Konfigurasi data source
-Aktifkan **REST data source** bila data berasal dari sistem Anda. Pilih endpoint terkonfigurasi dan autentikasi yang aman. Tentukan input lookup seperti employee_number dan JSON body yang memakainya. Endpoint hanya HTTPS publik, bukan host privat.
+## Konfigurasi di Properties
+Aktifkan **API Data Source**, pilih GET atau POST, lalu isi endpoint HTTPS publik. Endpoint dapat memakai nol, satu, atau beberapa parameter, misalnya `{{project_id}}` dan `{{period}}`. Nama ini bebas mengikuti API Anda; nama yang berulang memakai satu input.
 
-Jalankan Test dengan nilai sintetis. Hasil response bertipe sederhana ditawarkan sebagai response variables. Petakan setiap Sender field ke path hasil yang diuji, bukan nama field tebakan. Place & Date mempunyai pemetaan tempat dan tanggal terpisah.
+Untuk GET, letakkan parameter pada URL. Untuk POST, gunakan Body JSON:
+```json
+{
+  "project_id": "{{project_id}}",
+  "period": "{{period}}"
+}
+```
 
-## Fetch saat persiapan
-Pada Prepare & Send, isi input lookup, tekan Fetch, lalu periksa hasil. Respons yang diverifikasi dibekukan dalam preview; Send tidak memanggil ulang API dan mengambil nilai yang mungkin berubah. Preview mempunyai batas waktu serta terikat template/version/konteks.
+**Headers (JSON)** berisi objek nama header dan nilai string:
+```json
+{
+  "X-Client-Code": "DEKASIGN",
+  "X-Department": "operations"
+}
+```
+Gunakan `{}` bila tidak perlu header tambahan. Content-Type `application/json` ditambahkan otomatis untuk POST JSON. Atur kredensial melalui **Authentication**: None, API key, Bearer token, atau Basic username/password. Jangan menaruh secret dalam URL atau parameter pengguna.
 
-Perubahan endpoint, konfigurasi, scope, versi, atau token kedaluwarsa dapat menolak penggunaan hasil lama. Test tidak otomatis mengizinkan akses ke semua endpoint. Jangan memasukkan credential pada input lookup.
+## Test dan mapping
+<Steps>
+<Step title="Buka Test Request">
+Popup meminta parameter dinamis dan kredensial untuk pengujian. Gunakan data sintetis atau data yang boleh Anda akses.
+</Step>
+<Step title="Periksa response">
+Respons terlihat dalam popup. Path nilai yang didukung tersedia di Properties sebagai variabel respons.
+</Step>
+<Step title="Petakan field">
+Pilih API Data Source sebagai sumber nilai field, lalu pilih path responsnya. Seluruh field API harus dipetakan ke variabel hasil test yang valid sebelum template disimpan.
+</Step>
+<Step title="Simpan desain">
+Kredensial koneksi disimpan terenkripsi dan tidak ditampilkan kembali. Input rahasia dibersihkan setelah test; designer memasukkannya kembali untuk pengujian baru. Pemohon menggunakan koneksi tersimpan tanpa mengetik API key.
+</Step>
+</Steps>
 
-## Bila REST dimatikan
-Sender fields kembali diisi manual sebelum preview. Required tetap divalidasi. Field Approver tidak menjadi Sender hanya karena API dimatikan, dan parameter recipient tidak boleh disisipkan lewat response API.
+## Saat mengirim
+Pemohon atau pengirim mengisi parameter yang tersedia, lalu memilih **Fetch** sebelum menyiapkan salinan dokumen. Tanpa parameter, Fetch dapat dijalankan langsung. Periksa hasil pada preview sebelum Submit atau Send.
 
-## Batas
-Response dan payload dibatasi ukuran, kedalaman dan tipe data. HTML/objek kompleks tidak otomatis menjadi teks yang aman; petakan scalar yang sesuai. Nilai yang tidak muat pada area PDF harus diperbaiki ukuran/isinya, bukan dipotong diam-diam.
+Nilai yang diterima dikunci pada salinan pengajuan/pengiriman tersebut. Perubahan data API berikutnya tidak diam-diam mengganti dokumen yang sudah disiapkan. Perubahan desain atau konfigurasi dapat mengharuskan test, mapping, dan Fetch ulang.
+
+## Pilih sumber yang sesuai
+Field lain tetap dapat memakai nilai statis, mapping Form Builder, input manual pemohon/pengirim, atau input Actor saat signing. API lookup mengambil data; ini berbeda dari [event webhook](/integrations/outgoing-webhooks) dan [Custom API untuk notifikasi](/guides/notification-channels).
+
+Endpoint privat, payload berlebihan, respons yang tidak didukung, atau hasil yang tidak sesuai field akan ditolak. API Data Source tidak memberi kewenangan mengakses data yang tidak diizinkan oleh pemilik sistem sumber.

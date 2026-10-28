@@ -1,22 +1,31 @@
 ---
-title: "Kategori dan Request Forms"
-description: "Kategori, versi form, workflow release dan card requester."
+title: "Categories dan Request Forms"
+description: "Kelola kategori, kewenangan, dan template pengajuan."
 ---
-## Buat kategori
-Owner/Admin membuka halaman **Request Forms** dan memilih **Add category**. Isi nama yang jelas dan deskripsi. Kategori baru tidak otomatis menjadi form, workflow, atau izin approval untuk semua anggota.
+## Kelola Categories
+Owner/Admin membuka **Create Design → Categories**. Pilih **Add category**, isi nama dan deskripsi, lalu simpan. Gunakan **Edit** untuk mengubahnya. Kategori tidak dapat dihapus; archive hanya tersedia jika tidak ada Request Form yang berasosiasi.
 
-Tetapkan siapa yang boleh mengajukan, menggunakan template, dan menyetujui kategori tersebut. Kandidat approver harus aktif dan berwenang pada kategori; nama yang muncul di daftar member belum tentu kandidat yang sah.
+Kategori mengelompokkan Request Forms, izin, dan pekerjaan di Team Queue. Mengganti nama kategori juga mengganti nama kategori yang ditampilkan pada queue. Membuat kategori tidak memberi semua anggota izin mengajukan atau menyetujui.
 
-## Hubungkan desain
-Buat/simpan Form Builder template, lalu gunakan kategori dan template tersebut pada workflow canvas. Configure, Validate, Sandbox dan Publish. Card Request Form dibuat dari hasil workflow yang published, bukan hanya dari kategori kosong.
+## Buat Request Form
+<Steps>
+<Step title="Susun Form Builder">
+Buat field, validasi, tabel, dan sumber data yang diperlukan.
+</Step>
+<Step title="Publikasikan workflow">
+Hubungkan form ke Approval Workflow Engine. Pilih kategori, approver, dan jalurnya, lalu Validate, uji Sandbox, dan Publish.
+</Step>
+<Step title="Buat Request Form Template">
+Buka **Create Design → Request Form Templates**, pilih kategori aktif dan workflow terpublikasi. Form mengikuti workflow tersebut. Tambahkan dokumen bawaan bila diperlukan, lalu simpan dan publikasikan.
+</Step>
+<Step title="Tetapkan akses">
+Owner menentukan pemohon dan approver melalui Access Profiles atau izin manual. Pengguna hanya melihat form yang diizinkan.
+</Step>
+</Steps>
 
-## Versi
-Kombinasi kategori dan template form yang sama menggunakan rilis published baru untuk pengajuan baru. Kombinasi kategori/template yang berbeda dapat menghasilkan card/form baru. Card menampilkan versi form dan workflow yang aktif.
+Workflow terpublikasi tidak otomatis menggantikan langkah membuat Request Form Template. Template standar dapat digunakan sebagai titik awal; tetap periksa penugasan dan kewenangan sebelum dipakai tim.
 
-Request yang sedang berjalan tetap memakai release yang diterima. Mengganti label field tidak boleh dipakai untuk mengubah makna data historis; field key dan versi adalah bagian dari kontrak pengajuan.
+## Versi dan pengajuan
+Pengajuan menyimpan versi form, workflow, dan dokumen yang digunakannya. Mengedit template tidak mengubah proses yang sedang berjalan. **My Requests** digunakan untuk mengajukan dan memantau pekerjaan; pengelolaan kategori berada di **Create Design**.
 
-## Arsip
-Jangan arsipkan workflow/kategori yang masih digunakan request aktif. API dan kontrol yang relevan menolak konflik tersebut. Arsip bukan menghapus keputusan atau bukti dokumen.
-
-## Tidak melihat card?
-Periksa status published, kategori aktif, scope form dan izin Request Create. Role Requester saja tidak menjamin semua kategori terlihat. Minta pengelola memperbaiki konfigurasi, bukan membuat pengajuan lewat tenant lain.
+Jika form tidak terlihat, periksa status publikasi, kategori aktif, izin kategori, dan akses template. Lihat [Request Form Templates](/guides/request-form-templates).

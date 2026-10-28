@@ -26,7 +26,7 @@ For webhook results, optional `report_endpoint_id` selects an active registered 
 
 ## Prepare a template-bound document
 
-The latest locally tested implementation also accepts prepared signing documents. Your form designer must first pin a private template version and map every signer slot to an internal workflow Actor. Read the pinned release's submission schema for the field requirement and sender inputs.
+The current implementation also accepts prepared signing documents. Your form designer must first pin a private template version and map every signer slot to an internal workflow Actor. Read the pinned release's submission schema for the field requirement and sender inputs.
 
 Call `POST /api/v1/approval-requests/document-preparations` with `documents:write`, the sandbox environment header and a unique **Idempotency-Key**:
 
@@ -48,14 +48,21 @@ Review the filled PDF through `GET /api/v1/approval-requests/document-preparatio
 
 Place that object in `documents`, once for each required prepared field. A bound field rejects raw `document_id` input and caller-selected signer mappings. The response reports `document_approval_mode:"prepared_template"`; raw digital-only requests retain `digital_only`.
 
-The preparation pins source bytes, template/form/workflow versions, field layout and Actor mappings. Fixed and sender inputs are supported, including visual-signature and digital-only slots. Preparation is not a signature. Human reviewers still enter their own fields, verify identity and consent. Preparing uses storage, while approval/signing Process admission occurs at Submit. Exact retry does not add another admission.
+The preparation pins source bytes, template/form/workflow versions, field layout and Actor mappings. Fixed and sender inputs are supported, including visual-signature and digital-only slots. Preparation is not a signature. Human reviewers still enter their own fields, verify identity and consent. Preparing uses storage, while approval/signing Credits admission occurs at Submit. Exact retry does not add another admission.
 
-An unused preparation expires after 60–86,400 seconds and binds to one request, one issuing key and one mapped requester. Current private source access and app allowlists remain required. Expired unused, changed, consumed-by-another-request or cross-tenant IDs are refused. Dynamic REST templates, legacy `sign_template` fields and external/parallel API workflows are not supported by this increment. Migration, production credentials and deployed acceptance remain separate.
+An unused preparation expires after 60–86,400 seconds and binds to one request, one issuing key and one mapped requester. Current private source access and app allowlists remain required. Expired unused, changed, consumed-by-another-request or cross-tenant IDs are refused. Dynamic templates, external Actors, parallel routes and revisions follow the submission schema and supported Production capabilities. The legacy `sign_template` field is not used; prepare documents using the contract supported by the pinned release.
 
 ## Status
 `GET /approval-requests` supports `q`, `status`, `page`, and `size`. Read details with `GET /approval-requests/{id}`. Both require `requests:read` and return app-owned requests only.
 
 Details include status, `version`, `request_revision`, form/workflow versions, data, visited steps, SLA/timestamps, and decisions. For active requests, `remaining_approval_layers` can depend on Rules; it does not guarantee every branch will be visited.
+
+## History and final PDFs
+`GET /api/v1/approval-requests/{id}/history` requires `requests:read`. It returns status, revision, visited steps, decisions, and the remaining-layer estimate without form values.
+
+In Production, call `GET /api/v1/approval-requests/{id}/final-documents` with both `requests:read` and `documents:read`. Its `status` distinguishes **pending**, **ready**, and **failed**. Approved does not necessarily mean final PDF generation has finished. Only ready results include artifact IDs, filenames, digests, and sizes; no storage URLs are returned.
+
+Download an artifact with `GET /api/v1/approval-requests/{id}/final-documents/{artifact}/content` under the same authority. PDF integrity and access are checked. Pending/failed output returns 409; inaccessible artifacts are not served. Serving a download does not prove the file was read.
 
 ## Revisions
 Read `GET /approval-requests/{id}/revision-requirements` in NEEDS_REVISION. Save with `PATCH /approval-requests/{id}/revision-draft` and resubmit with `POST /approval-requests/{id}/resubmit`. Use `requests:revise`, an idempotency key, and current versions:
@@ -68,7 +75,7 @@ Read `GET /approval-requests/{id}/revision-requirements` in NEEDS_REVISION. Save
 
 For a retained prepared document, keep its original `prepared_instance_id` and `field_key` in `documents`. Reuse within the same frozen request may outlive preparation TTL or a newer workflow publication, provided the exact file/layout is still in the active working copy (or latest submitted revision if no working copy exists). Current issuing-key authority and private template/upload custody still apply. A removed or replaced working-copy reference cannot revive an expired preparation.
 
-To prepare a replacement for a request's pinned older release, add all three fields to the preparation call: `request_id`, current `expected_version` and `expected_task_version`. The request must have an active correction task assigned to the mapped requester, and the key also needs `requests:revise`. Use that request's frozen `workflow_release_id`. The replacement is prebound to that request and keeps its own preparation expiry. It cannot be submitted to another request. A distinct replacement source adds its document Process identity at resubmission; retaining the same source does not repeat its charge.
+To prepare a replacement for a request's pinned older release, add all three fields to the preparation call: `request_id`, current `expected_version` and `expected_task_version`. The request must have an active correction task assigned to the mapped requester, and the key also needs `requests:revise`. Use that request's frozen `workflow_release_id`. The replacement is prebound to that request and keeps its own preparation expiry. It cannot be submitted to another request. A distinct replacement source adds its document Credits identity at resubmission; retaining the same source does not repeat its charge.
 
 A paused category does not erase the frozen request: permitted reads, exact replay and correction drafts can continue. Resubmission still requires an active category and an eligible approver. Resolve `CATEGORY_UNAVAILABLE` by restoring authorized availability; do not change versions or identities to bypass the gate.
 

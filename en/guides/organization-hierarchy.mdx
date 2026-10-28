@@ -1,0 +1,41 @@
+---
+title: "Organization Hierarchy and Direct Manager"
+description: "Manage reporting lines, view the full organization diagram and route approval to a requester's manager."
+---
+
+**Management → Organization Hierarchy** lets the Owner manage reporting relationships. These relationships apply to every role, including Owner, Admin, Approver and Operation.
+
+## Set a Direct Manager
+
+You can select a Direct Manager when inviting a member or update the relationship after they join.
+
+A Direct Manager may be left unset during setup. It becomes required for a requester submitting a request configured to use Direct Manager approval.
+
+1. Open **Organization Hierarchy** as Owner.
+2. Search by name, email or job title.
+3. Select a member in the diagram or choose the edit action in the table.
+4. Choose an active manager in the same organization, enter a reason, and save.
+
+A member cannot manage themselves. Circular relationships, such as A reporting to B while B reports to A, are rejected. An Owner can have a manager without changing or revoking the Owner role.
+
+## Use the full diagram
+
+Select **Diagram** to see reporting lines. Drag the background to move, use **− / +** to zoom, and choose **Fit** to show the whole diagram. **Full screen** expands the diagram; **Exit full screen** restores the page view.
+
+Search highlights matching members. Select **Focus result** to center the first match. Choose **Table** to compare names, job titles, roles, managers and member status in a list.
+
+## Use the manager as an approver
+
+In the Canvas Approval Workflow, select an **Actor** and set **Approver source** to **Requester’s Direct Manager**. Assignment follows the manager of the member submitting the request, rather than the designer's manager or the previous approver's manager.
+
+<Warning>
+If the workflow uses Direct Manager and the requester has none configured, Submit is blocked. Ask the Owner to set the manager first. The manager must also be active and have the required approval authority; the system does not select an unconfigured replacement.
+</Warning>
+
+A manager relationship does not grant category or form permissions. Check **User management** or use [Access Profiles](/en/guides/access-profiles). The prohibition on approving your own request still applies.
+
+## Changes during a running process
+
+Hierarchy edits do not rewrite recorded decisions or evidence. Check the assignment on running requests; do not assume a manager change automatically transfers a task that has already opened.
+
+If an edit fails because the member changed, reload the page and review the manager selection again. Include the Request ID and Node ID when reporting an assignment issue to [support@dekasign.com](mailto:support@dekasign.com).

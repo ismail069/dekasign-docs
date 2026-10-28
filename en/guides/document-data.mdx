@@ -1,22 +1,51 @@
 ---
-title: "Dynamic document data and REST lookup"
-description: "Test responses, map fields, and prepare values before sending."
+title: "Document API Data Source"
+description: "Test one API connection, map its response, and fetch values before preparing documents."
 ---
-## Design fields
-Add PDF fields and select Filled by Sender for values prepared before sending. Without a REST data source, preparation asks for manual values. Choose Template designer for fixed data or Approver for recipient inputs at signing time.
+API Data Source works in both the standalone Document Sign Editor and the Request Form document editor. Each document design has one API connection shared by its mapped fields.
 
-## Configure the data source
-Enable **REST data source** when values come from your system. Select a configured endpoint and secure authentication. Define lookup inputs such as `employee_number` and the JSON body that uses them. Only public HTTPS endpoints are allowed, not private hosts.
+## Configure Properties
+Enable **API Data Source**, choose GET or POST, and enter a public HTTPS endpoint. Use zero, one, or multiple parameters such as `{{project_id}}` and `{{period}}`. Choose names for your API; repeated names share one input.
 
-Run Test with synthetic inputs. Supported scalar response values become response variables. Map each Sender field to a tested response path, not a guessed field name. Place & Date has separate place and date mappings.
+For GET, put parameters in the URL. For POST, use a JSON body:
+```json
+{
+  "project_id": "{{project_id}}",
+  "period": "{{period}}"
+}
+```
 
-## Fetch during preparation
-In Prepare & Send, enter lookup inputs, press Fetch, and inspect the result. Verified values are frozen in the preview. Send does not fetch the API again and obtain potentially changed data. Previews expire and are bound to template/version/context.
+**Headers (JSON)** accepts an object with header names and string values:
+```json
+{
+  "X-Client-Code": "DEKASIGN",
+  "X-Department": "operations"
+}
+```
+Use `{}` when no extra headers are needed. Content-Type `application/json` is added automatically for POST JSON. Configure credentials under **Authentication**: None, API key, Bearer token, or Basic username/password. Keep secrets out of URLs and user parameters.
 
-Changed endpoints, configuration, scope, versions, or expired tokens can invalidate older results. Test does not authorize every endpoint. Do not put credentials in lookup inputs.
+## Test and map
+<Steps>
+<Step title="Open Test Request">
+The popup requests dynamic parameters and test credentials. Use synthetic data or records you are authorized to access.
+</Step>
+<Step title="Inspect the response">
+View the response in the popup. Supported response paths become available in Properties.
+</Step>
+<Step title="Map fields">
+Choose API Data Source as a field's value source, then select its response path. Every API field must map to a valid tested response variable before saving.
+</Step>
+<Step title="Save the design">
+Connection credentials are encrypted and never displayed again. Secret inputs clear after testing; designers re-enter them for a new test. Requesters use the saved connection without entering its API key.
+</Step>
+</Steps>
 
-## When REST is disabled
-Sender inputs return to manual entry before preview. Required validation still applies. Disabling the API does not make Approver fields Sender fields, and API responses must not inject recipient parameters.
+## Fetch before sending
+The requester or sender enters any parameters, then selects **Fetch** before preparing the document copy. With no parameters, Fetch runs directly. Inspect the preview before Submit or Send.
 
-## Limits
-Responses/payloads have size, depth, and type limits. HTML/complex objects do not automatically become safe text; map appropriate scalars. Correct oversized content or field dimensions rather than silently clipping PDF values.
+Received values are pinned to that prepared submission or delivery. Later changes at the source do not silently replace its document. Design or connection changes can require a new test, mapping, and Fetch.
+
+## Choose the appropriate source
+Other fields may still use static values, Form Builder mappings, manual requester/sender input, or Actor input during signing. API lookup retrieves data; it differs from [event webhooks](/en/integrations/outgoing-webhooks) and [Custom API notifications](/en/guides/notification-channels).
+
+Private endpoints, excessive payloads, unsupported responses, or values incompatible with fields are rejected. API Data Source does not grant access to records the source system has not authorized.

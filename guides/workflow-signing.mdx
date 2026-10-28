@@ -1,62 +1,47 @@
 ---
-title: "Dokumen bertanda tangan pada pengajuan"
-description: "Opsi per dokumen, approver dan bukti keputusan."
+title: "Dokumen pada Request Form"
+description: "Siapkan dokumen bawaan, input dinamis, dan tanda tangan yang mengikuti workflow."
 ---
-## Alur per dokumen
-<Note>
-Klasifikasi, template persiapan tersimpan, dan kebijakan Process berikut sudah diuji lokal pada pembaruan 20 Oktober 2026. Migrasi dan deployment masih terpisah. Pastikan workspace Anda memakai rilis yang sesuai sebelum mengikuti alur ini.
-</Note>
+## Pilih jenis dokumen
+Template Request Form dapat memiliki dokumen bawaan **mandatory** atau **optional**. Setiap pengajuan mendapat salinan sendiri; file template tidak diubah.
 
-Workflow harus mengaktifkan tanda tangan dokumen pengajuan. Setelah upload, pilih jenis setiap dokumen:
+Pilihan upload:
+- **Supporting document** untuk lampiran pendukung.
+- **sign document or dynamic text** untuk dokumen yang disiapkan melalui editor versi Request Form.
 
-| Pilihan | Kegunaan |
-| --- | --- |
-| **Attachment** | Lampiran biasa untuk ditinjau. |
-| **Supporting document** | Dokumen pendukung untuk ditinjau. |
-| **Document to sign** | Dokumen yang memerlukan tanda tangan digital atau visual. |
+Dokumen tanda tangan mendukung PDF maksimal **30 MB**. Gunakan **Document Sign Editor versi Request Form**, bukan editor standalone, agar Actor terhubung dengan workflow.
 
-Untuk **Document to sign**, buka editor, pilih Actor/signers dan **Digital Only** atau **Visible Signature**, lalu atur field yang diperlukan. Klik **Save & attach to form** untuk menyimpan template privat dan memasangnya otomatis ke form. Template terikat pada file, versi rilis, dan desain tersebut; Anda tidak perlu membuat template standalone terlebih dahulu.
+## Siapkan melalui editor
+<Steps>
+<Step title="Pilih Actor dan mode">
+Tetapkan **Digital Only** atau **Visual Signature** untuk Actor penanda tangan. Digital Only mencatat persetujuan tanpa gambar tanda tangan. Visual Signature memerlukan posisi signature pada PDF.
+</Step>
+<Step title="Tambahkan field">
+Tempatkan text, multiline, number, date/place, checkbox atau signature. Field dapat memakai nilai statis dari designer, mapping Form Builder, input manual pemohon, API Data Source, atau Actor yang bertanggung jawab sesuai jenis field.
+</Step>
+<Step title="Periksa sumber nilai">
+Field pemohon yang tidak dipetakan ke form muncul sebagai input tersendiri pada area dokumen. API fields harus selesai diuji dan dipetakan. Field milik Actor tetap diisi oleh Actor tersebut; signature tidak boleh digantikan dengan data API.
+</Step>
+<Step title="Simpan dan pasang">
+Pilih **Save & attach to form**. Periksa dokumen telah siap sebelum Submit. Versi form, workflow, desain dokumen dan nilai persiapannya dikunci pada pengajuan.
+</Step>
+</Steps>
 
-Dokumen tanda tangan maksimal 30 MB/file. Form boleh disimpan sebagai draft saat persiapan belum selesai, tetapi **Submit** ditolak sampai setiap dokumen tanda tangan mempunyai persiapan tersimpan yang valid.
+Mode default Actor pada Canvas digunakan saat menyiapkan dokumen baru. Dokumen tersimpan mempertahankan mode serta pemetaannya. Cabang workflow yang tidak dijalankan tidak otomatis menjadi penanda tangan.
 
-Buka editor pada dokumen terpilih, tetapkan Actor/signers dan area/field sesuai kebijakan yang didukung. Dokumen request mengikuti desain dan approver yang benar-benar dikunjungi; cabang yang tidak dijalankan tidak otomatis menjadi penanda tangan.
+## Draft, review, dan revisi
+Simpan draft bila persiapan belum selesai, lalu lanjutkan dari **My Requests**. Save draft tidak memulai approval atau memakai Kredit. Submit ditolak bila persiapan dokumen wajib belum valid.
 
-## Petakan setiap field
-Document Sign Editor form/workflow menggunakan slot Actor dari workflow. Untuk **setiap** field teks, multiline, angka, tanggal/tempat, checkbox dan signature, pilih Actor pengisinya pada **Filled by** atau **Signature supplied by**. Field dengan nilai opsional tetap wajib memiliki Actor. Pemetaan kosong atau tidak valid memblokir penyimpanan dan submit di server.
+Approver memeriksa versi dokumen, mengisi field yang ditugaskan, lalu memberi konfirmasi. Komentar dan anotasi bukan persetujuan tanda tangan. User internal dapat memilih My Signature, QR Sign, atau tanda tangan manual sesuai mode.
 
-Actor digital-only dapat mengisi field selain signature tanpa kotak tanda tangan. Field visual signature hanya dapat diberikan ke slot visual. Editor ini diakhiri dengan **Save & attach to form**. Document Sign biasa memiliki editor penerima dan alur prepare/send terpisah.
+Jika dokumen diubah pada revisi, siapkan dan tinjau ulang versi tersebut sebelum Resubmit. Bukti lama tetap merujuk ke versi lama.
 
-Pada Canvas, pilih Actor lalu **New document signing default**: **Digital Only** atau **Visual Signature**. Dokumen baru mengambil default dari release workflow yang terikat pada upload, bukan draft terbaru. Mode visual tetap memerlukan penempatan kotak signature. Dokumen yang sudah disimpan mempertahankan mode dan pemetaannya sendiri.
+## Kredit
+Satu pengajuan workflow menggunakan **1 Kredit**, ditambah **1 Kredit untuk setiap dokumen tanda tangan berbeda**. Dua dokumen tanda tangan dan beberapa Supporting document memakai **3 Kredit**. Lampiran pendukung tidak menambah Kredit tanda tangan.
 
-Setiap dokumen mendukung maksimal 20 Actor penanda tangan. Untuk workflow yang lebih besar, hapus slot yang tidak diperlukan lalu pilih Actor lain dari daftar workflow.
+Dokumen dengan isi asli sama dihitung sekali dalam siklus request tersebut; isi asli berbeda pada revisi dapat menambah satu Kredit. Kredit tidak cukup membatalkan submit. Sandbox tidak memakai Kredit Production.
 
-Dua pintu masuk editor, pemetaan semua field dan default mode sudah lulus pemeriksaan lokal pada pembaruan 21 Oktober. Pemeriksaan desktop mencakup upload, Save & attach, buka ulang template serta Ready pada editor standalone. Pemeriksaan mobile mencakup pemetaan teks/tanggal/checkbox/signature, Save & attach, buka ulang draf dan standalone Ready. Identitas/audience eksternal yang diisi requester, review lengkap dan deployment masih terpisah; dokumentasi ini tidak mengaktifkannya.
+## Hasil dan akses
+Halaman bukti mencatat identitas, tindakan, waktu, dan hash versi dokumen. Mengubah PDF final dapat membuat pemeriksaan integritas tidak cocok. Seal visual DekaSign bukan sertifikasi pihak ketiga.
 
-## Lanjutkan draf
-Buka draf milik Anda dari **My Requests**, lalu klik **Continue draft**. Form memuat kembali isian dan persiapan tanda tangan yang tersimpan. Klik **Configure signing** untuk menyelesaikan dokumen yang belum siap, lalu **Save draft** atau **Submit**. Draf tetap memakai nomor request dan revisi awal yang sama; menyimpan draf tidak memulai task approval atau memotong Process.
-
-Submit pertama memulai workflow dan menghitung Process sekali. Jika draf berubah di tab lain, muat ulang untuk mengambil versi terbaru sebelum menyimpan lagi. Draf yang terikat pada release workflow lama tidak dipindahkan diam-diam ke desain baru. Alur ini berlaku untuk draf awal pada kebijakan dokumen baru; koreksi setelah permintaan revisi tetap menggunakan alur Resubmit.
-
-## Review
-Approver memeriksa form, file, note dan anotasi sebelum keputusan. Catatan bukan consent signing. Persetujuan dokumen dan persetujuan workflow harus mengikuti izin serta mode yang dikonfigurasi.
-
-Di reviewer dokumen, buka **Preview & download audit** untuk melihat siapa yang memperoleh preview/unduhan, waktunya, dan revisi dokumen. Aktivitas ini tercatat terpisah dari konfirmasi dan keputusan. File yang dilayani sistem bukan bukti bahwa isinya telah dibaca atau disetujui.
-
-Pada pembaruan lokal21 Oktober, pembatasan dokumen privat berlaku untuk **Attachment**, **Supporting document**, dan **Document to sign**, termasuk bila approver mempunyai peran Owner. Owner yang tidak menjadi peserta tidak otomatis mendapat akses file; hanya requester yang dapat mengubah izin lampiran request. Download oleh peserta memerlukan izin eksplisit. Jika kebijakan upload dan lampiran berbeda, pembatasan yang lebih ketat tetap berlaku.
-
-## Pemakaian Process
-Untuk pengajuan baru pada kebijakan ini, satu workflow memakai **1 Process**, ditambah **1 Process untuk setiap dokumen tanda tangan yang berbeda**. Dua dokumen tanda tangan dan beberapa lampiran biasa memakai **3 Process**. Attachment dan Supporting document tidak menambah Process tanda tangan.
-
-Dokumen dengan isi asli yang sama dihitung sekali dalam siklus request tersebut, termasuk saat approver bertambah, retry, revisi desain, atau upload ulang. Isi asli yang berbeda menambah satu Process saat diajukan pada revisi berikutnya. Kredit yang tidak cukup membatalkan seluruh transaksi submit. Pengajuan historis mempertahankan kebijakan lamanya; sandbox tidak memotong kredit production.
-
-## Revisi dokumen
-Requester membaca instruksi revisi dan anotasi, mengganti lampiran atau data sesuai kebutuhan, lalu memeriksa kembali rencana signing sebelum Resubmit. Bukti versi lama tidak boleh dipakai seolah menyetujui file baru.
-
-## Hasil
-Dokumen yang disetujui/ditandatangani menyimpan konteks tindakan dan halaman bukti yang disediakan sistem. Periksa identitas pelaku, waktu dan versi/digest. Jangan mengubah PDF final dengan print-to-PDF dan menganggap bukti integritas tetap sama.
-
-## API
-Submit request melalui management API hanya mendukung digital approval untuk dokumen yang dipilih. API key tidak boleh menghasilkan gambar tanda tangan atau mengambil alih signer. Endpoint API masih sandbox; lihat [request API](/api-reference/requests).
-
-## Batas
-Native memakai integritas internal DekaSign, bukan segel bersertifikat. Aktivasi external Actor dan ALL/ANY masih terpisah dari external signer Document Sign.
+Izin dokumen tetap diperiksa untuk pemohon, approver, dan Owner. Role Owner/Admin tidak otomatis membuka setiap file privat. Lihat [API Data Source](/guides/document-data), [Request Form Templates](/guides/request-form-templates), dan [Verify Document](/guides/verify-document).

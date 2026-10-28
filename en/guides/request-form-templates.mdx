@@ -1,0 +1,69 @@
+---
+title: "Request Form Templates"
+description: "Combine a category, published workflow and default documents into a ready-to-use request form."
+---
+
+A **Request Form Template** is the form a requester selects when creating a request. It connects a category to a published workflow; the selected workflow supplies its Form Builder.
+
+## Before creating a template
+
+Prepare the Form Builder, design the workflow, assign approvers and publish the workflow. You can select an existing category or create one. **Create Design** menus are reserved for authorized Owners and Admins.
+
+<Steps>
+  <Step title="Choose a name, category and workflow">
+    Open **Create Design → Request Form Templates** and select **Create template**. Enter a name, choose the category, and search for a published workflow. Check the displayed form/workflow names and versions.
+  </Step>
+  <Step title="Add default documents">
+    Select the form's file field and upload documents. Choose **Supporting document** for supporting attachments or **Sign document or dynamic text** for documents prepared in the editor.
+  </Step>
+  <Step title="Choose mandatory or optional">
+    Under **Requester may remove this document?**, choose **No — required in every request** for mandatory documents or **Yes — optional default** when requesters may omit them.
+  </Step>
+  <Step title="Prepare documents in the Request Form editor">
+    Open the Document Sign Editor from the document. Use the Request Form version linked to workflow Actors. Set signing mode, fields and value sources, then select **Save & attach to form**.
+  </Step>
+  <Step title="Publish and grant access">
+    Save and publish the template. In User management, give requesters category permission and permission to use the form. Approvers need the appropriate role and category approval authority.
+  </Step>
+</Steps>
+
+## Digital Only, Visual Signature and dynamic text
+
+| Use | Configuration |
+| --- | --- |
+| **Digital Only** | Records signing consent and evidence without a visible signature mark on the PDF page. |
+| **Visual Signature** | Requires a signature area mapped to the signing Actor. |
+| Dynamic text without signing | Prepares document data fields without requiring the document to be signed. |
+| Supporting document | Includes a default supporting attachment for review. |
+
+A Digital Only Actor can still complete assigned non-signature fields. Visual mode requires a signature box. Choose Actors relevant to the workflow; not every Actor or branch must sign every document.
+
+## Choose each field's value source
+
+Use **Value source** in Properties:
+
+- **Map to Form Builder field**: use a compatible form field's value.
+- **Requester · enter before submit**: show a separate input in the document area, such as an address absent from the main form.
+- **Static · set in this editor**: set a fixed value during design, including text, checkboxes, date/time or place where supported by the field type.
+- **API Data Source**: use a variable from a tested API response.
+- **Workflow Actor · enter during approval**: the assigned Actor completes the field during review/approval.
+
+Document fields do not automatically create new Form Builder fields. Deliberately choose form mapping or separate document input. Check required values and mappings before saving.
+
+## One API Data Source per document design
+
+In Properties, enable **API Data Source** and configure the HTTPS endpoint, GET or POST, Authentication, Headers JSON and Body JSON. Parameters such as `{{project_id}}` can be absent, singular or multiple; choose names that fit your API.
+
+Run **Test Request**, enter parameters and credentials in its popup, and inspect the response. Map every API field to a tested response variable. An API-enabled design cannot be saved until its required testing and mappings are valid.
+
+Saved credentials are protected and are not shown again in the editor. Designers re-enter credentials for a new test; requesters use the saved connection without seeing its API key. POST JSON automatically supplies `Content-Type: application/json`; use Headers for additional headers and Authentication for credentials.
+
+## When requesters fill out the form
+
+Requesters may remove optional defaults, while mandatory documents remain required. They may also add signing or supporting documents where the form allows it. Signing documents have a **30 MB per-file** limit.
+
+Mapped fields use form data; separate document inputs are completed in the document area. For API-enabled documents, requesters enter the required lookup parameters and fetch data before preparing the document. They cannot replace API values with manual input.
+
+Each request receives its own document copies. Its form, workflow and document preparation versions are pinned. Editing a template later does not rewrite running requests. During revision, refresh document copies through the revision flow before Resubmit when related values change.
+
+See [Document data](/en/guides/document-data), [workflow signing](/en/guides/workflow-signing), and [requests and revisions](/en/guides/requests-and-revisions).

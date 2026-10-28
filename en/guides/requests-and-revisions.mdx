@@ -1,30 +1,31 @@
 ---
-title: "Submit, track, and revise requests"
-description: "Requester and approver steps from category cards to completion."
+title: "Requests and revisions"
+description: "Submit Request Forms, review decisions, and handle requested changes."
 ---
-## Submit a request
-Open Request Forms/the requester dashboard and select an authorized category/form card. Check versions, complete required fields and dynamic tables, upload attachments, and review before Submit. A saved draft is not an accepted submission.
+## Submit a Request Form
+Open **Operations → My Requests**, then choose an authorized category and Request Form. Check its version, complete required fields and tables, and review documents before **Submit**. Tables support [CSV import](/en/guides/table-csv). **Save draft** does not begin approval.
 
-PDFs, PPTX files, and images are reviewed within the platform according to supported formats/converter availability. Do not upload unnecessary data. Enable signing per document when needed, configure signer/input layout, and confirm the workflow supports it.
+Mandatory default documents must remain included. Optional documents can be removed according to template settings. Add a **Supporting document** or **sign document or dynamic text**. Complete manual inputs, form mappings, or API Fetch before saving dynamic document preparation. See [workflow documents](/en/guides/workflow-signing).
 
-On a release with document classification, select each attachment's purpose and finish **Save & attach to form** for every **Document to sign** before Submit. See [preparation and Process usage](/en/guides/workflow-signing). Open **Preview & download audit** in the reviewer for file-delivery activity; this does not replace an approval decision.
+If the workflow uses Direct Manager, the requester's manager must be configured, active, and authorized—including when the requester is Owner. Self-approval is prohibited.
 
-## Read status
-Open **My Requests**, use filters/pagination, then open request details. History shows visited nodes, decisions, actors, datetimes, and available SLA information. Active requests show approval-layer information. History is not a list of every possible branch as though all were executed.
+## Details and status
+Request details separate **Detail Pengajuan, Alur & Riwayat** from **Document Proposal**. Review Actor/step, status, approver name, job title, update time, and pinned version. Parallel routes show ALL/ANY requirements. History describes steps actually executed.
 
-## Approver actions
-Open **My Approvals**, choose a task, and review form data, attachments, and notes. Use the document reviewer for annotations/notes. Confirm the reviewed version is current. Approve, Reject, and Need revision are different decisions; a comment alone does not decide a task.
+Add the request to [My Projects](/en/guides/my-projects) from its detail page. Grouping references does not change access permissions.
 
-The notification's review link takes you to login if needed, then directly to the intended task details. Use the assigned approver account; the link retains identity and task-permission checks.
+## Approver review
+Open **My Works → My Approvals**. **Form** contains submitted values and comments. **Documents** separates signing and supporting documents, with annotations beside the preview. The changes view helps compare revisions where available; **Activity** contains action history.
 
-## When revision is needed
-1. Open the notification or the same request's details.
-2. Read the revision reason, approver notes, and document annotations.
-3. Correct allowed fields/attachments. Replacing a document may require a new signing layout.
-4. Save if needed, review the updated data, then **Resubmit**.
-5. The process follows the configured Revision/Loop route; it does not automatically restart every node.
+Review documents, complete your assigned fields, and check confirmation before signing. Comments or annotations alone do not approve a request. **Approve**, **Reject**, and **Request Revision** are separate decisions.
 
-Exhausted revision limits do not make a request Approved. Final actions follow valid policy and decisions. A final Rejected request requires a new submission if the organization wants to restart.
+## Revise
+1. Open the same request when its status requires revision.
+2. Read the reason and annotations, then update permitted fields/attachments.
+3. Prepare changed documents again where required.
+4. Review the latest version and choose **Resubmit**.
+
+Routing follows the configured Revision/Loop path and limits. Final rejection does not automatically reopen editing.
 
 ## After approval
-Finish Approved records the approval outcome. Track any configured signing obligations separately. Approved does not mean vendor payment, every recipient Signed, or completion in an external system.
+Approved does not mean operational follow-up or payment is complete. Review Operation Task status and result data when used. Completed requests can export a PDF with form information, highlighted status, signed document references, and a DekaSign validation page.

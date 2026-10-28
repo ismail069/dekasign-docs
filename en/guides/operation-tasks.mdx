@@ -1,0 +1,63 @@
+---
+title: "Operation Task, My Tasks and Team Queue"
+description: "Turn approved requests into operational work that staff can take, track and complete."
+---
+
+**Operation Task** creates follow-up work after approval, such as recording a reimbursement payment or preparing equipment. Approval remains **Approved** while operational work has its own status.
+
+## Owner setup
+
+1. Prepare categories and members through **Settings → User management**.
+2. Add the **Operation** role to staff responsible for follow-up work.
+3. Select the categories each staff member manages. The Operation role alone does not provide access to every category.
+4. In the Canvas Approval Workflow, connect an **Operation Task** after **Finish Approved**. Enter an activity name and instructions.
+
+Tasks follow the workflow/request category. **Team Queue** is one page with category grouping and filters; you do not create a separate queue or choose a destination category on the node. Renaming a category updates its queue category name.
+
+## Choose who can work on a task
+
+| Node configuration | Result |
+| --- | --- |
+| **All category staff** | The **Open** task is available in Team Queue to authorized Operation staff in that category. |
+| **Specific staff**, exactly one available person | The task is automatically assigned as **Open** in that person's My Tasks and is not offered in Team Queue. They must still select **Start task**. |
+| **Specific staff**, multiple people | The **Open** task has no holder. Available selected staff can take it from Team Queue. |
+| All selected staff are unavailable | Other available Operation staff in the same category can take the task. |
+
+Selecting multiple people keeps the task in Team Queue even when only one is available. It does not become a single-person assignment. Once taken, a task has one active holder.
+
+## Conditions are optional
+
+Without **Enable Conditions**, the node uses its main visibility selection. When Conditions are enabled, choose workflow parameters, operators and values, then select staff for each rule and the default. The first matching rule applies.
+
+Use parameters relevant to your process. For example, different staff groups can handle different priorities. Missing values or invalid configuration require attention; an unavailable value is not silently treated as a non-match and sent to the default.
+
+## Work on a task
+
+1. Open **Operations → Team Queue** to find available work, or **My Works → My Tasks** for work assigned to you.
+2. Filter by category or search for a request reference. Open details to review the form, approval history, signed documents and supporting documents within task permissions.
+3. Select **Add to my work** for a queue task, or **Start task** for an assigned task.
+4. Update the status, reference number, reference date and remark. Upload work-result documents when needed.
+5. Choose **Completed** only when the work is finished, then confirm completion.
+
+| Status | Meaning |
+| --- | --- |
+| **Open** | Available or assigned, but not started. |
+| **In Progress** | The holder is working on the task. |
+| **Blocked** | Work is blocked; a remark must explain the issue. |
+| **Completed** | The holder has recorded the work as finished. |
+
+Recording completion does not automatically transfer money or verify a transaction in another system. References and documents are results recorded by the staff member.
+
+## Availability and returning work
+
+Set your unavailable-through date in account availability settings. Date boundaries follow the organization timezone. If a single-person assignment is still **Open** when the member becomes unavailable, the task can fall back to Team Queue. **In Progress** and **Blocked** tasks remain with their holder; availability changes do not take over that work.
+
+The holder can select **Return to Team Queue**, including before starting an automatically assigned task. Enter a reason and confirm. The task becomes **Open**, its holder is cleared, and all available authorized Operation staff in the category can take it. That returned task does not automatically restore its previous specific-staff selection.
+
+Saved references, remarks and documents remain attached. Unsaved changes are not included.
+
+## Approval, signing and requester visibility
+
+A task becomes actionable after approval and required signing finish. Operation Tasks can run in sequence; completing the current task opens the next configured step. The requester can view the operational status and recorded results associated with their request.
+
+Later design edits do not replace the version used by a running request. Use the Node ID and [workflow logging](/en/guides/approval-workflows) to locate the related step. Test normal flow, Conditions, unavailable staff and returning work in [Sandbox](/en/guides/sandbox) before use.

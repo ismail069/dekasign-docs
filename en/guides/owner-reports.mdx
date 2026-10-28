@@ -1,0 +1,60 @@
+---
+title: "Organization reports for Owners"
+description: "Read request volumes, approval and SLA measures, operational work, documents and organization resources."
+---
+
+Open **Management → Reports** as Owner to view organization summaries. The page is at `/dashboard/owner/reports`; Admin, Approver and Operation roles do not grant access to Owner reports.
+
+![DekaSign Reports page in Indonesian with synthetic QA organization data](/images/app/owner-reports.png)
+
+## Select a period
+
+Reports default to the **last 30 calendar days**, including today. Set **From date** and **To date**, then select **Apply period**. Both boundaries follow the organization timezone. The maximum range is **366 calendar days**, including both dates.
+
+Check **Updated** to see when the summary was read. Changing date inputs alone does not apply a filter. **Export CSV** uses the period already applied to the report.
+
+## Understand the counting basis
+
+| Section | Records included in the period | Status shown |
+| --- | --- | --- |
+| Requests | Requests created in the period, including Drafts. | Current status at report update. |
+| Approvals & SLA | Approval steps opened in the period. | Current step state at report update. |
+| Operational work | Operation Tasks created in the period. | Current task status at report update. |
+| Documents & sharing | Document Sign packages or Secure Document Sharing sessions created in the period. | Current package/session status at report update. |
+| Resources | Current member and storage inventory. | Not a historical snapshot at the filter's end date. |
+
+A request created before the period is not included in request totals merely because it finished today. An approval step on that older request can still enter approval statistics if the step opened in the period.
+
+## Overview
+
+**Requests created** includes Drafts. The daily chart follows request creation dates and shows empty days as zero. Status and category summaries distinguish work in progress, revisions, Approved, Rejected and Cancelled requests.
+
+**Approval turnaround** averages the time from request creation to an Approved or Rejected outcome for requests created in the period with valid completion timestamps. Its denominator is the completed-request count shown beside the measure, rather than all requests. This duration does not wait for operational follow-up.
+
+## Approvals & SLA
+
+- **Pending**: a step still awaits a decision.
+- **Overdue now**: a Pending step is past its original deadline.
+- **Average completed step**: mean opening-to-closing duration for Completed steps with valid timestamps. Cancelled steps are excluded.
+- **Steps have an SLA deadline**: steps with a deadline divided by all steps opened in the period.
+- **Finished late**: Completed steps closed after their deadline divided by Completed steps with a recorded deadline and closing time. Steps without a deadline are excluded.
+
+The waiting-work table shows the top 20 workflow/version/Node ID groups, ranked by overdue work and longest current wait. Select a step name to open its workflow log.
+
+## Operational work
+
+Review task status, tasks awaiting signing and average completion. The average uses only Completed tasks created in the period with valid completion timestamps.
+
+Unfinished-work age starts at task creation and includes signing waits and Blocked time. Age groups are under 1 day, 1–3 days, 3–7 days, and 7 days or more.
+
+Category tables show the top 50 categories. **In progress** combines Open and In Progress; Blocked is separate. Workload shows the top 20 holders, including unassigned work. The oldest-work table shows 20 unfinished tasks.
+
+## Documents & sharing
+
+Compare Document Sign packages and Secure Document Sharing sessions and their statuses. **Signing past deadline** means a package remains In Progress after its deadline. **Sharing past expiry** means a session remains marked Active after its expiry time; that count does not establish that access is still allowed.
+
+## Export and investigate
+
+Select **Export CSV** to download aggregate summaries. It is not an export of every form, file content or recipient contact. Member/storage figures remain current inventory. If storage inventory is unverified, recorded-object totals should not be treated as a complete measurement of all files.
+
+Use [Operation Task](/en/guides/operation-tasks) and workflow logs to investigate waiting work. Report summaries do not grant additional access to private documents.

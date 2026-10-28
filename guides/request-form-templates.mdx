@@ -1,0 +1,69 @@
+---
+title: "Request Form Templates"
+description: "Gabungkan kategori, workflow published dan dokumen bawaan menjadi form pengajuan yang siap digunakan."
+---
+
+**Request Form Template** adalah form yang dipilih pemohon saat membuat pengajuan. Template ini menghubungkan kategori dengan workflow published; Form Builder mengikuti workflow yang dipilih.
+
+## Sebelum membuat template
+
+Siapkan Form Builder, desain workflow, tetapkan approver dan publikasikan workflow. Anda dapat memilih kategori yang sudah ada atau membuat kategori baru. Menu **Create Design** hanya tersedia bagi Owner dan Admin yang berwenang.
+
+<Steps>
+  <Step title="Pilih nama, kategori dan workflow">
+    Buka **Create Design → Request Form Templates**, lalu klik **Create template**. Isi nama, pilih kategori, dan cari workflow yang sudah published. Periksa nama serta versi form/workflow yang ditampilkan.
+  </Step>
+  <Step title="Tambahkan dokumen bawaan">
+    Pilih field file pada form, lalu upload dokumen. Gunakan **Supporting document** untuk lampiran pendukung, atau **Sign document or dynamic text** untuk dokumen yang perlu disiapkan dalam editor.
+  </Step>
+  <Step title="Tentukan mandatory atau optional">
+    Pada **Requester may remove this document?**, pilih **No — required in every request** untuk mandatory, atau **Yes — optional default** bila pemohon boleh tidak menggunakannya.
+  </Step>
+  <Step title="Siapkan dokumen melalui editor Request Form">
+    Buka Document Sign Editor dari dokumen tersebut. Gunakan editor versi Request Form yang terhubung ke Actor workflow. Atur mode signing, field dan sumber nilainya, lalu klik **Save & attach to form**.
+  </Step>
+  <Step title="Publikasikan dan berikan akses">
+    Simpan dan publikasikan template. Di User management, berikan pemohon izin kategori dan hak menggunakan form. Approver memerlukan role serta izin approval kategori yang sesuai.
+  </Step>
+</Steps>
+
+## Digital Only, Visual Signature dan teks dinamis
+
+| Penggunaan | Pengaturan |
+| --- | --- |
+| **Digital Only** | Mencatat consent dan bukti signing tanpa tanda tangan visual pada halaman PDF. |
+| **Visual Signature** | Memerlukan area signature yang dipetakan ke Actor yang menandatangani. |
+| Teks dinamis tanpa signing | Siapkan field data pada dokumen tanpa menjadikan dokumen wajib ditandatangani. |
+| Supporting document | Menyertakan lampiran pendukung bawaan untuk ditinjau. |
+
+Actor Digital Only tetap dapat mengisi field non-signature yang menjadi tanggung jawabnya. Mode visual memerlukan kotak signature. Pilih Actor yang relevan dengan workflow; tidak semua Actor atau cabang harus menandatangani setiap dokumen.
+
+## Pilih sumber nilai setiap field
+
+Pada Properties, gunakan **Value source** sesuai kebutuhan:
+
+- **Map to Form Builder field**: gunakan nilai dari field form yang kompatibel.
+- **Requester · enter before submit**: tampilkan input terpisah pada area dokumen, misalnya alamat yang tidak ada di form utama.
+- **Static · set in this editor**: isi nilai tetap saat desain, seperti teks, checkbox, tanggal/waktu atau tempat sesuai jenis field.
+- **API Data Source**: gunakan variabel dari response API yang sudah diuji.
+- **Workflow Actor · enter during approval**: Actor yang ditetapkan mengisi saat proses review/approval.
+
+Field pada dokumen tidak otomatis membuat field baru di Form Builder. Pilih pemetaan form atau input dokumen terpisah secara sengaja. Periksa isian wajib dan pemetaan sebelum menyimpan.
+
+## Satu API Data Source per desain dokumen
+
+Di Properties, aktifkan **API Data Source**, isi endpoint HTTPS, GET atau POST, Authentication, Headers JSON dan Body JSON sesuai API Anda. Parameter seperti `{{project_id}}` dapat berjumlah nol, satu, atau beberapa; gunakan nama parameter sesuai kebutuhan.
+
+Jalankan **Test Request**, isi parameter dan kredensial pada popup, lalu periksa response. Petakan setiap field API ke variabel response yang diuji. Desain dengan API aktif belum dapat disimpan jika pengujian dan pemetaan yang diperlukan belum valid.
+
+Kredensial tersimpan dilindungi dan tidak ditampilkan kembali di editor. Designer memasukkan ulang kredensial saat melakukan tes baru; pemohon memakai koneksi tersimpan tanpa melihat API key. Header `Content-Type: application/json` ditambahkan otomatis untuk POST JSON; gunakan Headers untuk header tambahan dan Authentication untuk kredensial.
+
+## Saat pemohon mengisi pengajuan
+
+Pemohon dapat menghapus dokumen bawaan optional, tetapi mandatory tetap wajib. Pemohon juga dapat menambah dokumen tanda tangan atau supporting document sesuai konfigurasi form. Dokumen signing maksimal **30 MB per file**.
+
+Isian yang dipetakan mengambil data form; input dokumen terpisah diisi pada area dokumen. Jika API aktif, pemohon melengkapi parameter yang diminta dan melakukan fetch sebelum menyiapkan dokumen. Pemohon tidak mengganti nilai API dengan input manual.
+
+Setiap pengajuan memperoleh salinan dokumennya sendiri. Versi form, workflow dan persiapan dokumen terkunci pada pengajuan. Mengedit template berikutnya tidak mengubah request yang sudah berjalan. Pada revisi, perbarui salinan dokumen melalui alur revisi sebelum Resubmit jika isian terkait berubah.
+
+Lihat [Document data](/guides/document-data), [workflow signing](/guides/workflow-signing), dan [permintaan revisi](/guides/requests-and-revisions).

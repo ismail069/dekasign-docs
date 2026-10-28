@@ -1,0 +1,63 @@
+---
+title: "Operation Task, My Tasks dan Team Queue"
+description: "Teruskan hasil approval menjadi pekerjaan operasional yang dapat diambil, dipantau dan diselesaikan."
+---
+
+**Operation Task** membuat tindak lanjut setelah approval, seperti mencatat pembayaran reimbursement atau menyiapkan perangkat. Status approval tetap **Approved** sementara pekerjaan operasional memiliki status tersendiri.
+
+## Persiapan Owner
+
+1. Siapkan kategori dan anggota melalui **Settings → User management**.
+2. Tambahkan role **Operation** kepada staff yang mengerjakan tindak lanjut.
+3. Pilih kategori yang dikelola setiap staff. Role Operation saja belum memberikan akses ke semua kategori.
+4. Pada Canvas Approval Workflow, hubungkan output **Operation Task** setelah **Finish Approved**. Isi nama kegiatan dan instruksi.
+
+Task mengikuti kategori workflow/request. **Team Queue** adalah satu halaman dengan pengelompokan dan filter kategori; Anda tidak membuat queue baru atau memilih kategori tujuan pada node. Mengubah nama kategori memperbarui nama kategorinya di queue.
+
+## Pilih siapa yang dapat mengerjakan
+
+| Konfigurasi node | Hasil |
+| --- | --- |
+| **All category staff** | Task **Open** tersedia di Team Queue untuk staff Operation berwenang pada kategori tersebut. |
+| **Specific staff**, tepat satu orang tersedia | Task otomatis ditugaskan dalam status **Open** di My Tasks orang itu dan tidak ditawarkan di Team Queue. Staff tetap harus memilih **Start task**. |
+| **Specific staff**, beberapa orang | Task **Open** belum memiliki penanggung jawab. Staff terpilih yang tersedia dapat mengambilnya dari Team Queue. |
+| Semua staff terpilih tidak tersedia | Task ditawarkan kepada staff Operation lain yang tersedia pada kategori yang sama. |
+
+Jika Anda memilih beberapa orang tetapi hanya satu yang tersedia, task tetap berada di Team Queue; sistem tidak mengubahnya menjadi penugasan satu orang. Satu task hanya memiliki satu penanggung jawab aktif setelah diambil.
+
+## Conditions bersifat opsional
+
+Tanpa **Enable Conditions**, node menggunakan pilihan visibilitas utama. Jika Conditions aktif, pilih parameter workflow, operator, dan nilai, lalu tentukan staff untuk tiap aturan dan default. Aturan pertama yang cocok digunakan.
+
+Gunakan parameter yang relevan dengan proses Anda. Contohnya, prioritas tertentu dapat ditangani kelompok staff yang berbeda. Nilai yang belum tersedia atau konfigurasi tidak valid memerlukan penanganan; nilai kosong tidak diam-diam dianggap tidak cocok lalu diarahkan ke default.
+
+## Kerjakan task
+
+1. Buka **Operations → Team Queue** untuk mencari pekerjaan yang dapat diambil, atau **My Works → My Tasks** untuk pekerjaan yang ditugaskan kepada Anda.
+2. Saring kategori atau cari referensi pengajuan. Buka detail untuk melihat form, riwayat approval, dokumen yang ditandatangani, dan supporting document sesuai izin task.
+3. Pilih **Add to my work** untuk mengambil task queue, atau **Start task** untuk memulai task yang sudah ditugaskan.
+4. Perbarui status, nomor referensi, tanggal referensi, dan remark. Tambahkan dokumen hasil pekerjaan bila diperlukan.
+5. Pilih **Completed** hanya setelah pekerjaan tuntas, lalu konfirmasikan penyelesaian.
+
+| Status | Makna |
+| --- | --- |
+| **Open** | Task tersedia atau sudah ditugaskan, tetapi belum dimulai. |
+| **In Progress** | Penanggung jawab sedang mengerjakan task. |
+| **Blocked** | Pekerjaan terhambat; isi remark yang menjelaskan kendalanya. |
+| **Completed** | Penanggung jawab telah mencatat pekerjaan selesai. |
+
+Pencatatan selesai tidak otomatis melakukan transfer uang atau memverifikasi transaksi di sistem lain. Nomor referensi dan dokumen adalah hasil yang dicatat staff.
+
+## Ketersediaan dan pengembalian task
+
+Atur tanggal tidak tersedia melalui pengaturan ketersediaan akun. Batas tanggal mengikuti timezone organisasi. Jika task satu orang masih **Open** ketika staff menjadi tidak tersedia, task dapat dialihkan ke Team Queue sesuai aturan fallback. Task **In Progress** atau **Blocked** tetap berada pada penanggung jawabnya; perubahan ketersediaan tidak mengambil alih pekerjaan tersebut.
+
+Penanggung jawab dapat memilih **Return to Team Queue**, termasuk sebelum memulai task yang otomatis ditugaskan. Isi alasan dan konfirmasi. Task kembali **Open**, penanggung jawab dikosongkan, dan task tersebut tersedia bagi seluruh staff Operation berwenang yang tersedia dalam kategori. Pilihan spesifik sebelumnya tidak diterapkan ulang pada task yang dikembalikan.
+
+Referensi, remark, dan dokumen yang sudah disimpan tetap disertakan. Perubahan yang belum disimpan tidak ikut dikembalikan.
+
+## Hubungan dengan approval, signing dan pemohon
+
+Task baru dapat dikerjakan setelah approval dan signing wajib selesai. Beberapa Operation Task dapat disusun berurutan; menyelesaikan task saat ini membuka langkah berikutnya sesuai desain. Pemohon dapat melihat status serta hasil operasional yang terkait dengan pengajuannya.
+
+Perubahan desain berikutnya tidak mengubah versi yang digunakan pengajuan berjalan. Gunakan Node ID dan [workflow logging](/guides/approval-workflows) untuk menelusuri langkah yang terkait. Uji jalur normal, Conditions, staff tidak tersedia, dan pengembalian task di [Sandbox](/guides/sandbox) sebelum digunakan.

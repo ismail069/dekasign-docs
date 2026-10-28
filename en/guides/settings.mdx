@@ -1,49 +1,33 @@
 ---
 title: "Settings and organizations"
-description: "Profile, Email OTP, authenticator, organization, members, and API access."
+description: "Manage profiles, account security, members, branding, and timezone."
 ---
-## Personal settings
-Open the profile menu in the top bar, then **Settings**. Check your name and account identity. To change your password, complete the form's verification and password requirements. Do not request password changes through comments or support messages.
+## Profile and availability
+Open **Settings → Profile** to update personal information. Staff can set **Not available until** during leave or absence. New Operation Task assignments consider availability; claimed tasks retain their current holder.
 
-## Sign-in verification
-In the latest local implementation, **Settings → Account security** shows your sign-in method. Email OTP is enabled by default for internal accounts. After a correct password, enter the code sent to your registered email before accessing the workspace. Codes expire after five minutes; resend cooldown and attempt limits apply.
+## Account security
+Email OTP is the default after account authentication. Codes expire after five minutes, with resend cooldowns and attempt limits. Google accounts use Google identity followed by required DekaSign verification; this does not imply they have a local password.
 
-To use an authenticator, sign in again if your session is older than five minutes, select **Set up authenticator**, verify your password if your account has one, and scan the QR. Save ten recovery codes privately and confirm an authenticator code. Email OTP remains active until confirmation succeeds. Enrollment revokes old sessions; subsequent sign-in uses TOTP or one recovery code. Email OTP is unavailable as a fallback while TOTP is active.
+For an authenticator, open **Account security → Set up authenticator**, complete the requested verification, scan the QR, and keep recovery codes privately. Enrollment takes effect after code confirmation. Subsequent sign-in uses TOTP or a recovery code; Email OTP is not a fallback while TOTP is active.
 
-To return to Email OTP, select **Switch to Email OTP**, provide your password if required, and enter a fresh authenticator code or an unused recovery code. Switching revokes the authenticator, recovery codes and all sessions; sign in again with Email OTP.
+Choose **Switch to Email OTP** to change methods, then verify your password if the account has one and supply TOTP/recovery verification. Security changes may revoke old sessions. Never send OTPs, passwords, or recovery codes to support.
 
-## Owner-assisted MFA recovery
-In the latest local implementation, the Owner opens **Settings → User management → Recover MFA** for a member who lost their phone and recovery codes. The Owner's sign-in must have completed MFA within the last five minutes. Select **Review recovery**, check the member's email, enter a reason, type that email and verify the Owner password if the account has one.
+## Organization
+Owners use **Organization** to manage name, email domain, logo, favicon, and theme. The customer's primary logo appears in organization contexts; DekaSign is the default without an uploaded logo.
 
-Confirmation switches the member's authenticator to Email OTP and revokes the old keys, recovery codes and sessions. The member signs in again with their own credentials and a code at their registered email. Recovery preserves email/password, member status, permissions and document ownership; it grants the Owner no document access. The action is audited atomically. If the result is uncertain, **Retry same recovery** repeats the exact command.
+The default timezone is **Asia/Jakarta (GMT+7)**. Select a global timezone appropriate to the organization. Displayed dates/times and filters follow it; stored times remain consistent. Check timezone before setting schedules or deadlines.
 
-Recovery is limited to the Owner's workspace. Admins, guest identities and legacy accounts still registered in multiple workspaces cannot use this flow. Use personal recovery under Account security for your own account. Migration and production rollout still require release verification.
+## User management
+Invite a new email not registered to any DekaSign organization. Choose role, job title, Access Profile or manual permissions, categories, and Direct Manager when available. Invitees set a password, enter their phone number, and verify email through the invitation flow.
 
-<Note>This flow has been tested on a local server and desktop/mobile browsers. Retained database migration, operator authentication SMTP readiness and production rollout remain pending. Sign-in OTP delivery is separate from organization notification channels.</Note>
+Use a member row's action menu for access, Internal/External tags, MFA recovery, status, and document review. Bulk invitation accepts CSV/XLSX using downloadable templates. Review the import preview before sending.
 
-## Document handover inventory
-The latest local implementation adds **Settings → User management → Review documents**. Select the receiving account, then **Review inventory**. The receiving account can be the Owner or another active, email-verified member in the same workspace. The source member may be suspended. The Owner must have verified MFA within the last five minutes; legacy accounts with multiple workspace memberships require separate reconciliation.
+The Owner cannot be deleted or have their role revoked through ordinary member actions. Use **Transfer Ownership** to hand the organization to an eligible member and follow its security confirmation. Manage managers and Access Profiles through their Management pages.
 
-The review lists counts for documents and versions, signing templates/packages, form uploads and sharing sessions, including receiver uploads and removed-file history. It flags conflicting ownership and pending approval/request work. Counts can overlap across versions and parent resources. Changing the receiving account clears the previous review.
+## Recovery and handover
+**Recover MFA** helps members who lost their authenticator and recovery codes. The Owner completes fresh security verification, reviews the target, and enters a reason. Recovery returns the member to Email OTP without granting document access to the Owner.
 
-Reviewing alone changes nothing. When transfer is available, enter the reason and receiving email, verify your Owner password if configured, acknowledge the account changes, then choose **Confirm document handover**. The review expires after ten minutes; changing the recipient or inventory requires a fresh review. Conflicting ownership or incompatible document policy blocks transfer.
+**Review documents** opens a popup to inspect inventory before handover. Reviewing alone transfers nothing. Choose the receiving account, review conflicts, then confirm an allowed action. Signer identities, decisions, and historical audit remain unchanged.
 
-Confirmation transfers current custody, suspends the former member and revokes both accounts' old sessions/authenticators. The recipient signs in again with Email OTP. Original uploader/sender, signatures, decisions and audit identities remain unchanged. Approval assignments and requester identity are not transferred. Exact retry returns the original receipt without resetting a later authenticator.
-
-**My documents** is available to all workspace roles for files you own, including reviewed handovers. It does not grant access to someone else's Request or approvals. Owner/Admin role alone grants no private file access. Production handover remains disabled until its migration and release acceptance are complete; member-content deletion is a separate unfinished feature.
-
-## Organization settings
-The Owner opens **Organization** in Settings. Enter the organization name and authorized email domain, upload a logo, and choose theme colors. Preview branding before saving. The email domain classifies internal/external recipients; an internal label is not proof of legal authority.
-
-Organization branding appears in the relevant workspace context, including tenant login when configured. Do not enter another organization's information if the subdomain is wrong or the organization cannot be found.
-
-## Members and permissions
-Use **User management / Members** according to your role. Invite the correct email, choose the minimum necessary role, and grant category/form permissions. Review active status and validity periods. Do not grant Owner merely to let someone approve; grant the appropriate category authority.
-
-## Workspace API keys
-The Owner opens **Settings → API Access**. Create an integration app, choose its mapped requester, allowed categories/workflows/templates, minimum scopes, and key expiry. Copy the key once into your server-side secret manager. Rotate or revoke exposed keys. Never put keys in forms, frontend code, URLs, or source repositories.
-
-Management APIs remain sandbox-only and use workspace data within allowlists. Sandbox does not automatically isolate data. Do not use the API for customer production transactions before the required activation and commercial scope are available.
-
-## Operational checklist
-Check the organization, membership, category grants, tested email channel, published form/workflow, and substitute approvers. See [notification channels](/en/guides/notification-channels).
+## Integrations
+Integration and API settings follow Owner role and available workspace permissions. Store keys in a server-side secret manager, never frontend code or URLs. See [Notification Channels](/en/guides/notification-channels), [Organization Hierarchy](/en/guides/organization-hierarchy), and [Owner setup](/en/guides/owner-setup).

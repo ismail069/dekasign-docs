@@ -1,30 +1,31 @@
 ---
-title: "Submit, status, dan revisi pengajuan"
-description: "Alur requester dan approver dari card kategori sampai selesai."
+title: "Pengajuan dan revisi"
+description: "Kirim Request Form, tinjau keputusan, dan tindak lanjuti revisi."
 ---
-## Submit request
-Requester membuka Request Forms/dashboard dan memilih card kategori/form yang diizinkan. Periksa versi, isi field wajib dan tabel dinamis, unggah lampiran, lalu tinjau sebelum Submit. Save draft bukan pengajuan yang sudah diterima.
+## Kirim Request Form
+Buka **Operations → My Requests**, pilih kategori dan Request Form yang diizinkan. Periksa versi, isi seluruh field wajib dan tabel, lalu tinjau dokumen sebelum **Submit**. Tabel mendukung [import CSV](/guides/table-csv). **Save draft** belum memulai approval.
 
-PDF/PPTX/gambar ditinjau melalui engine platform sesuai dukungan berkas dan converter. Jangan mengunggah data yang tidak perlu. Bila memerlukan signing, aktifkan per dokumen, atur desain signer/input, dan pastikan workflow mendukungnya.
+Dokumen bawaan mandatory harus dipakai. Dokumen optional dapat dilepas sesuai pengaturan template. Tambahkan **Supporting document** atau **sign document or dynamic text**. Untuk dokumen dinamis, lengkapi input manual, mapping form atau Fetch API sebelum menyimpan persiapannya. Lihat [dokumen workflow](/guides/workflow-signing).
 
-Untuk rilis dengan klasifikasi dokumen, pilih jenis lampiran dan selesaikan **Save & attach to form** bagi setiap **Document to sign** sebelum Submit. Lihat [persiapan dan pemakaian Process](/guides/workflow-signing). Buka **Preview & download audit** pada reviewer untuk aktivitas penyajian file; aktivitas ini tidak menggantikan keputusan approval.
+Jika workflow memakai Direct Manager, manager pemohon harus sudah diatur, aktif dan berwenang. Termasuk ketika pemohon adalah Owner. Pengajuan sendiri tidak boleh disetujui sendiri.
 
-## Membaca status
-Buka **My Requests**, gunakan filter dan pagination, lalu detail request. Riwayat menampilkan node yang telah dikunjungi, keputusan, aktor, datetime dan SLA yang tersedia. Proses aktif menampilkan informasi layer approval yang harus dilalui. Riwayat bukan daftar semua kemungkinan cabang seolah semuanya telah dijalankan.
+## Detail dan status
+Detail pengajuan memisahkan **Detail Pengajuan, Alur & Riwayat** dan **Document Proposal**. Lihat Actor/step, status, nama approver, jabatan, waktu pembaruan dan versi yang digunakan. Jalur paralel menunjukkan ketentuan ALL/ANY. Riwayat hanya menyatakan langkah yang benar-benar dijalankan.
 
-## Tindakan approver
-Buka **My Approvals**, pilih tugas, baca form/lampiran dan catatan. Gunakan reviewer untuk anotasi/note. Pastikan versi yang ditinjau masih terbaru. Approve, Reject, dan Need revision mempunyai makna berbeda; memberi komentar saja tidak mengambil keputusan.
+Tambahkan pengajuan ke [My Projects](/guides/my-projects) dari detail. Ini mengelompokkan referensi tanpa mengubah hak akses.
 
-Link review pada notifikasi membawa Anda ke login bila diperlukan, lalu langsung ke detail tugas yang dituju. Gunakan account approver yang ditugaskan; link tidak menghilangkan pemeriksaan identitas dan izin tugas.
+## Tinjauan approver
+Buka **My Works → My Approvals**. Tab **Form** menampilkan isian pengajuan dan komentar. Tab **Documents** memisahkan dokumen tanda tangan dan pendukung; anotasi berada di samping preview. Tab perubahan membantu membandingkan revisi bila tersedia; **Activity** memuat riwayat tindakan.
 
-## Bila Need revision
-1. Requester membuka notifikasi atau detail request yang sama.
-2. Baca alasan revisi, catatan dan anotasi approver pada dokumen terkait.
-3. Perbaiki field/lampiran yang diizinkan. Penggantian dokumen dapat memerlukan pengaturan sign ulang.
-4. Simpan bila perlu, tinjau data terbaru, lalu **Resubmit**.
-5. Proses mengikuti rute Revision/Loop yang dikonfigurasi, bukan mengulang semua node secara otomatis.
+Periksa dokumen, lengkapi field Anda, dan centang konfirmasi sebelum signing. Komentar atau anotasi saja tidak menyetujui pengajuan. **Approve**, **Reject**, dan **Request Revision** adalah tindakan keputusan yang terpisah.
 
-Batas revisi yang habis tidak mengubah data menjadi Approved. Tindakan final mengikuti kebijakan dan keputusan yang sah. Request Rejected final memerlukan pengajuan baru bila organisasi ingin memulai lagi.
+## Revisi
+1. Buka request yang sama saat statusnya membutuhkan revisi.
+2. Baca alasan dan anotasi, lalu perbaiki data/lampiran yang diizinkan.
+3. Siapkan ulang dokumen yang berubah bila diperlukan.
+4. Tinjau versi terbaru dan pilih **Resubmit**.
 
-## Sesudah Approved
-Finish Approved merekam hasil approval. Jika terdapat kewajiban signing yang dikonfigurasi, pantau statusnya terpisah. Approved bukan pembayaran vendor, Signed seluruh paket, atau eksekusi sistem eksternal.
+Proses mengikuti jalur Revision/Loop dan batas revisi yang dirancang. Rejected final tidak otomatis membuka edit.
+
+## Setelah approval
+Approval Approved tidak berarti tindak lanjut operasional atau pembayaran telah selesai. Lihat Operation Task dan data hasilnya jika workflow menggunakannya. Pengajuan selesai dapat diekspor ke PDF berisi data form, status yang disorot, dokumen yang ditandatangani dan halaman validasi DekaSign.

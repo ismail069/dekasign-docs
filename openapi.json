@@ -1,14 +1,14 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "DekaSign sandbox and session API",
-    "version": "2026-10-20",
-    "description": "Management endpoints are sandbox-only and may return SANDBOX_API_DISABLED on production hosts. Template authoring and human approval decisions are not machine-key APIs. Session routes are separately authenticated. Responses are intentionally extensible; narrative guides document key fields. This specification does not grant access or enable feature flags."
+    "title": "DekaSign integration and session API",
+    "version": "2026-10-28",
+    "description": "Production APIs require an active paid plan, Production app/key, allowed scopes and enabled capabilities. Some design-management operations remain sandbox-only. Template authoring and human approval decisions are not delegated to API keys. Session routes use separate identity. This specification grants no access or capability activation."
   },
   "servers": [
     {
       "url": "https://{workspace}.dekasign.com",
-      "description": "Use the authorized sandbox workspace supplied by your administrator.",
+      "description": "Use the organization workspace authorized for your integration app.",
       "variables": {
         "workspace": {
           "default": "your-workspace"
@@ -24,10 +24,13 @@
         "tags": [
           "categories"
         ],
-        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: catalog:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -38,7 +41,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -266,10 +270,13 @@
         "tags": [
           "categories"
         ],
-        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: catalog:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -289,7 +296,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -341,10 +349,13 @@
         "tags": [
           "request-templates"
         ],
-        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: catalog:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -355,7 +366,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -475,10 +487,13 @@
         "tags": [
           "request-templates"
         ],
-        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: catalog:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -498,7 +513,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -550,10 +566,13 @@
         "tags": [
           "approval-workflows"
         ],
-        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: catalog:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -564,7 +583,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -705,10 +725,13 @@
         "tags": [
           "approval-workflows"
         ],
-        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: catalog:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -728,7 +751,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -780,10 +804,13 @@
         "tags": [
           "request-forms"
         ],
-        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: catalog:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -794,7 +821,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -935,10 +963,13 @@
         "tags": [
           "request-forms"
         ],
-        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: catalog:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -958,7 +989,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -1010,10 +1042,13 @@
         "tags": [
           "document-sign-templates"
         ],
-        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: catalog:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -1024,7 +1059,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -1144,10 +1180,13 @@
         "tags": [
           "document-sign-templates"
         ],
-        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: catalog:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -1167,7 +1206,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -1540,10 +1580,13 @@
         "tags": [
           "approval-workflows"
         ],
-        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: catalog:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -1572,7 +1615,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -1667,10 +1711,13 @@
         "tags": [
           "document-sign-templates"
         ],
-        "description": "Required scope: catalog:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: catalog:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -1690,7 +1737,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -1749,10 +1797,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Required scope: requests:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: requests:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -1763,7 +1814,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -1888,10 +1940,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Required scope: requests:create. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: requests:create. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -1902,7 +1957,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -1965,7 +2021,8 @@
                     "environment": {
                       "type": "string",
                       "enum": [
-                        "sandbox"
+                        "sandbox",
+                        "production"
                       ]
                     },
                     "document_approval_mode": {
@@ -2117,10 +2174,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Required scope: documents:write. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: documents:write. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2131,7 +2191,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -2182,7 +2243,8 @@
                     "environment": {
                       "type": "string",
                       "enum": [
-                        "sandbox"
+                        "sandbox",
+                        "production"
                       ]
                     },
                     "signed": {
@@ -2376,10 +2438,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Required scope: documents:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: documents:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2399,7 +2464,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -2451,10 +2517,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Required scope: requests:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: requests:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2474,7 +2543,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -2526,10 +2596,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Required scope: requests:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: requests:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2549,7 +2622,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -2601,10 +2675,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Required scope: requests:revise. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: requests:revise. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2624,7 +2701,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -2772,10 +2850,13 @@
         "tags": [
           "approval-requests"
         ],
-        "description": "Required scope: requests:revise. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: requests:revise. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2795,7 +2876,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -2943,10 +3025,13 @@
         "tags": [
           "documents"
         ],
-        "description": "Required scope: documents:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: documents:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -2957,7 +3042,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -3079,6 +3165,9 @@
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -3089,7 +3178,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -3180,10 +3270,13 @@
         "tags": [
           "documents"
         ],
-        "description": "Required scope: documents:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: documents:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -3203,7 +3296,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -3926,10 +4020,13 @@
         "tags": [
           "signature-packages"
         ],
-        "description": "Required scope: packages:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: packages:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -3940,7 +4037,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -4072,10 +4170,13 @@
         "tags": [
           "signature-packages"
         ],
-        "description": "Required scope: packages:create. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: packages:create. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -4086,7 +4187,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           },
@@ -4135,7 +4237,8 @@
                     "environment": {
                       "type": "string",
                       "enum": [
-                        "sandbox"
+                        "sandbox",
+                        "production"
                       ]
                     },
                     "integrity_profile": {
@@ -4215,10 +4318,13 @@
         "tags": [
           "signature-packages"
         ],
-        "description": "Required scope: packages:read. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: packages:read. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -4238,7 +4344,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -4342,10 +4449,13 @@
         "tags": [
           "signature-packages"
         ],
-        "description": "Required scope: packages:create. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: packages:create. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -4356,7 +4466,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -4554,6 +4665,12 @@
                       ],
                       "additionalProperties": false
                     }
+                  },
+                  "lookup_token": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 450000,
+                    "description": "Secret receipt from data-fetch, required when the template uses API Data Source."
                   }
                 },
                 "required": [
@@ -4575,10 +4692,13 @@
         "tags": [
           "signature-packages"
         ],
-        "description": "Required scope: packages:create. Sandbox only; app allowlists and requester authority also apply.",
+        "description": "Required scope: packages:create. Sandbox and supported Production configurations; app allowlists, mapped requester authority and active paid coverage apply. Production availability is checked per operation.",
         "security": [
           {
             "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
           }
         ],
         "parameters": [
@@ -4589,7 +4709,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "sandbox"
+                "sandbox",
+                "production"
               ]
             }
           }
@@ -5267,6 +5388,716 @@
         },
         "deprecated": true
       }
+    },
+    "/api/v1/approval-requests/{id}/history": {
+      "get": {
+        "operationId": "get_approval_requests_id_history",
+        "summary": "Read visited approval history",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Returns the request status, revision, visited steps and remaining-layer estimate without form values. Current app, requester and request-scope authorization still applies.",
+        "security": [
+          {
+            "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox",
+                "production"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "environment": {
+                      "type": "string",
+                      "enum": [
+                        "sandbox",
+                        "production"
+                      ]
+                    },
+                    "approval_status": {
+                      "type": "string"
+                    },
+                    "request_revision": {
+                      "type": "integer"
+                    },
+                    "visited_approval_steps": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "node_id": {
+                            "type": "string"
+                          },
+                          "request_revision": {
+                            "type": "integer"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "opened_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "closed_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
+                          },
+                          "sla_due_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
+                          },
+                          "decisions": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "action": {
+                                  "type": "string"
+                                },
+                                "comment": {
+                                  "type": "string",
+                                  "nullable": true
+                                },
+                                "actor_name": {
+                                  "type": "string"
+                                },
+                                "decided_at": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                }
+                              },
+                              "required": [
+                                "action",
+                                "comment",
+                                "actor_name",
+                                "decided_at"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "node_id",
+                          "request_revision",
+                          "status",
+                          "opened_at",
+                          "closed_at",
+                          "sla_due_at",
+                          "decisions"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "remaining_approval_layers": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "known": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "count",
+                        "known"
+                      ],
+                      "additionalProperties": false,
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "environment",
+                    "approval_status",
+                    "request_revision",
+                    "visited_approval_steps",
+                    "remaining_approval_layers"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Result not ready, integrity failure, changed version, or unavailable data-source configuration."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Environment capability disabled or service temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "requests:read"
+      }
+    },
+    "/api/v1/approval-requests/{id}/final-documents": {
+      "get": {
+        "operationId": "get_approval_requests_id_final_documents",
+        "summary": "List final request documents",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Production only. Requires requests:read and documents:read with current requester/document authority. Approval completion and generated-output readiness are separate: pending/failed results return an empty documents array. Lists filenames, artifact IDs and integrity metadata, never storage URLs.",
+        "security": [
+          {
+            "ProductionBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "production"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "request_id": {
+                      "type": "string"
+                    },
+                    "request_revision": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ready",
+                        "failed",
+                        "pending"
+                      ]
+                    },
+                    "documents": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "digest": {
+                            "type": "string",
+                            "pattern": "^[a-f0-9]{64}$"
+                          },
+                          "size_bytes": {
+                            "type": "integer",
+                            "minimum": 1
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "digest",
+                          "size_bytes"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "request_id",
+                    "request_revision",
+                    "status",
+                    "documents"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Result not ready, integrity failure, changed version, or unavailable data-source configuration."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Environment capability disabled or service temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "documents:read"
+      }
+    },
+    "/api/v1/approval-requests/{id}/final-documents/{artifact}/content": {
+      "get": {
+        "operationId": "get_approval_requests_id_final_documents_artifact_content",
+        "summary": "Download final request PDF",
+        "tags": [
+          "approval-requests"
+        ],
+        "description": "Production only. Requires requests:read and documents:read. Rechecks current scope, custody and final artifact integrity before serving PDF bytes. Pending/failed finalization returns 409; inaccessible artifacts return 404. Serving bytes does not prove reading.",
+        "security": [
+          {
+            "ProductionBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "artifact",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "production"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized result.",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Result not ready, integrity failure, changed version, or unavailable data-source configuration."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Environment capability disabled or service temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "documents:read"
+      }
+    },
+    "/api/v1/documents/{id}/content": {
+      "get": {
+        "operationId": "get_documents_id_content",
+        "summary": "Read uploaded production PDF",
+        "tags": [
+          "documents"
+        ],
+        "description": "Production only. Reads the authorized supporting PDF uploaded by this integration app for its mapped requester. Current private-document permission and immutable upload proof are required; content is reauthorized after loading. This is source content, not a final signed PDF.",
+        "security": [
+          {
+            "ProductionBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "production"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized result.",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Result not ready, integrity failure, changed version, or unavailable data-source configuration."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Environment capability disabled or service temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "documents:read"
+      }
+    },
+    "/api/v1/signature-packages/{id}/document": {
+      "get": {
+        "operationId": "get_signature_packages_id_document",
+        "summary": "Download completed signing PDF",
+        "tags": [
+          "signature-packages"
+        ],
+        "description": "Requires a COMPLETED package within the app and mapped user private/custody scope. Returns FINAL_DOCUMENT_NOT_READY (409) before completion; a changed document returns DOCUMENT_CHANGED (409). Production reads require the retained production package proof.",
+        "security": [
+          {
+            "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            "description": "Workspace-scoped identifier."
+          },
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox",
+                "production"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized result.",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Result not ready, integrity failure, changed version, or unavailable data-source configuration."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Environment capability disabled or service temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "packages:read"
+      }
+    },
+    "/api/v1/signature-packages/data-fetch": {
+      "post": {
+        "operationId": "post_signature_packages_data_fetch",
+        "summary": "Fetch mapped signing data",
+        "tags": [
+          "signature-packages"
+        ],
+        "description": "Fetches the saved, tested template API Data Source without exposing its credentials. Body limit is 20,000 bytes, with up to 20 named lookup parameters. No invitation or signing package is created. Pass lookup_token to the signing preview within 10 minutes. Production returns only mapped supported variables and requires enabled data-source capability and current paid app authority.",
+        "security": [
+          {
+            "SandboxBearer": []
+          },
+          {
+            "ProductionBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Dekasign-Environment",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sandbox",
+                "production"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "template_id": {
+                      "type": "string"
+                    },
+                    "template_version_id": {
+                      "type": "string"
+                    },
+                    "lookup_token": {
+                      "type": "string",
+                      "description": "Secret lookup receipt, bound to the issuing integration key; expires after 10 minutes. Do not log."
+                    },
+                    "valid_until": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "variables": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "template_id",
+                    "template_version_id",
+                    "lookup_token",
+                    "valid_until",
+                    "variables"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or layout."
+          },
+          "401": {
+            "description": "Invalid or expired credential/session."
+          },
+          "403": {
+            "description": "Scope, environment, tenant or authority denied."
+          },
+          "404": {
+            "description": "Not found or outside app scope."
+          },
+          "409": {
+            "description": "Result not ready, integrity failure, changed version, or unavailable data-source configuration."
+          },
+          "422": {
+            "description": "Invalid schema or required idempotency key."
+          },
+          "429": {
+            "description": "Rate limited."
+          },
+          "503": {
+            "description": "Environment capability disabled or service temporarily unavailable."
+          }
+        },
+        "x-dekasign-scope": "packages:create",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "template_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "parameters": {
+                    "type": "object",
+                    "maxProperties": 20,
+                    "additionalProperties": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 500
+                    },
+                    "description": "Names start with a letter, followed by letters/numbers/underscores, up to 64 characters. Use an empty object when no parameters are configured.",
+                    "default": {}
+                  }
+                },
+                "required": [
+                  "template_id"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -5275,6 +6106,11 @@
         "type": "http",
         "scheme": "bearer",
         "description": "Sandbox dks_test_ key, server-side only."
+      },
+      "ProductionBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Production dks_live_ key, server-side only."
       }
     }
   }
