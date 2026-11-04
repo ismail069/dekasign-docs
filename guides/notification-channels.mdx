@@ -44,7 +44,7 @@ Owner membuka **Management → Notification channels → Add channel**, lalu mem
 **Test & get templates** hanya membaca katalog dan detail. Respons HTTP 200 memverifikasi akses API; langkah ini tidak mengirim pesan dan tidak membuktikan pesan sampai atau dibaca. Provider mempunyai biaya, kuota, serta persetujuan template sendiri.
 </Note>
 
-WatZap belum menyediakan alur template terpandu dalam DekaSign. Halaman provider menjelaskan keterbatasannya. Anda dapat memakai **Custom API** jika API provider yang diperlukan terdokumentasi. Channel lama tetap tersedia; periksa ulang sebelum menggunakannya pada rancangan baru.
+Kanal WhatsApp terpandu tersedia untuk Convia, Wati dan Bird. Untuk provider lain, gunakan **Custom API** bila endpoint dan format pesan didukung.
 
 ## Parameter dan media WhatsApp
 
@@ -92,3 +92,7 @@ Ini berbeda dari API Data Source yang mengambil data dokumen dan event webhook y
 
 ## Memantau
 Gunakan **Delivery logs** untuk status, retry dan error yang disamarkan. Periksa alamat, izin provider, template dan kuota bila gagal. Jangan mengirim ulang secara manual tanpa mengecek deduplikasi.
+
+## Slack
+
+Hubungkan workspace Slack di **Management → Integrations**. Kartu Slack tampil di Notification channels setelah terhubung. Anggota mengonfirmasi akun melalui DM sebelum menerima notifikasi kerja. [Panduan Slack](/guides/slack)

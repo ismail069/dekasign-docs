@@ -2,18 +2,20 @@
 title: "Dokumentasi DekaSign"
 description: "Panduan aplikasi, pengaturan organisasi, approval, dokumen, dan API."
 ---
-DekaSign menghubungkan formulir, pengajuan, pemeriksaan, revisi, dan tanda tangan dokumen. Mulai dari panduan yang sesuai dengan peran Anda.
+DekaSign menghubungkan formulir, pengajuan, pemeriksaan, revisi, tanda tangan, kontrak, dan tindak lanjut pekerjaan. Mulai dari panduan yang sesuai dengan peran Anda.
 
 <CardGroup cols={2}>
   <Card title="Mulai menggunakan" icon="flag" href="/quickstart">Login, onboarding, dan urutan pengaturan.</Card>
   <Card title="Form & workflow" icon="diagram-project" href="/guides/approval-workflows">Desain alur serial, Rule, SLA, dan revisi.</Card>
   <Card title="Document Sign" icon="signature" href="/guides/document-sign">Template PDF, field, penerima, preview, dan Send.</Card>
   <Card title="API Developers" icon="code" href="/api-reference/overview">Katalog endpoint, sandbox, dan webhook.</Card>
+  <Card title="Kelola kontrak" icon="file-contract" href="/guides/contract-lifecycle">Daftar kontrak, pengingat, dan renewal.</Card>
+  <Card title="Contoh proses" icon="list-check" href="/guides/use-cases">Pilih satu alur untuk uji coba tim Anda.</Card>
 </CardGroup>
 
-<Warning>
-Dokumentasi tidak mengaktifkan fitur. API manajemen masih sandbox. SSO, grup paralel ALL/ANY dan penerimaan baru Actor approval eksternal belum aktif untuk produksi. Native Document Sign menggunakan integritas internal DekaSign, bukan segel bersertifikat.
-</Warning>
+<Note>
+Akses fitur mengikuti role, kategori, paket, dan konfigurasi workspace. Untuk integrasi API, periksa operasi yang didukung pada lingkungan yang Anda gunakan. [Ketersediaan fitur](/guides/availability)
+</Note>
 
 ## Istilah utama
 **Organisasi/workspace** adalah batas keanggotaan dan data. **Kategori** mengelompokkan kewenangan dan pengajuan. **Form template** menentukan struktur data. **Workflow release** menentukan versi alur yang dipakai request baru. **Request** adalah proses approval. **Signing package** melacak kewajiban setiap penerima dokumen.

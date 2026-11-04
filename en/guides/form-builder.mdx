@@ -23,3 +23,9 @@ Configure mandatory/optional default documents, static values, manual requester 
 
 ## From form to request
 Save the form, select it in Workflow Engines, check routing, Validate/test Sandbox and Publish. Then create a Request Form Template from the published workflow and grant requester category/form access. Editing the form does not change pinned versions on running requests.
+
+## Calculate form and table values
+
+For supported numeric fields or columns, enter a formula such as `[quantity] * [price]` for a subtotal. Use stable field or column keys. Use SUM to total a table column. Calculated values are shown as results and recalculated when submitted. Test empty values, rounding, and division by zero before publishing. When importing CSV, fill the input columns and let the system calculate the results.
+
+For a simple workflow using the form, follow the [Workflow Wizard](/en/guides/workflow-wizard).

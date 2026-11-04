@@ -4,6 +4,7 @@ import fs from "node:fs";
 // paths, field names, enum values, examples and schema constraints stay stable.
 const source = JSON.parse(fs.readFileSync("openapi.json", "utf8"));
 const translations = {
+  "Sandbox only. In Production, omit this field and use the REST webhook configured on the published workflow.":"Khusus Sandbox. Di Production, hilangkan field ini dan gunakan webhook REST pada workflow yang dipublikasikan.",
   "DekaSign sandbox and session API":"API sandbox dan sesi DekaSign",
   "Management endpoints are sandbox-only and may return SANDBOX_API_DISABLED on production hosts. Template authoring and human approval decisions are not machine-key APIs. Session routes are separately authenticated. Responses are intentionally extensible; narrative guides document key fields. This specification does not grant access or enable feature flags.":"Endpoint manajemen hanya untuk sandbox dan dapat mengembalikan SANDBOX_API_DISABLED pada host produksi. Desain template dan keputusan manusia bukan API machine-key. Rute sesi memakai autentikasi terpisah. Respons dapat diperluas; panduan menjelaskan field penting. Spesifikasi ini tidak memberikan akses atau mengaktifkan fitur.",
   "Use the authorized sandbox workspace supplied by your administrator.":"Gunakan workspace sandbox berwenang yang diberikan administrator.",

@@ -1,0 +1,14 @@
+---
+title: "Hubungkan n8n"
+description: "Gunakan starter DekaSign pada instance n8n milik Anda."
+---
+
+Gunakan integrasi ini untuk mengirim pengajuan dari sistem lain dan menerima perubahan status melalui webhook. Anda memerlukan instance n8n yang dapat dikelola dan diuji.
+
+1. Di **Settings → API Key workspace**, buat Application yang mengizinkan requester, kategori dan workflow yang dipilih. Buat key pada lingkungan yang sama. Scope awal mencakup `catalog:read`, `requests:create` dan `requests:read`.
+2. Buka **Management → Integrations → n8n**. Pilih Application dan unduh starter pembaca schema, submit request scalar, dan receiver event.
+3. Impor starter ke n8n. Simpan key pada credential n8n dan petakan field sesuai schema versi workflow. Gunakan ID sumber stabil sebagai dasar idempotency. Starter scalar menangani field biasa. Siapkan mapping terpisah bila workflow membutuhkan file atau signing.
+4. Atur tujuan dan autentikasi webhook pada Canvas, uji lalu publikasikan. Simpan event di inbox sebelum memberi respons sukses. Tangani retry dan event duplikat.
+5. Jalankan percobaan dari awal hingga perubahan sistem tujuan tercatat. Aktifkan workflow setelah mapping, izin dan hasil benar.
+
+Lihat [autentikasi API](/api-reference/authentication) dan [outgoing webhooks](/integrations/outgoing-webhooks).

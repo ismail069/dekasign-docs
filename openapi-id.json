@@ -2147,7 +2147,8 @@
                   "report_endpoint_id": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 150
+                    "maxLength": 150,
+                    "description": "Khusus Sandbox. Di Production, hilangkan field ini dan gunakan webhook REST pada workflow yang dipublikasikan."
                   },
                   "submit": {
                     "type": "boolean",

@@ -3,7 +3,7 @@ title: "Authentication dan idempotency"
 description: "Key server-side, scope dan retry aman."
 ---
 
-Owner mengelola key di **Settings → Workspace API keys** atau integration app. Pilih requester aktif, scope, allowlist kategori/template dan expiry minimum. Simpan key di secret manager server, bukan frontend, URL, Git, screenshot atau log.
+Di **Settings → API Key workspace → API Access**, pilih lingkungan. Buka **Applications → Create application** untuk mengatur requester, kategori, workflow, dan scope. Setelah ada Application aktif pada lingkungan itu, buka **API key → Create API key**, pilih Application, dan atur masa berlaku. Salin key saat ditampilkan dan simpan di secret manager server. **Access activity** membantu meninjau pemakaian.
 
 ```http
 Authorization: Bearer <sandbox-api-key>

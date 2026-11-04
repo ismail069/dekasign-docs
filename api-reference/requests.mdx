@@ -23,7 +23,7 @@ Untuk PDF unggahan biasa, `sign_actor_ids` opsional, hanya menunjuk Actor intern
 
 Pada implementasi terbaru, server menyimpan template persiapan digital-only yang terikat pada file dan Actor yang diminta sebelum binding pengajuan. Persiapan ini bukan consent atau bukti tanda tangan; approver tetap harus memverifikasi identitas dan meninjau dokumen. Editor form UI mempunyai alur terpisah [Save & attach to form](/guides/workflow-signing).
 
-Untuk hasil melalui webhook, `report_endpoint_id` opsional memilih endpoint terdaftar yang aktif dan diizinkan untuk app/workflow tersebut. Jika dihilangkan, default app tetap berlaku. App `get_only` tidak dapat diubah menjadi webhook lewat parameter ini. URL bebas seperti `reportURL` tidak diterima. Lihat [outgoing webhooks](/integrations/outgoing-webhooks).
+Di **Sandbox**, `report_endpoint_id` dapat memilih endpoint app terdaftar yang diizinkan. Menghilangkannya memakai default app. Di **Production**, jangan kirim field ini. Gunakan webhook REST yang dikonfigurasi dan dipublikasikan pada workflow. Label **GET only** menunjukkan akses hasil melalui polling. POST submit tetap mengikuti scope dan kapabilitas Application. [Outgoing webhooks](/integrations/outgoing-webhooks)
 
 ## Siapkan dokumen berbasis template
 

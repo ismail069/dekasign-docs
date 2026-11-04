@@ -1,0 +1,14 @@
+---
+title: "Impor karyawan dari HRIS atau ERP"
+description: "Ambil data karyawan, periksa pemetaan, dan pilih siapa yang diimpor."
+---
+
+Sebagai Owner, buka **Management → Integrations → HRIS/ERP** atau **Import employees** di User management. Siapkan endpoint HTTPS dan akses API dari pengelola HRIS/ERP.
+
+1. **Hubungkan sumber.** Tetapkan ID sumber yang stabil. Masukkan endpoint serta autentikasi yang disediakan, lalu uji koneksi.
+2. **Pilih daftar karyawan.** Tentukan lokasi array pada respons dan aturan pagination.
+3. **Petakan data dan akses.** Pilih ID karyawan, nama, email, dan atribut yang diperlukan. Gunakan ID string dari sumber. Pilih role, Access Profile atau queue yang tersedia.
+4. **Tinjau preview.** Periksa undangan, penautan anggota, pembaruan, dan konflik. Pilih baris yang diinginkan sebelum mengonfirmasi.
+5. **Periksa hasil.** Karyawan baru menerima undangan dan tetap mengikuti verifikasi akun. Konflik identitas atau preview lama memerlukan tinjauan baru.
+
+Jabatan dan departemen dari sumber adalah metadata. Pilih grant DekaSign secara eksplisit. Perubahan status pegawai atau Direct Manager ditinjau melalui proses organisasi. [Akun dan role](/guides/accounts-and-roles)

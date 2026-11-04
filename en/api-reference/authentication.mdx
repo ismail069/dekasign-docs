@@ -2,7 +2,7 @@
 title: "Authentication and idempotency"
 description: "Server-side keys, minimum scopes, and safe retries."
 ---
-The Owner manages keys in **Settings → Workspace API keys** or the integration app. Select an active mapped requester, minimum scopes, category/template allowlists, and the shortest appropriate expiry. Store keys in a server secret manager, not frontend code, URLs, Git, screenshots, or logs.
+In **Settings → API Key workspace → API Access**, choose an environment. Use **Applications → Create application** to configure the requester, categories, workflows, and scopes. After an active Application exists in that environment, open **API key → Create API key**, select the Application, and set expiry. Copy the key when shown and store it in your server's secret manager. Review usage in **Access activity**.
 
 ```http
 Authorization: Bearer <sandbox-api-key>
