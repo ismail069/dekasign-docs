@@ -45,7 +45,7 @@ As Owner, open **Management → Notification channels → Add channel**, then ch
 **Test & get templates** only reads the catalog and details. HTTP 200 verifies API access; it sends no message and does not prove delivery or reading. Your provider sets its own fees, quotas, and template approval rules.
 </Note>
 
-WatZap does not currently offer guided template setup in DekaSign. Its provider screen explains this limitation. Use **Custom API** when the provider documents the API you need. Existing channels remain available; review them before using them in new designs.
+Guided WhatsApp setup covers Convia, Wati, and Bird. For another provider, use **Custom API** when its endpoint and message format are supported.
 
 ## WhatsApp parameters and media
 
@@ -93,3 +93,7 @@ This differs from document API Data Source lookups and workflow event webhooks. 
 
 ## Monitor deliveries
 Use **Delivery logs** to inspect status, retries, and redacted errors. Check destinations, provider permissions, templates, and quotas on failure. Check deduplication before manually resending.
+
+## Slack
+
+Connect Slack in **Management → Integrations**. The Slack card appears in Notification channels once connected. Members confirm their accounts by DM before receiving work notifications. [Slack guide](/en/guides/slack)

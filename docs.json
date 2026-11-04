@@ -43,7 +43,8 @@
                   "guides/owner-setup",
                   "guides/accounts-and-roles",
                   "guides/settings",
-                  "guides/availability"
+                  "guides/availability",
+                  "guides/use-cases"
                 ]
               },
               {
@@ -51,7 +52,8 @@
                 "pages": [
                   "guides/organization-hierarchy",
                   "guides/access-profiles",
-                  "guides/owner-reports"
+                  "guides/owner-reports",
+                  "guides/billing"
                 ]
               },
               {
@@ -67,6 +69,7 @@
                   "guides/categories-and-forms",
                   "guides/form-builder",
                   "guides/table-csv",
+                  "guides/workflow-wizard",
                   "guides/approval-workflows",
                   "guides/request-form-templates",
                   "guides/sandbox",
@@ -76,13 +79,15 @@
                 ]
               },
               {
-                "group": "Document Sign",
+                "group": "Dokumen dan kontrak",
                 "pages": [
                   "guides/document-sign",
                   "guides/my-signature",
                   "guides/verify-document",
                   "guides/document-data",
-                  "guides/secure-sharing"
+                  "guides/secure-sharing",
+                  "guides/my-documents",
+                  "guides/contract-lifecycle"
                 ]
               },
               {
@@ -90,7 +95,17 @@
                 "pages": [
                   "guides/my-projects",
                   "guides/operation-tasks",
-                  "guides/operations"
+                  "guides/operations",
+                  "guides/team-queue-report"
+                ]
+              },
+              {
+                "group": "Koneksi layanan",
+                "pages": [
+                  "guides/google-drive",
+                  "guides/google-calendar",
+                  "guides/slack",
+                  "guides/employee-import"
                 ]
               }
             ]
@@ -114,7 +129,8 @@
               {
                 "group": "Integrasi",
                 "pages": [
-                  "integrations/outgoing-webhooks"
+                  "integrations/outgoing-webhooks",
+                  "integrations/n8n"
                 ]
               },
               {
@@ -156,7 +172,8 @@
                   "en/guides/owner-setup",
                   "en/guides/accounts-and-roles",
                   "en/guides/settings",
-                  "en/guides/availability"
+                  "en/guides/availability",
+                  "en/guides/use-cases"
                 ]
               },
               {
@@ -164,7 +181,8 @@
                 "pages": [
                   "en/guides/organization-hierarchy",
                   "en/guides/access-profiles",
-                  "en/guides/owner-reports"
+                  "en/guides/owner-reports",
+                  "en/guides/billing"
                 ]
               },
               {
@@ -180,6 +198,7 @@
                   "en/guides/categories-and-forms",
                   "en/guides/form-builder",
                   "en/guides/table-csv",
+                  "en/guides/workflow-wizard",
                   "en/guides/approval-workflows",
                   "en/guides/request-form-templates",
                   "en/guides/sandbox",
@@ -189,13 +208,15 @@
                 ]
               },
               {
-                "group": "Document Sign",
+                "group": "Documents and contracts",
                 "pages": [
                   "en/guides/document-sign",
                   "en/guides/my-signature",
                   "en/guides/verify-document",
                   "en/guides/document-data",
-                  "en/guides/secure-sharing"
+                  "en/guides/secure-sharing",
+                  "en/guides/my-documents",
+                  "en/guides/contract-lifecycle"
                 ]
               },
               {
@@ -203,7 +224,17 @@
                 "pages": [
                   "en/guides/my-projects",
                   "en/guides/operation-tasks",
-                  "en/guides/operations"
+                  "en/guides/operations",
+                  "en/guides/team-queue-report"
+                ]
+              },
+              {
+                "group": "Connections",
+                "pages": [
+                  "en/guides/google-drive",
+                  "en/guides/google-calendar",
+                  "en/guides/slack",
+                  "en/guides/employee-import"
                 ]
               }
             ]
@@ -227,7 +258,8 @@
               {
                 "group": "Integrations",
                 "pages": [
-                  "en/integrations/outgoing-webhooks"
+                  "en/integrations/outgoing-webhooks",
+                  "en/integrations/n8n"
                 ]
               },
               {

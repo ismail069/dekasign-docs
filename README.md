@@ -4,7 +4,7 @@ Public user guides and developer reference for https://docs.dekasign.com, mainta
 
 ## Current guide coverage
 
-The site has paired Indonesian and English content. Indonesian is the default and keeps root URLs; English pages use `/en/...`. Navigation currently contains 37 authored pages per language. Each language has its own navbar labels and endpoint-reference directory. Product names and technical identifiers remain in English where required by the product.
+The site has paired Indonesian and English content. Indonesian is the default and keeps root URLs; English pages use `/en/...`. Navigation currently contains 48 authored pages per language. Each language has its own navbar labels and endpoint-reference directory. Product names and technical identifiers remain in English where required by the product.
 
 - **Owner setup:** organization settings and timezone, categories, inviting another approver, category/form permissions, Form Builder, published workflow, Request Form Template, Sandbox and first submission. Self-approval remains prohibited.
 - **Organization management:** Organization Hierarchy with table/full diagram, Direct Manager, Access Profiles and Owner Reports.
@@ -46,7 +46,7 @@ No secret, API token, OTP, production customer file or private signing URL belon
 
 Support links use `support@dekasign.com`. General and sales inquiries use `halo@dekasign.com`. Legal content remains in the application at https://dekasign.com/id/privacy and https://dekasign.com/id/terms; these guides do not replace those policies.
 
-Review application changes before publishing their documentation. A documentation push does not deploy the application, apply its database changes, activate an integration or establish successful production acceptance. Google Drive, OneDrive, n8n and expanded SSO remain separate from the core documentation work unless explicitly resumed.
+Review application changes before publishing their documentation. A documentation push does not deploy the application, apply its database changes, activate an integration or establish successful production acceptance. Integration guides cover personal and organization Google Drive, organization Google Calendar and manual ICS, Slack, HRIS/ERP import, and customer-managed n8n.
 
 ## Historical acceptance receipts
 

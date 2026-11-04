@@ -3,7 +3,7 @@ title: "Feature availability"
 description: "Understand permissions, configuration, and integration boundaries."
 ---
 ## Application features
-Guides cover Form Builder, Categories, Request Form Templates, Workflow Canvas, serial/parallel ALL/ANY approval, external Actors, revisions, delegation, Document Sign, Secure Document Sharing, My Signature, Organization Hierarchy, Access Profiles, Operation Task, My Projects, and Owner Reports.
+Guides cover Form Builder, Categories, Request Form Templates, Workflow Canvas, serial/parallel ALL/ANY approval, external Actors, revisions, delegation, Document Sign, Secure Document Sharing, My Signature, Organization Hierarchy, Access Profiles, Operation Task, My Projects, Contract Lifecycle, Workflow Wizard, Owner Reports, and the Team Queue report.
 
 Actions depend on roles, categories, document permissions, subscription status, and workflow version. A sample design does not grant access to another user's data. Check readiness with the [Owner setup guide](/en/guides/owner-setup).
 
@@ -12,8 +12,8 @@ Use Sandbox APIs for testing. Production APIs require an active paid plan, Produ
 
 Custom channels require provider credentials and a successful test. Accepted does not mean delivered/read. Payments activate capacity only after provider verification; a browser redirect alone is not evidence of payment.
 
-## Deferred integrations
-Google Drive, OneDrive, n8n, and expanded SSO are outside this core feature scope. Google login is separate from Google Drive storage integration.
+## Connections that require setup
+[Google Drive](/en/guides/google-drive), [organization Calendar](/en/guides/google-calendar), [Slack](/en/guides/slack), [HRIS/ERP import](/en/guides/employee-import), and [n8n](/en/integrations/n8n) require setup. Google sign-in, Drive, and Calendar use separate permissions. Check available enterprise SSO or other connectors with Support.
 
 DekaSign integrity evidence does not claim a certified electronic seal, third-party signer certificate, trusted timestamp, or external KYC verification. Choose a method appropriate to your transaction.
 

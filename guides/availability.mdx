@@ -3,7 +3,7 @@ title: "Ketersediaan fitur"
 description: "Pahami kewenangan, konfigurasi, dan batas integrasi."
 ---
 ## Fitur aplikasi
-Panduan mencakup Form Builder, Categories, Request Form Templates, Workflow Canvas, approval serial/paralel ALL/ANY, Actor eksternal, revisi, delegasi, Document Sign, Secure Document Sharing, My Signature, Organization Hierarchy, Access Profiles, Operation Task, My Projects, dan laporan Owner.
+Panduan mencakup Form Builder, Categories, Request Form Templates, Workflow Canvas, approval serial/paralel ALL/ANY, Actor eksternal, revisi, delegasi, Document Sign, Secure Document Sharing, My Signature, Organization Hierarchy, Access Profiles, Operation Task, My Projects, Contract Lifecycle, Workflow Wizard, dan laporan Owner serta Team Queue.
 
 Ketersediaan tindakan mengikuti role, kategori, izin dokumen, status langganan, serta versi workflow. Contoh desain tidak memberi akses ke data pengguna lain. Periksa setup melalui [panduan Owner](/guides/owner-setup).
 
@@ -12,8 +12,8 @@ API Sandbox digunakan untuk pengujian. API Production memerlukan paket berbayar 
 
 Channel custom membutuhkan kredensial provider dan test yang berhasil. Accepted tidak berarti delivered/read. Pembayaran aktif setelah hasil provider diverifikasi; halaman redirect saja bukan bukti pembayaran berhasil.
 
-## Integrasi yang ditunda
-Google Drive, OneDrive, n8n, dan perluasan SSO belum termasuk cakupan fitur inti ini. Google login berbeda dari integrasi penyimpanan Google Drive.
+## Koneksi yang perlu disiapkan
+[Google Drive](/guides/google-drive), [Calendar organisasi](/guides/google-calendar), [Slack](/guides/slack), [impor HRIS/ERP](/guides/employee-import), dan [n8n](/integrations/n8n) memerlukan setup sesuai kebutuhan. Google login, Drive, dan Calendar memiliki izin terpisah. Untuk kebutuhan SSO enterprise atau konektor lain, periksa cakupan yang tersedia dengan Support.
 
 Bukti integritas DekaSign tidak menyatakan segel elektronik bersertifikat, sertifikat signer pihak ketiga, trusted timestamp, atau verifikasi KYC eksternal. Pilih metode yang sesuai kebutuhan transaksi Anda.
 

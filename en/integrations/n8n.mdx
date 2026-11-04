@@ -1,0 +1,14 @@
+---
+title: "Connect n8n"
+description: "Use DekaSign starters on your own n8n instance."
+---
+
+Use this integration to submit requests from another system and receive status changes through webhooks. You need an n8n instance you can manage and test.
+
+1. In **Settings → API Key workspace**, create an Application that authorizes the requester, category, and workflow. Create a key for the same environment. Starter scopes include `catalog:read`, `requests:create`, and `requests:read`.
+2. Open **Management → Integrations → n8n**. Choose the Application and download the schema reader, scalar request submitter, and event receiver.
+3. Import the starters into n8n. Store the key in n8n credentials and map fields from the workflow version's schema. Use a stable source ID for idempotency. The scalar starter handles ordinary fields. Map files and signing separately when required.
+4. Configure and authenticate the webhook destination on the Canvas, test it, and publish. Store events in an inbox before acknowledging success. Handle retries and duplicate events.
+5. Test the entire flow through the change in the destination system. Enable the workflow after verifying mapping, permissions, and results.
+
+See [API authentication](/en/api-reference/authentication) and [outgoing webhooks](/en/integrations/outgoing-webhooks).

@@ -2,18 +2,20 @@
 title: "DekaSign documentation"
 description: "Guides to accounts, organizations, approvals, documents, and APIs."
 ---
-DekaSign connects forms, requests, reviews, revisions, and document signing. Start with the guide for your role.
+DekaSign connects forms, decisions, document signing, contracts, and follow-up work. Choose a guide for what you want to do.
 
 <CardGroup cols={2}>
   <Card title="Get started" icon="flag" href="/en/quickstart">Login, onboarding, and the setup sequence.</Card>
   <Card title="Forms and workflows" icon="diagram-project" href="/en/guides/approval-workflows">Serial flows, Rules, SLAs, and revisions.</Card>
   <Card title="Document Sign" icon="signature" href="/en/guides/document-sign">PDF templates, fields, recipients, preview, and sending.</Card>
   <Card title="API developers" icon="code" href="/en/api-reference/overview">Endpoints, sandbox access, and webhooks.</Card>
+  <Card title="Manage contracts" icon="file-contract" href="/en/guides/contract-lifecycle">Contract records, reminders, and renewals.</Card>
+  <Card title="Process examples" icon="list-check" href="/en/guides/use-cases">Choose a workflow for your team to pilot.</Card>
 </CardGroup>
 
-<Warning>
-Documentation does not enable features. Management APIs remain sandbox-only. SSO, parallel ALL/ANY groups, and new external approval Actor admission are not enabled for production. Native Document Sign uses internal DekaSign integrity evidence, not a certified electronic seal.
-</Warning>
+<Note>
+Feature access depends on roles, categories, plan, and workspace configuration. Check which API operations are supported in your environment. [Feature availability](/en/guides/availability)
+</Note>
 
 ## Key terms
 An **organization/workspace** defines membership and data boundaries. A **category** groups permissions and requests. A **form template** defines input structure. A **workflow release** pins the flow used for new requests. A **request** is an approval process. A **signing package** tracks each document recipient's obligations.

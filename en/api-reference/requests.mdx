@@ -22,7 +22,7 @@ For raw uploaded PDFs, optional `sign_actor_ids` may reference valid internal Ac
 
 In the latest implementation, the server saves digital-only preparation bound to the file and requested Actors before binding the submission. This is not consent or signature evidence; approvers must still verify identity and review the document. The form UI has a separate [Save & attach to form flow](/en/guides/workflow-signing).
 
-For webhook results, optional `report_endpoint_id` selects an active registered endpoint allowed for that app/workflow. Omitting it retains app defaults. It cannot change a `get_only` app to webhook mode. Arbitrary URLs such as `reportURL` are not accepted. See [outgoing webhooks](/en/integrations/outgoing-webhooks).
+In **Sandbox**, `report_endpoint_id` can select an allowed registered app endpoint. Omitting it uses the app default. In **Production**, omit this field and use the REST webhook configured and published on the workflow. **GET only** refers to polling results. POST submission still follows the Application's scopes and capabilities. [Outgoing webhooks](/en/integrations/outgoing-webhooks)
 
 ## Prepare a template-bound document
 

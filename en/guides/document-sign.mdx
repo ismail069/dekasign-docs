@@ -11,7 +11,7 @@ Use Signers and Field palette, select a field and configure Properties. Zoom, Fi
 ## Signature modes and value sources
 **Digital Only** records consent and signing evidence without a visible signature image. **Visual Signature** places a signature in the designed PDF area. Assign each slot/field to the correct recipient.
 
-Choose designer-fixed values, Sender inputs, recipient inputs or **API Data Source**. Text, multiline, numbers, checkboxes and date/place follow their field types. Fixed values are set in the editor; Sender values are prepared before sending.
+Choose designer-fixed values, Sender inputs, recipient inputs or **API Data Source**. Use text, multiline, number, checkbox, date/place, or **Dropdown** as appropriate. Fixed values are set in the editor; Sender values are prepared before sending.
 
 ## Save as template and sharing
 Every user can **Save as template** for personal reuse. Owner/Admin have a separate action to share templates with all or selected users. Template access does not authorize signing as a recipient.
@@ -22,8 +22,14 @@ Choose internal/external recipients, complete Sender values and set an expiry. D
 Preview the populated PDF, pages/fields, recipient names/emails and expiry, then confirm sending. Changed data/templates require a new preview. See [API Data Source](/en/guides/document-data).
 
 ## Recipients and outcomes
-Recipients open the invitation, verify their identity through the applicable flow, read the document, fill their fields and confirm consent. **Finish signing** is in the right panel below confirmation. To decline, enter a reason and choose Decline.
+Recipients open the invitation, verify their identity through the applicable flow, read the document, fill their fields and confirm consent. Use **Fields assigned to you** to open the page for each field. An asterisk marks a required field. Select **Finish signing** after completing the fields and consent. To decline, enter a reason and choose Decline.
 
 Internal users can use [My Signature](/en/guides/my-signature), QR Sign or manual drawing for visual signing. One Signed recipient does not mean the entire package is Completed.
 
 Track Active packages and Completed history. Final PDFs include DekaSign integrity evidence and can be checked through Verify document. This is not a claim of a certified electronic seal or third-party trusted timestamp. Share completed documents with authorized internal users, or add them to Secure Document Sharing for the required external sharing flow.
+
+## Date and dropdown fields
+
+For a **Date** field, configure date or date-and-place input in Properties. Recipients use the date control in the signing interface. For **Dropdown**, add unique choices in Properties, assign the recipient, and choose whether it is required. The recipient selects one available value. Use single-line choices with characters supported by the PDF font.
+
+For source uploads and copies, see [My Documents](/en/guides/my-documents). For agreement expiry reminders, use [Contract Lifecycle](/en/guides/contract-lifecycle).

@@ -2147,7 +2147,8 @@
                   "report_endpoint_id": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 150
+                    "maxLength": 150,
+                    "description": "Sandbox only. In Production, omit this field and use the REST webhook configured on the published workflow."
                   },
                   "submit": {
                     "type": "boolean",

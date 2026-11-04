@@ -11,7 +11,7 @@ Pada editor gunakan Signers dan Field palette, lalu pilih field untuk mengatur P
 ## Mode signature dan sumber nilai
 **Digital Only** merekam persetujuan dan bukti signing tanpa gambar tanda tangan. **Visual Signature** menempatkan signature di area PDF yang dirancang. Pastikan slot/field ditugaskan ke penerima yang benar.
 
-Pilih nilai tetap dari designer, input Sender, input penerima atau **API Data Source**. Text, multiline, angka, checkbox dan date/place mengikuti tipe field. Nilai tetap diatur di editor; nilai Sender disiapkan sebelum pengiriman.
+Pilih nilai tetap dari designer, input Sender, input penerima atau **API Data Source**. Gunakan text, multiline, angka, checkbox, tanggal/tempat, atau **Dropdown** sesuai kebutuhan field. Nilai tetap diatur di editor; nilai Sender disiapkan sebelum pengiriman.
 
 ## Save as template dan berbagi
 Setiap pengguna dapat **Save as template** untuk template pribadinya. Owner/Admin mempunyai tindakan berbagi template ke semua pengguna atau pengguna tertentu. Akses template tidak berarti dapat menandatangani atas nama penerima.
@@ -22,8 +22,14 @@ Pilih penerima internal atau eksternal, isi data Sender dan batas waktu. Default
 Buka preview PDF terisi, periksa halaman/field, nama/email penerima dan expiry, lalu konfirmasi pengiriman. Perubahan data/template memerlukan preview baru. Lihat [API Data Source](/guides/document-data).
 
 ## Penerima dan hasil
-Penerima membuka undangan, memverifikasi identitas sesuai alur, membaca dokumen, mengisi field miliknya dan mencentang consent. **Finish signing** berada di panel kanan di bawah konfirmasi. Untuk menolak, isi reason lalu pilih Decline.
+Penerima membuka undangan, memverifikasi identitas sesuai alur, membaca dokumen, mengisi field miliknya dan mencentang consent. Buka **Fields assigned to you** untuk berpindah ke halaman isian yang ditugaskan. Tanda bintang menandai field wajib. Pilih **Finish signing** setelah isian dan consent lengkap. Untuk menolak, isi reason lalu pilih Decline.
 
 User internal dapat memakai [My Signature](/guides/my-signature), QR Sign atau menggambar manual pada signing visual. Satu penerima Signed belum berarti seluruh paket Completed.
 
 Pantau Active packages dan Completed history. PDF final memiliki bukti integritas DekaSign dan dapat diverifikasi melalui Verify document. Bukti DekaSign bukan klaim segel elektronik tersertifikasi atau trusted timestamp pihak ketiga. Bagikan dokumen selesai kepada pengguna internal sesuai akses, atau tambahkan ke Secure Document Sharing untuk alur eksternal yang memerlukannya.
+
+## Field tanggal dan dropdown
+
+Pada field **Date**, atur cara pengisian tanggal atau tanggal/tempat di Properties. Penerima menggunakan kontrol tanggal pada antarmuka signing. Untuk **Dropdown**, tambahkan daftar pilihan unik di Properties dan tentukan penerima serta apakah wajib. Penerima memilih satu nilai yang tersedia. Gunakan pilihan satu baris dengan karakter yang didukung font PDF.
+
+Untuk unggah atau salin sumber dokumen, lihat [My Documents](/guides/my-documents). Untuk pengingat masa berlaku perjanjian, gunakan [Contract Lifecycle](/guides/contract-lifecycle).

@@ -23,3 +23,9 @@ Dokumen bawaan, mandatory/optional, static value, input manual pemohon, mapping 
 
 ## Dari form ke pengajuan
 Simpan form, pilih pada Workflow Engines, periksa routing lalu Validate/Sandbox dan Publish. Selanjutnya buat Request Form Template dari workflow published. Berikan akses kategori/form kepada pemohon. Versi pengajuan yang berjalan tidak berubah ketika form diedit.
+
+## Hitung nilai form dan tabel
+
+Pada field atau kolom angka yang mendukung formula, masukkan ekspresi seperti `[quantity] * [price]` untuk subtotal. Gunakan key field atau kolom yang stabil. Gunakan SUM untuk menjumlahkan kolom tabel. Field hasil ditampilkan sebagai nilai hitung dan dihitung kembali saat pengajuan. Uji nilai kosong, pembulatan, dan pembagian nol sebelum publish. Saat impor CSV, isi kolom input dan biarkan sistem menghitung hasilnya.
+
+Untuk memakai form pada alur sederhana, ikuti [Workflow Wizard](/guides/workflow-wizard).

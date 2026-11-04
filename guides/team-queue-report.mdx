@@ -1,0 +1,16 @@
+---
+title: "Pantau Team Queue dan SLA"
+description: "Lihat tenggat, keterlambatan, dan hasil pekerjaan operasional."
+---
+
+## Atur tenggat pada workflow
+
+Pilih node **Operation Task** di Canvas. Tentukan durasi, menit kalender atau kalender kerja yang sesuai, dan peringatan awal bila diperlukan. Pada kalender kerja, isi zona waktu, jam kerja dan tanggal libur yang berlaku. Untuk eskalasi saat breach, pilih alamat email yang sesuai dan opsi Direct Manager jika diperlukan. Publikasikan dan uji versi workflow.
+
+Clock dimulai ketika tugas aktif dan siap dikerjakan. Contoh: tugas aktif di luar jam kerja dengan durasi 60 menit kerja akan memakai menit dalam shift kerja berikutnya. **Blocked** mencatat kendala. Untuk menjeda SLA, gunakan tindakan **Pause** bila Anda berwenang, lalu **Resume** ketika pekerjaan dapat dilanjutkan. Clock yang sudah breach tidak dapat dijeda untuk menghapus catatan keterlambatan.
+
+## Baca laporan
+
+Buka **Management → Team Queue report**. Owner dan anggota dengan akses laporan yang diberikan dapat memantau lingkup organisasi. Direct Manager melihat tugas staf yang menjadi lingkupnya. Laporan menampilkan total tugas, Open, In progress, Blocked, Completed/closed, SLA breach, dan rata-rata waktu penyelesaian.
+
+Filter menurut kategori, status, requester, staf, atau rentang tanggal. Rata-rata waktu penyelesaian mengukur waktu kalender sejak aktivasi hingga selesai, termasuk antrean. Gunakan status SLA untuk menilai tenggat kerja. [Cara mengerjakan task](/guides/operation-tasks)
